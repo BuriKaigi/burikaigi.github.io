@@ -27,7 +27,8 @@ export function Newsletter() {
                 Supports
               </p>
               <p className="mt-4 text-lg tracking-tight text-gray-900">
-                スポンサーでご協力いただける方、スピーカー希望の方はこちらかごらご応募ください。
+                スポンサーでご協力いただける方はこちらかごらご応募ください。<br />
+                ※スピーカーはご応募多数のため、締め切りさせて頂きました。
               </p>
             </div>
             <div>
