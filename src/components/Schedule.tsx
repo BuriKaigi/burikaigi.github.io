@@ -29,7 +29,7 @@ const scheduleTop: Day = {
     {
       name: '受付開始',
       description: '',
-      start: '11:00',
+      start: '11:50',
       end: '',
     },
     {
@@ -55,20 +55,14 @@ const scheduleBottom: Day = {
     {
       name: 'クロージング',
       description: '',
-      start: '16:20',
-      end: '16:30',
+      start: '16:40',
+      end: '16:50',
     },
     {
       name: '小島 富治雄・石野 光仁・鈴木 孝明',
       description: 'BuriKaigi 名物！C# ドキドキ Live Coding 対決!!',
-      start: '16:30',
-      end: '17:30',
-    },
-    {
-      name: 'ライトニングトーク',
-      description: '',
-      start: '17:30',
-      end: '18:30',
+      start: '16:50',
+      end: '17:40',
     },
   ]
 }

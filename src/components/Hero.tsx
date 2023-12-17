@@ -24,7 +24,7 @@ export function Hero() {
           <dl className="mt-10 grid grid-cols-2 gap-x-10 gap-y-6 sm:mt-16 sm:gap-x-16 sm:gap-y-10 sm:text-center lg:auto-cols-auto lg:grid-flow-col lg:grid-cols-none lg:justify-start lg:text-left">
             {[
               ['Date', '2024.1.20'],
-              ['Time', '11:50 - 19:00'],
+              ['Time', '11:50 - 18:30'],
               ['Location', '富山県立大学 DX教育研究センター', "max-lg:col-span-2"],
             ].map(([name, value, className]) => (
               <div key={name} className={clsx(className)}>

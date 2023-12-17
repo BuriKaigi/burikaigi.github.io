@@ -35,9 +35,9 @@ export function Newsletter() {
                 <Button href="/sponsor">
                   <span>スポンサーのご協力</span>
                 </Button>
-                <Button href="https://docs.google.com/forms/d/e/1FAIpQLSfbJS_gWQ5pHAnEKs6WLUs2dweYpD6vOVzgfYntg6mouCmJrw/viewform" target="_blank" rel="noopener noreferrer">
+                {/* <Button href="https://docs.google.com/forms/d/e/1FAIpQLSfbJS_gWQ5pHAnEKs6WLUs2dweYpD6vOVzgfYntg6mouCmJrw/viewform" target="_blank" rel="noopener noreferrer">
                   <span>スピーカーの応募</span>
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>
