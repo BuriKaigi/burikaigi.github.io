@@ -1,0 +1,131 @@
+---
+import clsx from 'clsx'
+import { Header } from '../components/Header';
+import { Hero } from '../components/Hero';
+import { Container } from "../components/Container";
+import { Newsletter } from '../components/Newsletter';
+import { Button } from '../components/Button';
+
+interface Props {
+  title?: string;
+}
+
+const { title, frontmatter } = Astro.props;
+
+const allSpeakers = await Astro.glob('../pages/speakers/*.md');
+const index = allSpeakers.findIndex(speaker => speaker.frontmatter.name === frontmatter.name)
+const first = index === 0
+const last = index === allSpeakers.length - 1;
+
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ENE2XQ27C"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-3ENE2XQ27C');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="description" content="寒ブリとIT技術者のマリアージュ">
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <head prefix="og: https://ogp.me/ns#">
+    <meta property="og:url" content="https://burikaigi.dev" />
+    <meta property="og:title" content="BuriKaigi" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="寒ブリとIT技術者のマリアージュ" />
+    <meta property="og:site_name" content="BuriKaigi" />
+    <meta property="og:image" content="https://burikaigi.dev/images/ogp.png" />
+    <title>BuriKaigi 2024 | {title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <Header />
+    <main class="flex-auto">
+      <Hero />
+      <section class="py-20 sm:py-32">
+        <Container className="flex gap-8">
+          <div class="mx-auto max-w-2xl lg:mx-0">
+            <h2
+              id="speakers-title"
+              class="font-display text-4xl font-medium tracking-tighter text-gray-600 sm:text-5xl"
+            >
+              Speaker
+            </h2>
+          </div>
+        </Container>
+        <Container className="flex gap-8 mt-10 flex-col lg:flex-row">
+          <div class="flex-[0]">
+            <div class="group h-[17.5rem] w-[17.5rem] transform overflow-hidden rounded-4xl">
+              <img
+                class="inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-110"
+                src={frontmatter.image}
+                alt=""
+              />
+            </div>
+            <div>
+              <h3 class="mt-8 font-display text-xl font-bold tracking-tight text-slate-900">
+                {frontmatter.name}
+              </h3>
+              <p class="mt-1 text-base tracking-tight text-slate-500">
+                {frontmatter.belong}
+              </p>
+              <p class="mt-1 text-base tracking-tight text-slate-500 text-sm">
+                {frontmatter.role}
+              </p>
+            </div>
+          </div>
+          <div class="flex-1 session--info">
+            <slot />
+          </div>
+        </Container>
+        <Container className="flex gap-8 justify-between mt-10">
+          <Button className={clsx(["rounded-none py-2", { "invisible": first }])} href={allSpeakers[index - 1]?.url}>
+            <span>Prev</span>
+          </Button>
+          <Button className={clsx(["rounded-none py-2"])} href="/">
+            <span>TOP</span>
+          </Button>
+          <Button className={clsx(["rounded-none py-2", { "invisible": last }])} href={allSpeakers[index + 1]?.url}>
+            <span>Next</span>
+          </Button>
+        </Container>
+      </section>
+    </main>
+    <Newsletter />
+  </body>
+</html>
+
+<style is:global>
+.session--info {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.session--info h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.session--info p {
+  margin-top: 2rem;
+  line-height: 1.5rem;
+}
+
+/* FIXME 既存スタイルがが抑止されているので調整 */
+.session--info a {
+  text-decoration: underline;
+  color: blue;
+}
+
+
+
+</style>

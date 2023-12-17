@@ -1,96 +1,27 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../layouts/Vanilla.astro';
+import { Header } from '../components/Header'
+import { Hero } from '../components/Hero'
+import { Newsletter } from '../components/Newsletter'
+import { Schedule } from '../components/Schedule'
+import { Speakers } from '../components/Speakers.tsx'
+import { Sponsors } from '../components/Sponsors'
+
+const allSpeakers = await Astro.glob('./speakers/*.md');
+const speakers: any[] = allSpeakers.map(speaker => ({
+  ...speaker.frontmatter,
+  url: speaker.url
+}))
+
 ---
 
 <Layout>
-  <main>
-    <h1>BuriKaigi 2024</h1>
-    <h2>北陸ITエンジニアカンファレンス</h2>
-    <section>
-      1/20 10:00 ~ in Toyama
-    </section>
-    <section style="line-height: 1.5rem; font-size: 12px;">
-      ※1Day開催です。宿泊はご自身で手配ください<br />
-      ※懇親会会場は調整中となります。
-    </section>
-    <footer>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfbJS_gWQ5pHAnEKs6WLUs2dweYpD6vOVzgfYntg6mouCmJrw/viewform?usp=sf_link" class="button" target="_blank" rel="noopener noreferrer">
-        スピーカーご希望の方
-        <img src="/images/arrow-link.svg" />
-      </a>
-      <a href="/sponsor" class="button">スポンサーのご協力</a>
-    </footer>
-
-    <div>
-      <a href="https://toyama-eng.connpass.com/" class="events" target="_blank" rel="noopener noreferrer" >
-        これまでのイベントについて
-      </a>
-    </div>
+  <Header />
+  <main class="flex-auto">
+    <Hero />
+    <Speakers speakers={speakers} />
+    <Schedule />
+    <Sponsors />
+    <Newsletter />
   </main>
 </Layout>
-
-<style>
-	main {
-    margin: auto;
-		width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-	}
-	h1, h2 {
-		margin: 0;
-	}
-  h1 {
-    font-family: 'Noto Serif', serif;
-    font-size: 3rem;
-		font-weight: 700;
-  }
-  h2 {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-		font-weight: 700;
-    letter-spacing: .1em;
-  }
-  section {
-    font-family: 'Noto Sans JP', sans-serif;
-    margin-bottom: 5rem;
-    font-size: 1.1rem;
-    font-weight: 400;
-  }
-
-  footer {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-
-  footer a img {
-    margin-left: 6px;
-  }
-
-  a.events {
-    text-decoration: none;
-  }
-
-  @media screen and (min-width: 768px) {
-    h1 {
-      font-size: 6rem;
-      letter-spacing: .05em;
-    }
-    h2 {
-      font-size: 2.4rem;
-    }
-    section {
-      font-size: 1.2rem;
-    }
-    footer {
-      display: flex;
-      gap: 1rem;
-      flex-direction: row;
-    }
-
-  }
-</style>
