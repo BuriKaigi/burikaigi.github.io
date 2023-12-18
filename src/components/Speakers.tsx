@@ -100,8 +100,39 @@ export function Speakers({ speakers = [] }: SpeakersProps) {
               <h3 className="mt-8 font-display text-xl font-bold tracking-tight text-slate-900">
                 <a href={speaker.url}>
                   {speaker.name}
-                </a>                
+                </a>
               </h3>
+              <div className="my-2 flex gap-2 items-center">
+                { speaker.twitter && (
+                  <a href={`https://twitter.com/${speaker.twitter}`}>
+                    <figure className="w-5 h-5">
+                      <img src="/images/x.svg" class="w-full h-full" />
+                    </figure>
+                  </a>
+                )}
+                { speaker.github && (
+                  <a href={`https://github.com/${speaker.github}`}>
+                    <figure className="w-5 h-5">
+                      <img src="/images/github.svg" class="w-full h-full" />
+                    </figure>
+                  </a>
+                )}
+                { speaker.facebook && (
+                  <a href={`https://facebook.com/${speaker.facebook}`}>
+                    <figure className="w-5 h-5">
+                      <img src="/images/facebook.svg" class="w-full h-full" />
+                    </figure>
+                  </a>
+                )}
+                { speaker.linkedIn && (
+                  <a href={`https://www.linkedin.com/in/${speaker.linkedIn}`}>
+                    <figure className="w-5 h-5">
+                      <img src="/images/linkedIn.svg" class="w-full h-full" />
+                    </figure>
+                  </a>
+                )}
+              </div>
+
               <p className="mt-1 text-base tracking-tight text-slate-500">
                 {speaker.belong}
               </p>
