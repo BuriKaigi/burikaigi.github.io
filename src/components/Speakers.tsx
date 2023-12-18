@@ -106,28 +106,28 @@ export function Speakers({ speakers = [] }: SpeakersProps) {
                 { speaker.twitter && (
                   <a href={`https://twitter.com/${speaker.twitter}`}>
                     <figure className="w-5 h-5">
-                      <img src="/images/x.svg" class="w-full h-full" />
+                      <img src="/images/x.svg" className="w-full h-full" />
                     </figure>
                   </a>
                 )}
                 { speaker.github && (
                   <a href={`https://github.com/${speaker.github}`}>
                     <figure className="w-5 h-5">
-                      <img src="/images/github.svg" class="w-full h-full" />
+                      <img src="/images/github.svg" className="w-full h-full" />
                     </figure>
                   </a>
                 )}
                 { speaker.facebook && (
                   <a href={`https://facebook.com/${speaker.facebook}`}>
                     <figure className="w-5 h-5">
-                      <img src="/images/facebook.svg" class="w-full h-full" />
+                      <img src="/images/facebook.svg" className="w-full h-full" />
                     </figure>
                   </a>
                 )}
                 { speaker.linkedIn && (
                   <a href={`https://www.linkedin.com/in/${speaker.linkedIn}`}>
                     <figure className="w-5 h-5">
-                      <img src="/images/linkedIn.svg" class="w-full h-full" />
+                      <img src="/images/linkedIn.svg" className="w-full h-full" />
                     </figure>
                   </a>
                 )}
