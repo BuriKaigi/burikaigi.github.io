@@ -112,6 +112,13 @@ const last = index === allSpeakers.length - 1;
                   </figure>
                 </a>
               )}
+              { frontmatter.instagram && (
+                <a href={`https://www.instagram.com/${frontmatter.instagram}`}>
+                  <figure class="w-5 h-5">
+                    <img src="/images/instagram.svg" class="w-full h-full" />
+                  </figure>
+                </a>
+              )}
             </div>
 
           </div>

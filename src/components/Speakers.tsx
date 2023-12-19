@@ -131,6 +131,13 @@ export function Speakers({ speakers = [] }: SpeakersProps) {
                     </figure>
                   </a>
                 )}
+                { speaker.instagram && (
+                  <a href={`https://www.instagram.com/${speaker.instagram}`}>
+                    <figure className="w-5 h-5">
+                      <img src="/images/instagram.svg" className="w-full h-full" />
+                    </figure>
+                  </a>
+                )}
               </div>
 
               <p className="mt-1 text-base tracking-tight text-slate-500">
