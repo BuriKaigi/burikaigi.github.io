@@ -2,11 +2,7 @@
 // import Image from 'next/image'
 import { Container } from './Container'
 
-const sponsors = [
-  // { name: 'dummy', logo: "/images/logo.png" },
-]
-
-export function Sponsors() {
+export function Sponsors({ sponsors }: { sponsors: any[] }) {
   return (
     <section id="sponsors" aria-label="Sponsors" className="py-20 sm:py-32">
       <Container>
@@ -18,12 +14,13 @@ export function Sponsors() {
             <div className="text-center col-span-3">調整中</div>
           )}
           {sponsors.map((sponsor) => (
-            <div
+            <a
               key={sponsor.name}
               className="flex items-center justify-center"
+              href={sponsor.url}
             >
-              <img src={sponsor.logo} alt={sponsor.name} />
-            </div>
+              <img src={sponsor.image} alt={sponsor.name} />
+            </a>
           ))}
         </div>
       </Container>

@@ -13,6 +13,12 @@ const speakers: any[] = allSpeakers.map(speaker => ({
   url: speaker.url
 }))
 
+const allSponsors = await Astro.glob('./sponsors/*.md');
+const sponsors: any[] = allSponsors.map(sponsor => ({
+  ...sponsor.frontmatter,
+  url: sponsor.url
+}))
+
 ---
 
 <Layout>
@@ -21,7 +27,7 @@ const speakers: any[] = allSpeakers.map(speaker => ({
     <Hero />
     <Speakers speakers={speakers} />
     <Schedule />
-    <Sponsors />
+    <Sponsors sponsors={sponsors} />
     <Newsletter />
   </main>
 </Layout>
