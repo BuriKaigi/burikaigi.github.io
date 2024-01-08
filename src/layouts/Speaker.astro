@@ -122,7 +122,11 @@ const last = index === allSpeakers.length - 1;
                 </a>
               )}
             </div>
-
+            { frontmatter.sponsor && (
+              <div class="mt-2 flex gap-2 items-center">
+                <span class="border-2	rounded-lg p-1 text-sm text-gray-400">SPONSOR SESSION</span>
+              </div>
+            )}
           </div>
           <div class="flex-1 session--info">
             <slot />
