@@ -73,22 +73,34 @@ const scheduleBottom: Day = {
       end: '17:40',
     },
     {
-      name: 'クラスメソッド株式会社',
-      description: 'スポンサーセッション',
-      start: '17:40',
-      end: '17:55',
-    },
-    {
       speakerRef: "関根 優作",
       description: '株式会社Relic',
-      start: '17:55',
-      end: '18:10',
+      start: '17:40',
+      end: '18:55',
     },
     {
       name: '北日本新聞社',
       description: 'スポンサーセッション',
+      start: '17:55',
+      end: '18:10',
+    },
+    {
+      name: 'クラスメソッド株式会社',
+      description: 'スポンサーセッション',
       start: '18:10',
-      end: '18:25',
+      end: '18:20',
+    },
+    {
+      name: 'サイボウズ株式会社',
+      description: 'スポンサーセッション',
+      start: '18:20',
+      end: '18:30',
+    },
+    {
+      name: '撤収',
+      description: '',
+      start: '18:30',
+      end: '18:45',
     },
   ]
 }
