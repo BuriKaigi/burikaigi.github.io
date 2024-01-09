@@ -29,7 +29,7 @@ interface Day {
 
 const scheduleTop: Day = {
   about: '共通',
-  prefix: "C",
+  prefix: "",
   dateTime: '2022-04-04',
   location:
     'DXセンター1F',
@@ -56,7 +56,7 @@ const scheduleTop: Day = {
 
 const scheduleBottom: Day = {
   about: 'スペシャルイベント',
-  prefix: "C",
+  prefix: "",
   dateTime: '2022-04-04',
   location: 'DXセンター1F',
   timeSlots: [
@@ -96,7 +96,7 @@ const scheduleBottom: Day = {
 const schedule: Array<Day> = [
   {
     about: 'Room-Buri',
-    prefix: "B",
+    prefix: "A",
     dateTime: '2024-01-20',
     location:
       'DXセンター1F',
@@ -139,25 +139,26 @@ const schedule: Array<Day> = [
   },
   {
     about: 'Room-Shiroebi',
-    prefix: "S",
+    prefix: "B",
     dateTime: '2024-01-20',
     location:
       '中央棟2F 教室',
     timeSlots: [
       {
-        speakerRef: 'おやかた@oyakata2438',
+        name: '調整枠',
+        description: "",
         start: '12:30',
         end: '12:50',
         id: 1,
       },
       {
-        speakerRef: 'ariaki',
+        speakerRef: '北原　憲',
         start: '12:50',
         end: '13:10',
         id: 2,
       },
       {
-        name: '調整枠',
+        speakerRef: '澤田　賢也',
         description: '',
         start: '13:10',
         end: '13:30',
@@ -194,21 +195,21 @@ const schedule: Array<Day> = [
         end: '14:50',
       },
       {
-        speakerRef: '北原　憲',
+        speakerRef: '石川達也',
         description: "",
         start: '14:50',
         end: '15:10',
         id: 7,
       },
       {
-        speakerRef: '澤田　賢也',
+        speakerRef: 'ariaki',
         description: "",
         start: '15:10',
         end: '15:30',
         id: 8,
       },
       {
-        speakerRef: '石川達也',
+        speakerRef: 'おやかた@oyakata2438',
         description: "",
         start: '15:30',
         end: '15:50',
@@ -238,7 +239,7 @@ const schedule: Array<Day> = [
   },
   {
     about: 'Room-Hotaruika',
-    prefix: "H",
+    prefix: "C",
     dateTime: '2024-01-20',
     location:
       '中央棟2F 教室',
@@ -275,13 +276,13 @@ const schedule: Array<Day> = [
         id: 4,
       },
       {
-        speakerRef: "おぐえもん（小倉 且也）",
+        speakerRef: "池原大然",
         start: '14:00',
         end: '14:20',
         id: 5,
       },
       {
-        name: "調整中",
+        speakerRef: "杉本 和也",
         description: "",
         start: '14:20',
         end: '14:40',
@@ -308,7 +309,7 @@ const schedule: Array<Day> = [
         id: 8,
       },
       {
-        speakerRef: 'どうけ',
+        speakerRef: 'きしだ なおき',
         description: "",
         start: '15:30',
         end: '15:50',
@@ -321,14 +322,14 @@ const schedule: Array<Day> = [
         end: '16:00',
       },
       {
-        speakerRef: "nus3",
+        speakerRef: "中西 孝之",
         description: "",
         start: '16:00',
         end: '16:15',
         id: 10,
       },
       {
-        speakerRef: '中西 孝之',
+        name: '調整枠',
         description: "",
         start: '16:15',
         end: '16:30',
@@ -338,7 +339,7 @@ const schedule: Array<Day> = [
   },
   {
     about: 'Room-Masu',
-    prefix: "M",
+    prefix: "D",
     dateTime: '2024-01-20',
     location:
       '中央棟2F 教室',
@@ -375,13 +376,13 @@ const schedule: Array<Day> = [
         id: 4,
       },
       {
-        speakerRef: "池原大然",
+        speakerRef: "おぐえもん（小倉 且也）",
         start: '14:00',
         end: '14:20',
         id: 5,
       },
       {
-        speakerRef: "杉本 和也",
+        name: "調整中",
         description: "",
         start: '14:20',
         end: '14:40',
@@ -408,7 +409,7 @@ const schedule: Array<Day> = [
         id: 8,
       },
       {
-        speakerRef: 'きしだ なおき',
+        speakerRef: 'どうけ',
         description: "",
         start: '15:30',
         end: '15:50',
@@ -428,7 +429,7 @@ const schedule: Array<Day> = [
         id: 10,
       },
       {
-        name: '調整枠',
+        speakerRef: "nus3",
         description: "",
         start: '16:15',
         end: '16:30',
