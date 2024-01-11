@@ -76,7 +76,7 @@ const scheduleBottom: Day = {
       speakerRef: "関根 優作",
       description: '株式会社Relic',
       start: '17:40',
-      end: '18:55',
+      end: '17:55',
     },
     {
       name: '北日本新聞社',
