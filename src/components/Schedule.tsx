@@ -393,7 +393,7 @@ const schedule: Array<Day> = [
         id: 5,
       },
       {
-        name: "調整中",
+        speakerRef: "tasshi",
         description: "",
         start: '14:20',
         end: '14:40',
