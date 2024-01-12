@@ -79,8 +79,8 @@ const scheduleBottom: Day = {
       end: '17:55',
     },
     {
-      name: '北日本新聞社',
-      description: 'スポンサーセッション',
+      speakerRef: "水上 達也",
+      description: '北日本新聞社',
       start: '17:55',
       end: '18:10',
     },
@@ -127,8 +127,7 @@ const schedule: Array<Day> = [
         end: '13:40',
       },
       {
-        name: '調整中',
-        description: '',
+        speakerRef: "櫻庭 祐一",
         size: 3,
         start: '13:40',
         end: '14:40',
