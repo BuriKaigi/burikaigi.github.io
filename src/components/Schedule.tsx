@@ -562,6 +562,9 @@ export function Schedule({ speakers = [] }: ScheduleProps) {
             Sessions
           </h2>
         </div>
+        <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-4xl lg:pr-24 mt-6">
+          <a href="/BuriKaigi2024-timetable.pdf" className='underline hover:opacity-50' target="_blank" rel="noopener noreferrer">タイムテーブルはこちら(PDF)</a>
+        </div>
       </Container>
       <div className="relative mt-14 sm:mt-24">
         <BackgroundImage position="hidden" className="-bottom-32 -top-40" />
