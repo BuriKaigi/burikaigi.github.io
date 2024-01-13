@@ -156,7 +156,7 @@ const schedule: Array<Day> = [
       '中央棟2F 教室',
     timeSlots: [
       {
-        name: '調整枠',
+        name: 'なぎせゆうき',
         description: "",
         start: '12:30',
         end: '12:50',
@@ -340,7 +340,7 @@ const schedule: Array<Day> = [
         id: 10,
       },
       {
-        name: '調整枠',
+        speakerRef: 'Takumi Muraishi',
         description: "",
         start: '16:15',
         end: '16:30',
