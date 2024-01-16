@@ -85,8 +85,9 @@ const scheduleBottom: Day = {
       end: '18:10',
     },
     {
-      name: 'クラスメソッド株式会社',
-      description: 'スポンサーセッション',
+      name: '熊膳成祥',
+      title: "Zennについてちょっと語ろう",
+      description: 'クラスメソッド株式会社',
       start: '18:10',
       end: '18:20',
     },
