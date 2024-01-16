@@ -92,8 +92,9 @@ const scheduleBottom: Day = {
       end: '18:20',
     },
     {
-      name: 'サイボウズ株式会社',
-      description: 'スポンサーセッション',
+      name: 'shisama',
+      title: "未定",
+      description: 'サイボウズ株式会社',
       start: '18:20',
       end: '18:30',
     },
@@ -157,7 +158,7 @@ const schedule: Array<Day> = [
       '中央棟2F 教室',
     timeSlots: [
       {
-        name: 'なぎせゆうき',
+        speakerRef: 'なぎせゆうき',
         description: "",
         start: '12:30',
         end: '12:50',
