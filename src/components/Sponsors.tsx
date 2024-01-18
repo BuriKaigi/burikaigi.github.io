@@ -1,5 +1,6 @@
 
 // import Image from 'next/image'
+import clsx from "clsx";
 import { Container } from './Container'
 
 export function Sponsors({ titleClassName, title, className, sponsors }: { titleClassName: string, title: string, className: string, sponsors: any[] }) {
@@ -16,7 +17,7 @@ export function Sponsors({ titleClassName, title, className, sponsors }: { title
           {sponsors.map((sponsor) => (
             <a
               key={sponsor.name}
-              className="flex items-center justify-center p-8 md:p-4"
+              className={clsx("flex items-center justify-center p-8 md:p-4", sponsor.className)}
               href={sponsor.url}
             >
               <img src={sponsor.image} alt={sponsor.name} />
