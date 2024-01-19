@@ -61,7 +61,7 @@ const last = index === allSponsors.length - 1;
               id="sponsor-title"
               class="font-display text-4xl font-medium tracking-tighter text-gray-600 sm:text-5xl"
             >
-              {frontmatter.type}スポンサー
+              { frontmatter.type === "後援" ? frontmatter.type : `${frontmatter.type}スポンサー`}               
             </h2>
           </div>
         </Container>
