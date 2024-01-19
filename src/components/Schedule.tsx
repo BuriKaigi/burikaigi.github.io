@@ -111,7 +111,7 @@ const scheduleBottom: Day = {
 const schedule: Array<Day> = [
   {
     about: 'Room-Buri',
-    prefix: "A",
+    prefix: "B",
     dateTime: '2024-01-20',
     location:
       'DXセンター1F',
@@ -153,10 +153,10 @@ const schedule: Array<Day> = [
   },
   {
     about: 'Room-Shiroebi',
-    prefix: "B",
+    prefix: "S",
     dateTime: '2024-01-20',
     location:
-      '中央棟2F 教室',
+      '中央棟2F 207',
     timeSlots: [
       {
         speakerRef: 'なぎせゆうき',
@@ -253,7 +253,7 @@ const schedule: Array<Day> = [
   },
   {
     about: 'Room-Hotaruika',
-    prefix: "C",
+    prefix: "H",
     dateTime: '2024-01-20',
     location:
       '中央棟2F 教室',
@@ -353,10 +353,10 @@ const schedule: Array<Day> = [
   },
   {
     about: 'Room-Masu',
-    prefix: "D",
+    prefix: "M",
     dateTime: '2024-01-20',
     location:
-      '中央棟2F 教室',
+      '中央棟2F 209',
     timeSlots: [
       {
         speakerRef: 'もやし丸',
