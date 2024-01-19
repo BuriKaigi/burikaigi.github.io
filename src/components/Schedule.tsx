@@ -295,7 +295,7 @@ const schedule: Array<Day> = [
         id: 5,
       },
       {
-        speakerRef: "杉本 和也",
+        speakerRef: "疋田 圭介",
         description: "",
         start: '14:20',
         end: '14:40',
