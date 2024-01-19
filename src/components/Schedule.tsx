@@ -93,7 +93,7 @@ const scheduleBottom: Day = {
     },
     {
       name: 'shisama',
-      title: "未定",
+      title: "ossとコミュニティに恩返しがしたい！(仮)",
       description: 'サイボウズ株式会社',
       start: '18:20',
       end: '18:30',
