@@ -1,10 +1,10 @@
 ---
 import clsx from 'clsx'
-import { Header } from '../components/Header';
-import { Hero } from '../components/Hero';
-import { Container } from "../components/Container";
-import { Newsletter } from '../components/Newsletter';
-import { Button } from '../components/Button';
+import { Header } from '~/components/Header';
+import { Hero } from '~/components/Hero';
+import { Container } from "~/components/Container";
+import { Newsletter } from '~/components/Newsletter';
+import { Button } from '~/components/Button';
 
 interface Props {
   title?: string;
@@ -12,7 +12,7 @@ interface Props {
 
 const { title, frontmatter } = Astro.props;
 
-const allSpeakers = await Astro.glob('../pages/speakers/*.md');
+const allSpeakers = await Astro.glob('../pages/2024/speakers/*.md');
 const index = allSpeakers.findIndex(speaker => speaker.frontmatter.name === frontmatter.name)
 const first = index === 0
 const last = index === allSpeakers.length - 1;
