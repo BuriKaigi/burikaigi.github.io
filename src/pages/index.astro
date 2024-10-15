@@ -1,57 +1,33 @@
 ---
-import Layout from '../layouts/Vanilla.astro';
-import { Header } from '../components/Header'
-import { Hero } from '../components/Hero'
-import { Newsletter } from '../components/Newsletter'
-import { Schedule } from '../components/Schedule'
-import { Speakers } from '../components/Speakers.tsx'
-import { Sponsors } from '../components/Sponsors'
+import Layout from '~/layouts/Vanilla.astro';
 
-const allSpeakers = await Astro.glob('./speakers/*.md');
-const speakers: any[] = allSpeakers.map(speaker => ({
-  ...speaker.frontmatter,
-  url: speaker.url
-}))
-
-const allSponsors = await Astro.glob('./sponsors/*.md');
-const sponsors: any[] = allSponsors.map(sponsor => ({
-  ...sponsor.frontmatter,
-  url: sponsor.url
-}))
-
-const buriSponsors = sponsors.filter(v => v.type === "鰤しゃぶ")
-const roomSponsors = sponsors.filter(v => v.type === "ルーム")
-const noveltySponsors = sponsors.filter(v => v.type === "ノベルティ")
-const sponsorship = sponsors.filter(v => v.type === "後援")
-sponsorship[0].className = "col-start-2"
 ---
 
 <Layout>
-  <Header />
-  <main class="flex-auto">
-    <Hero />
-    <Speakers speakers={speakers} />
-    <Schedule speakers={speakers} />
-    <Sponsors sponsors={buriSponsors}
-      title="Buri-Sponsors"
-      titleClassName='mx-auto max-w-2xl text-center font-display text-4xl font-medium tracking-tighter text-gray-900 sm:text-5xl'
-      className="mx-auto mt-20 mx-20 grid max-w-max grid-cols-1 place-content-center gap-x-16 gap-y-12 sm:grid-cols-2 md:gap-x-32 md:gap-x-16"      
-    />
-    <Sponsors sponsors={roomSponsors}
-      title="Room-Sponsors"
-      titleClassName='mx-auto max-w-2xl text-center font-display text-2xl font-medium tracking-tighter text-gray-900 sm:text-4xl'
-      className="mx-auto mt-20 mx-20 grid max-w-max grid-cols-2 place-content-center gap-x-16 gap-y-12 sm:grid-cols-2 md:grid-cols-3 md:gap-x-32 md:gap-x-16"
-    />
-    <Sponsors sponsors={noveltySponsors}
-      title="Novelty-Sponsors"
-      titleClassName='mx-auto max-w-2xl text-center font-display text-1xl font-medium tracking-tighter text-gray-900 sm:text-3xl'
-      className="mx-auto mt-20 mx-20 grid max-w-max grid-cols-2 place-content-center gap-x-16 gap-y-12 sm:grid-cols-4 md:gap-x-32 md:gap-x-16"
-    />
-    <Sponsors sponsors={sponsorship}
-      title="後援"
-      titleClassName='mx-auto max-w-2xl text-center font-display text-4xl font-medium tracking-tighter text-gray-900 sm:text-5xl'
-      className="mx-auto mt-20 mx-20 grid max-w-max grid-cols-1 place-content-center gap-x-16 gap-y-12 sm:grid-cols-3 md:gap-x-32 md:gap-x-16"      
-    />
-    <Newsletter />
-  </main>
+  <div class="min-h-screen bg-gray-900 flex flex-col items-center justify-center relative px-4">
+    <h1 class="text-5xl md:text-8xl text-white font-bold mb-8 z-10">BuriKaigi 2025</h1>
+    <p class="text-white text-xl md:text-2xl mb-4 z-10">
+      富山県立大学射水キャンパス(仮)
+    </p>
+    <p class="text-white text-xl md:text-2xl mb-10 z-10">
+      2025/02/01
+    </p>
+    <div class="flex space-x-4 mb-6 z-10">
+      <a href="https://fortee.jp/burikaigi-2025/speaker/proposal/cfp" class="border-2 border-gray-800 text-black font-bold py-3 px-6 rounded dark:text-white dark:border-white hover:opacity-50 transition">
+        登壇ご希望の方
+      </a>
+      <a href="https://fortee.jp/burikaigi-2025/sponsor/form" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded dark:bg-gray-700 dark:hover:bg-gray-600 hover:opacity-50 transition">
+        スポンサーのご協力
+      </a>
+    </div>
+    <div class="flex space-x-4 text-white mb-6 z-10">
+      ※イベントの公開までもう少しお待ちください。
+    </div>
+    <div class="text-white z-10 underline underline-offset-4 hover:opacity-50 transition">
+      <a href="/2024">昨年の様子はこちら</a>
+    </div>
+    <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-30"
+      style="background-image: url('/images/6ee144801b1e5221410445f7e824b669.png');">
+    </div>
+  </div>
 </Layout>
