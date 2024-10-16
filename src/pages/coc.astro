@@ -1,0 +1,96 @@
+---
+import Layout from '~/layouts/Layout.astro';
+---
+
+<Layout title="行動規範( Code of Couduct )">
+  <main>    
+    <h1 class="text-3xl font-bold">行動規範<br class="desktop-hidden"/>( Code of Couduct )</h1>
+    <div class="hero mt-10">
+      <img src="/images/sponsors.jpeg" />
+    </div>
+    <section>
+      BuriKaigiが参加者にとって有益であり、身体的・心理的に安全である環境を保つため、幾つかのルールを設けています。
+    </section>
+    <section>
+      <ul class="list-inside m-4">
+        <li class="list-disc">関係者の人種、性別、性的指向、身体的特徴、見た目、政治、宗教（または無宗教）などに係る表現は、いかなる場合も適切ではありません。</li>
+        <li class="list-disc">イベントの主旨と関係のない宣伝行為・採用活動・ネットワーキングのみを目的としたご参加はご遠慮ください。</li>
+        <li class="list-disc">あなたのクリエイティブで前向きな発言がイベントをより楽しくします。発表者や質問者に対して疑問や意見がある場合は批判や罵り・嘲りではなく提案と課題解決の態度でポジティブな発言を心がけましょう。</li>
+        <li class="list-disc">本イベントは有志のボランティアにより非営利目的にて運営され、いつでもあなたの手助けを必要としています。お気付きの点があればぜひご協力をお願いいたします。</li>
+      </ul>
+    </section>
+    <section>
+      ルールに違反する方は参加をお断りする場合がございます。また、これらの適用範囲はイベント中の行動・言動だけではなく、 Burikaigiが関連する全ての場（発表資料・チャット・SNSでの発言など）に及びます。 違反行為を受けた場合、もしくは見つけた場合には主催者までお声がけください。
+    </section>
+    <section>
+      ※この行動規範は以下を参考にしています。        
+    </section>
+    <section>  
+      <ul class="list-inside mt-4">
+        <li class="list-disc"><a href="https://jaws-ug.jp/for-participant/">JAWS-UG AWS User Group - Japan</a></li>
+        <li class="list-disc"><a href="https://toyamarb.github.io/">Toyama.rb</a></li>
+      </ul>
+    </section>
+
+    <footer>
+      <a href="/" class="button">TOPへ</a>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+
+  main {
+    margin: auto;
+    padding: 2rem 1rem;
+    letter-spacing: 0.02rem;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+
+  section.sponsor-type::before {
+    content: "";
+    width: 100%;
+    display: block;
+    border: solid 1px #999;
+    opacity: 0.5;
+  }
+
+  .hero {
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
+  .hero img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 2rem;
+  }
+
+  h1.title {
+    text-align: center;
+  }
+
+  footer {
+    text-align: center;
+  }
+
+  @media screen and (min-width: 1024px) {
+    main {
+      max-width: 768px;
+    }
+
+    h1.title {
+      text-align: left;
+    }
+
+    .desktop-hidden {
+      display: none;
+    }
+
+  }
+</style>
