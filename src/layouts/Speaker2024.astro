@@ -12,10 +12,10 @@ interface Props {
 
 const { title, frontmatter } = Astro.props;
 
-const allSponsors = await Astro.glob('../pages/2024/sponsors/*.md');
-const index = allSponsors.findIndex(speaker => speaker.frontmatter.name === frontmatter.name)
+const allSpeakers = await Astro.glob('../pages/2024/speakers/*.md');
+const index = allSpeakers.findIndex(speaker => speaker.frontmatter.name === frontmatter.name)
 const first = index === 0
-const last = index === allSponsors.length - 1;
+const last = index === allSpeakers.length - 1;
 
 ---
 
@@ -58,16 +58,16 @@ const last = index === allSponsors.length - 1;
         <Container className="flex gap-8">
           <div class="mx-auto max-w-2xl lg:mx-0">
             <h2
-              id="sponsor-title"
+              id="speakers-title"
               class="font-display text-4xl font-medium tracking-tighter text-gray-600 sm:text-5xl"
             >
-              { frontmatter.type === "後援" ? frontmatter.type : `${frontmatter.type}スポンサー`}               
+              Speaker
             </h2>
           </div>
         </Container>
-        <Container className="flex gap-8 mt-12 flex-col">
-          <div class="max-lg:flex max-lg:flex-col max-lg:items-center">
-            <div class="h-auto w-[30rem] max-w-full transform">
+        <Container className="flex gap-8 mt-10 flex-col lg:flex-row">
+          <div class="flex-[0]">
+            <div class="group h-[17.5rem] w-[17.5rem] transform overflow-hidden rounded-4xl">
               <img
                 class="inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-110"
                 src={frontmatter.image}
@@ -79,9 +79,10 @@ const last = index === allSponsors.length - 1;
                 {frontmatter.name}
               </h3>
               <p class="mt-1 text-base tracking-tight text-slate-500">
-                <a href={frontmatter.siteUrl} target="_blank" rel="noopener noreferrer">
-                  {frontmatter.siteUrl}
-                </a>
+                {frontmatter.belong}
+              </p>
+              <p class="mt-1 text-base tracking-tight text-slate-500 text-sm">
+                {frontmatter.role}
               </p>
             </div>
             <div class="mt-2 flex gap-2 items-center">
@@ -121,20 +122,24 @@ const last = index === allSponsors.length - 1;
                 </a>
               )}
             </div>
-
+            { frontmatter.sponsor && (
+              <div class="mt-2 flex gap-2 items-center">
+                <span class="border-2	rounded-lg p-1 text-sm text-gray-400">SPONSOR SESSION</span>
+              </div>
+            )}
           </div>
           <div class="flex-1 session--info">
             <slot />
           </div>
         </Container>
         <Container className="flex gap-8 justify-between mt-10">
-          <Button className={clsx(["rounded-none py-2", { "invisible": first }])} href={allSponsors[index - 1]?.url}>
+          <Button className={clsx(["rounded-none py-2", { "invisible": first }])} href={allSpeakers[index - 1]?.url}>
             <span>Prev</span>
           </Button>
-          <Button className={clsx(["rounded-none py-2"])} href="/">
+          <Button className={clsx(["rounded-none py-2"])} href="/2024/">
             <span>TOP</span>
           </Button>
-          <Button className={clsx(["rounded-none py-2", { "invisible": last }])} href={allSponsors[index + 1]?.url}>
+          <Button className={clsx(["rounded-none py-2", { "invisible": last }])} href={allSpeakers[index + 1]?.url}>
             <span>Next</span>
           </Button>
         </Container>
@@ -145,7 +150,6 @@ const last = index === allSponsors.length - 1;
 </html>
 
 <style is:global>
-.sponsor-title,
 .session--info {
   font-family: 'Noto Sans JP', sans-serif;
 }
