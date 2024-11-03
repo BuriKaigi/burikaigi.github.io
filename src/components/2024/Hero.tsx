@@ -1,9 +1,9 @@
-import { BackgroundImage } from './BackgroundImage'
-import { Button } from './Button'
-import { Container } from './Container'
+import { BackgroundImage } from '../BackgroundImage.tsx'
+import { Button } from '../Button.tsx'
+import { Container } from '../Container.tsx'
 import clsx from 'clsx'
 
-export function Hero2024() {
+export function Hero() {
   return (
     <div className="relative py-20 sm:pb-24 sm:pt-36">
       <BackgroundImage className="-bottom-14 -top-36" position='full' />
