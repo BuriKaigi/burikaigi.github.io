@@ -33,7 +33,7 @@ export function Newsletter() {
             </div>
             <div>
               <div className='flex gap-5'>
-                <Button href="/sponsor">
+                <Button href="/2024/sponsor">
                   <span>スポンサーのご協力</span>
                 </Button>
                 {/* <Button href="https://docs.google.com/forms/d/e/1FAIpQLSfbJS_gWQ5pHAnEKs6WLUs2dweYpD6vOVzgfYntg6mouCmJrw/viewform" target="_blank" rel="noopener noreferrer">

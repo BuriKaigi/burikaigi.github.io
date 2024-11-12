@@ -11,6 +11,7 @@ interface Props {
 }
 
 const { title, frontmatter } = Astro.props;
+const myTitle = ['BuriKaigi', frontmatter.title, frontmatter.name].filter(Boolean).join(' | ')
 
 const allSponsors = await Astro.glob('../../pages/2024/sponsors/*.md');
 const index = allSponsors.findIndex(speaker => speaker.frontmatter.name === frontmatter.name)
@@ -45,7 +46,7 @@ const last = index === allSponsors.length - 1;
     <meta property="og:description" content="寒ブリとIT技術者のマリアージュ" />
     <meta property="og:site_name" content="BuriKaigi" />
     <meta property="og:image" content="https://burikaigi.dev/images/ogp.png" />
-    <title>BuriKaigi | {title}</title>
+    <title> {myTitle}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
