@@ -1,0 +1,172 @@
+---
+import clsx from 'clsx'
+import { Header } from '~/components/2025/Header';
+import { Hero } from '~/components/2025/Hero';
+import { Container } from "~/components/Container";
+import { Newsletter } from '~/components/Newsletter';
+import { Button } from '~/components/Button';
+
+interface Props {
+  title?: string;
+}
+
+const { title, frontmatter } = Astro.props;
+const myTitle = ['BuriKaigi', frontmatter.title, frontmatter.name].filter(Boolean).join(' | ')
+
+const allSponsors = await Astro.glob('../../pages/2025/sponsors/*.md');
+const index = allSponsors.findIndex(speaker => speaker.frontmatter.name === frontmatter.name)
+const first = index === 0
+const last = index === allSponsors.length - 1;
+
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ENE2XQ27C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-3ENE2XQ27C');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="description" content="寒ブリとIT技術者のマリアージュ">
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" sizes="16x16" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="generator" content={Astro.generator} />
+  <head prefix="og: https://ogp.me/ns#">
+    <meta property="og:url" content="https://burikaigi.dev" />
+    <meta property="og:title" content="BuriKaigi" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="寒ブリとIT技術者のマリアージュ" />
+    <meta property="og:site_name" content="BuriKaigi" />
+    <meta property="og:image" content="https://burikaigi.dev/images/ogp.png" />
+    <title> {myTitle}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+<body>
+  <Header />
+  <main class="flex-auto">
+    <Hero />
+    <section class="py-20 sm:py-32">
+      <Container className="flex gap-8">
+        <div class="mx-auto max-w-2xl lg:mx-0">
+          <h2
+            id="sponsor-title"
+            class="font-display text-4xl font-medium tracking-tighter text-gray-600 sm:text-5xl"
+          >
+            { frontmatter.type === "後援" ? frontmatter.type : `${frontmatter.type} Sponsors`}
+          </h2>
+        </div>
+      </Container>
+      <Container className="flex gap-8 mt-12 flex-col">
+        <div class="max-lg:flex max-lg:flex-col max-lg:items-center">
+          <div class="h-auto w-[30rem] max-w-full transform">
+            <img
+              class="inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-110"
+              src={frontmatter.image}
+              alt=""
+            />
+          </div>
+          <div>
+            <h3 class="mt-8 font-display text-xl font-bold tracking-tight text-slate-900">
+              {frontmatter.name}
+            </h3>
+            <p class="mt-1 text-base tracking-tight text-slate-500">
+              <a href={frontmatter.siteUrl} target="_blank" rel="noopener noreferrer">
+                {frontmatter.siteUrl}
+              </a>
+            </p>
+          </div>
+          <div class="mt-2 flex gap-2 items-center">
+            { frontmatter.twitter && (
+              <a href={`https://twitter.com/${frontmatter.twitter}`}>
+                <figure class="w-5 h-5">
+                  <img src="/images/x.svg" class="w-full h-full" />
+                </figure>
+              </a>
+            )}
+            { frontmatter.github && (
+              <a href={`https://github.com/${frontmatter.github}`}>
+                <figure class="w-5 h-5">
+                  <img src="/images/github.svg" class="w-full h-full" />
+                </figure>
+              </a>
+            )}
+            { frontmatter.facebook && (
+              <a href={`https://facebook.com/${frontmatter.facebook}`}>
+                <figure class="w-5 h-5">
+                  <img src="/images/facebook.svg" class="w-full h-full" />
+                </figure>
+              </a>
+            )}
+            { frontmatter.linkedIn && (
+              <a href={`https://www.linkedin.com/in/${frontmatter.linkedIn}`}>
+                <figure class="w-5 h-5">
+                  <img src="/images/linkedIn.svg" class="w-full h-full" />
+                </figure>
+              </a>
+            )}
+            { frontmatter.instagram && (
+              <a href={`https://www.instagram.com/${frontmatter.instagram}`}>
+                <figure class="w-5 h-5">
+                  <img src="/images/instagram.svg" class="w-full h-full" />
+                </figure>
+              </a>
+            )}
+          </div>
+
+        </div>
+        <div class="flex-1 session--info">
+          <slot />
+        </div>
+      </Container>
+      <Container className="flex gap-8 justify-between mt-10">
+        <Button className={clsx(["rounded-none py-2", { "invisible": first }])} href={allSponsors[index - 1]?.url}>
+          <span>Prev</span>
+        </Button>
+        <Button className={clsx(["rounded-none py-2"])} href="/">
+          <span>TOP</span>
+        </Button>
+        <Button className={clsx(["rounded-none py-2", { "invisible": last }])} href={allSponsors[index + 1]?.url}>
+          <span>Next</span>
+        </Button>
+      </Container>
+    </section>
+  </main>
+  <!-- <Newsletter /> -->
+</body>
+</html>
+
+<style is:global>
+  .sponsor-title,
+  .session--info {
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+
+  .session--info h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .session--info p {
+    margin-top: 2rem;
+    line-height: 1.5rem;
+  }
+
+  /* FIXME 既存スタイルがが抑止されているので調整 */
+  .session--info a {
+    text-decoration: underline;
+    color: blue;
+  }
+
+
+
+</style>
