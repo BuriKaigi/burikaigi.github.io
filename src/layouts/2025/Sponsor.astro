@@ -14,9 +14,10 @@ const { title, frontmatter } = Astro.props;
 const myTitle = ['BuriKaigi', frontmatter.title, frontmatter.name].filter(Boolean).join(' | ')
 
 const allSponsors = await Astro.glob('../../pages/2025/sponsors/*.md');
-const index = allSponsors.findIndex(speaker => speaker.frontmatter.name === frontmatter.name)
+const sponsors = allSponsors.filter(sponsor => sponsor.frontmatter.type === frontmatter.type)
+const index = sponsors.findIndex(sponsor => sponsor.frontmatter.name === frontmatter.name)
 const first = index === 0
-const last = index === allSponsors.length - 1;
+const last = index === sponsors.length - 1;
 
 ---
 
@@ -129,13 +130,13 @@ const last = index === allSponsors.length - 1;
         </div>
       </Container>
       <Container className="flex gap-8 justify-between mt-10">
-        <Button className={clsx(["rounded-none py-2", { "invisible": first }])} href={allSponsors[index - 1]?.url}>
+        <Button className={clsx(["rounded-none py-2", { "invisible": first }])} href={sponsors[index - 1]?.url}>
           <span>Prev</span>
         </Button>
         <Button className={clsx(["rounded-none py-2"])} href="/">
           <span>TOP</span>
         </Button>
-        <Button className={clsx(["rounded-none py-2", { "invisible": last }])} href={allSponsors[index + 1]?.url}>
+        <Button className={clsx(["rounded-none py-2", { "invisible": last }])} href={sponsors[index + 1]?.url}>
           <span>Next</span>
         </Button>
       </Container>
