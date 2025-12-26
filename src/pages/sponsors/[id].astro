@@ -1,0 +1,408 @@
+---
+import Layout from '~/layouts/Vanilla.astro';
+import { ArrowLeft, MapPin, Users, Globe, Briefcase, Mail } from 'lucide-react';
+
+export const sponsorData = {
+  '1232fa5b-f456-436c-a76d-1030cfd5ad5b': {
+    tier: 'ブリスポンサー',
+    name: '株式会社Codeer',
+    logo: '/images/sponsors/1232fa5b-f456-436c-a76d-1030cfd5ad5b.svg',
+    website: 'https://www.codeer.co.jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      'Power Apps や kintone に代表されるノーコード/ローコードの機能をあなたの Blazor アプリに組み込めるとしたらどうでしょう？様々なビジネスチャンスが思い浮かびませんか？しかも型どおりのノー/ローコード機能だけではなくあなたのアプリに応じて ProCode で柔軟にカスタマイズできるとしたら・・・。Codeer.LowCode.Blazor はそれをかなえる唯一無二のライブラリです。そして拡張性が非常に高く、拡張ライブラリの部分はOSSで作成しています。あなたも独自のローコードアプリを作ってみませんか？'
+    ],
+    techStack: [],
+    benefits: [],
+    message:
+      'Power AppsやkintoneのようなローコードをBlazorで実現し、ビジネスチャンスを広げる唯一無二のライブラリです。拡張性が高くOSSとして開発されています。'
+  },
+  '5f3f30d9-f5a1-42bd-8f06-d699a16b8971': {
+    tier: 'ブリスポンサー',
+    name: 'クラスメソッド株式会社',
+    logo: '/images/sponsors/5f3f30d9-f5a1-42bd-8f06-d699a16b8971.png',
+    website: 'https://classmethod.jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      '「すべてのお客様の創造活動に貢献し続ける」という企業理念のもと「AI、クラウド、ビッグデータ、モバイル、音声認識、機械学習」の技術を活用した企業支援を行っています。また、技術ブログ「DevelopersIO」を通じた技術情報の発信や「Zenn」の運営も行っています。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  'f7449494-81e2-4b97-9580-ba4d69f18aff': {
+    tier: 'ブリスポンサー',
+    name: 'CodeRabbit',
+    logo: '/images/sponsors/f7449494-81e2-4b97-9580-ba4d69f18aff.svg',
+    website: 'https://www.coderabbit.ai/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      'CodeRabbitは、コードレビューの時間とバグを減らすAIコードレビューサービスです。GitHubやGitLabなどと連携し、プルリクエストを自動コードレビューします。VS Code機能拡張、CLI、OSSプロジェクトは無料で利用できます。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  '9a79f08e-8de6-402c-8e2d-31a36575e0e8': {
+    tier: 'ブリスポンサー',
+    name: 'アサイクル株式会社',
+    logo: '/images/sponsors/9a79f08e-8de6-402c-8e2d-31a36575e0e8.jpg',
+    website: 'https://131kr.jp',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      'AI × AWSで薬局の“めんどくさい”を解決するDXカンパニーです。30年以上の医療システム開発実績を基盤に、在庫を最適化するAI「ASKAN」、効率的なピッキングを実現する「PICKING GO」、スマホで簡単に棚卸できる「ZERO STOCK」などを展開。クラウドの力で日本中の薬局をつなぎ、よりスマートで楽しい医療現場を実現します。今年、新社屋を建設し、より働きやすい環境を小松に構築しました。仲間も随時募集中です！'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  'b82081a9-b2e1-47ba-9ac8-148baf28d9df': {
+    tier: 'ブリスポンサー',
+    name: 'CData Connect AI',
+    logo: '/images/sponsors/b82081a9-b2e1-47ba-9ac8-148baf28d9df.png',
+    website: 'https://jp.cdata.com/ai/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      'CDataは世界初のマネージドMCPプラットフォーム「Connect AI」を提供しています。ChatGPTやClaudeなどのAIアシスタントやAIエージェントから、Salesforce、kintone、SAP、Google Sheetsなど300種類以上のビジネスデータへ、簡単な設定のみでセキュアなリモートMCPによる接続を実現します。データの読み書き両対応、元システムの認証・権限継承、完全なアクセスログ記録により、エンタープライズグレードのガバナンスを確保。開発者の皆様の次世代AIアプリケーション開発を強力に支援します。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  '630f03f6-af01-41fe-ae0d-a5165ba812e4': {
+    tier: 'ブリスポンサー',
+    name: '株式会社日本オープンシステムズ',
+    logo: '/images/sponsors/630f03f6-af01-41fe-ae0d-a5165ba812e4.png',
+    website: 'https://www.jops.co.jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: ['株式会社日本オープンシステムズ（JOPS）は、システム開発や運用を中心に、クラウド事業やDX推進事業を展開し、自社サービスの開発にも注力しています。'],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  'ad787bcf-4be5-4033-889f-78428549cf65': {
+    tier: 'ブリスポンサー',
+    name: 'さくらインターネット株式会社',
+    logo: '/images/sponsors/ad787bcf-4be5-4033-889f-78428549cf65.svg',
+    website: 'https://www.sakura.ad.jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      'さくらインターネットは、さくらのクラウドや、AIに最適なGPUサーバー、レンタルサーバーから専用サーバーまで、あらゆるニーズに応える環境を、自社運営の国内データセンターから提供しています。「『やりたいこと』を『できる』に変える」の企業理念のもと、お客さまのご要望にお応えする多様なサービスを開発し、あらゆる分野に対応するDXソリューションを提案します。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  '3f642e46-7d02-4078-9115-308ae1be6fbb': {
+    tier: 'ブリスポンサー',
+    name: '株式会社Helpfeel',
+    logo: '/images/sponsors/3f642e46-7d02-4078-9115-308ae1be6fbb.png',
+    website: 'https://www.helpfeel.com/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      '株式会社Helpfeelは、AIで顧客接点のインサイトデータを収集・ナレッジ化し、カスタマーサポートやマーケティング等、企業の中核部門のデータドリブン経営を後押しするテクノロジーカンパニーです。ナレッジ化したデータに誰もがいつでもアクセス・活用できる状態を実現することで、顧客満足度の向上から事業改善までを一環して支援します。AI検索FAQ「Helpfeel」は、社内外の疑問に応える自己解決システムです。AI技術を用いてカスタマーサポートや社内ヘルプデスクに寄せられる疑問をFAQ形式で解決し、問い合わせ数の削減と体験改善につなげます。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  '351e6e60-b4e1-40fc-9d60-00b975d06cfb': {
+    tier: 'ガンドスポンサー',
+    name: 'TechTrain',
+    logo: '/images/sponsors/351e6e60-b4e1-40fc-9d60-00b975d06cfb.png',
+    website: 'https://service.techtrain.dev',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      'TechTrainは、すごいメンターと1対1で好きな時間にいつでも話せるサービスです。CxOやテックリードクラスのエンジニアやデザイナー、PMなどものづくりに携わるすごいメンターが総勢約160名も在籍！国内トップクラスの知見を持つメンターたちと協力し、技術に関する企業・学校研修や次世代のエンジニアを送り出す採用支援を展開している会社です。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  '94ee3ccb-2400-425b-8597-c5e7ac5c091b': {
+    tier: 'ガンドスポンサー',
+    name: '転職ドラフト（株式会社リブセンス）',
+    logo: '/images/burikaigi-logo.png',
+    website: 'https://job-draft.jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      '転職ドラフトは、「年収も実力も磨ける仕事」に出会える、ITエンジニア向けの転職サービスです。 年収付きのスカウトが企業から届く「転職ドラフトスカウト」、ITエンジニアキャリアのプロに相談できる「転職ドラフトエージェント」を運営しています。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  'bbc1a306-aaa9-4e43-b01c-9fc630ce8a42': {
+    tier: 'ガンドスポンサー',
+    name: 'サイボウズ株式会社',
+    logo: '/images/sponsors/bbc1a306-aaa9-4e43-b01c-9fc630ce8a42.png',
+    website: 'https://cybozu.co.jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: ['サイボウズはクラウドベースのグループウェアや業務改善サービスを軸に、社会のチームワーク向上を支援しています。'],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  '3345b5f3-5229-4566-bde5-fcdb5c2979d6': {
+    tier: 'ガンドスポンサー',
+    name: '株式会社サムライズム',
+    logo: '/images/sponsors/3345b5f3-5229-4566-bde5-fcdb5c2979d6.svg',
+    website: 'https://samuraism.com/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      'サムライズムは JetBrains、GitHub など海外の開発者向けツールを扱っています。コヅクラ級のビギナーも、フクラギ級のミドル層も、ガンド級のベテランも、サムライズムのツールで“脂の乗ったブリエンジニア”へ華麗に出世できるはず！'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  'ea42dad8-863f-4cec-b95d-5a18b049ad04': {
+    tier: 'ガンドスポンサー',
+    name: 'アイオートラストサービス',
+    logo: '/images/sponsors/ea42dad8-863f-4cec-b95d-5a18b049ad04.png',
+    website: 'https://www.iodata.jp/product/service/iotrustservice/sp.htm',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      '「データの信頼、証明できます！」アイ・オー・データ機器の アイオートラストサービス は、電子文書に「改ざんされていない」証明 と 「その時点で存在していた」証明 を付与する総務大臣認定タイムスタンプサービスです。電子契約、受発注、請求書の電子帳簿保存法対応、設計図書の長期保管や、特許の先使用権など「このデータ、ちゃんと証明したい！」というときにぴったり。アイオートラストサービスで、電子文書の安心と信頼をもっと身近に！'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  'ba9bd53a-224f-4340-87e6-23ca80b08238': {
+    tier: 'ガンドスポンサー',
+    name: '株式会社サイバーエージェント',
+    logo: '/images/sponsors/ba9bd53a-224f-4340-87e6-23ca80b08238.png',
+    website: 'https://www.cyberagent.co.jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      '株式会社サイバーエージェントは、「21世紀を代表する会社をつくる」をVisionとして新しい未来のテレビ「ABEMA」や「WINTICKET」「タップル」など数多くのサービスを開発している企業です。新卒・中途採用に限らず再度社会人キャリアをリスタートする人のための採用枠「Re:Career採用」もオープンしており、様々な形で皆様のキャリアを応援しています。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  'd6c2c624-fb4d-4f93-93ba-806d1b1b3ed7': {
+    tier: 'ガンドスポンサー',
+    name: '株式会社jig.jp',
+    logo: '/images/sponsors/d6c2c624-fb4d-4f93-93ba-806d1b1b3ed7.png',
+    website: 'https://jig.jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      'jig.jpでは、「みんなのライブ配信」ふわっちを中心に、B2C/C2Cのソフトウェア・アプリのサービス開発を行っています。開発メンバーは福井県鯖江市の開発センターに勤務しており、バックエンドからフロントエンド、モバイルアプリまで、それぞれの得意分野を活かして日々サービスの開発を進めています。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  '5b222f6a-09a3-47cb-9144-d45ad18b88dd': {
+    tier: 'フクラギスポンサー',
+    name: 'Postman株式会社',
+    logo: '/images/sponsors/5b222f6a-09a3-47cb-9144-d45ad18b88dd.svg',
+    website: 'https://www.postman.com/jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      'Postmanは4,000万人を超える開発者と50万の組織で利用されているAPIプラットフォームです。APIの設計から構築・テスト・セキュリティ・監視・ドキュメント作成・アプリ統合まで、APIライフサイクル全体の作業を簡素化、効率化します。また、AIエージェントのプロトタイピング、MCPサーバの生成等、AIとの連携でも役立てていただけます。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  '5ae3afef-fd42-4112-a4a6-b57796d6d887': {
+    tier: 'フクラギスポンサー',
+    name: 'クラウドリモートデスクトップ「Avalon」',
+    logo: '/images/sponsors/5ae3afef-fd42-4112-a4a6-b57796d6d887.png',
+    website: 'https://avalon.baron.toyama.jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      'AvalonはWindows向けの純日本製リモートデスクトップで、日本企業による開発で国内クラウド事業者により安全性を確保しています。機能を最小限に絞ったシンプル設計で軽量・高速かつ高安定。RGB32の高画質やマルチスレッド最適化によりクリエイティブ作業にも最適です。クラウド中継でNAT越えが可能で設定も容易です。オーバーレイフィルターによる操作秘匿やエンドツーエンド暗号化を備え、さらに耐量子セキュリティやオーダーメイド開発にも対応します。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  '812f1345-25cb-4ab1-9760-6b26cc23f6cc': {
+    tier: 'フクラギスポンサー',
+    name: '株式会社ビヨンド',
+    logo: '/images/sponsors/812f1345-25cb-4ab1-9760-6b26cc23f6cc.svg',
+    website: 'https://beyondjapan.com/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      '株式会社ビヨンド は、2007年4月に設立されたマネージドサービスプロバイダー（MSP）です。AWSやGoogle Cloudなどマルチクラウド環境でのサーバー構築・24時間365日の運用保守・監視まで、クラウドに特化したサービスを展開しています。また、ゲーム・アプリ・デジタルコンテンツなどのWebシステム開発、サーバーサイドのAPI開発や運用監視に加え、自社サービスである「予約システム EDISONE」「URL監視サービス Appmill」「WordPress クラウドサーバー ウェブスピードなど、様々なクラウドサービスの企画・開発・運営をおこなっています。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  'd747a69d-bc08-48c2-a96d-22f724015e86': {
+    tier: 'フクラギスポンサー',
+    name: '株式会社クレディセゾン',
+    logo: '/images/sponsors/d747a69d-bc08-48c2-a96d-22f724015e86.jpg',
+    website: 'https://www.saisoncard.co.jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      'クレディセゾンはCSDX／CSAXを軸に、2019年より「事業会社に本気のエンジニア組織をつくる」ことに挑戦し続けてきました。現在は約200名規模の精鋭エンジニアチームへと成長し、常に最新技術を取り入れた開発を推進。事業とテクノロジーを融合し、金融サービスの新しい価値創出に挑む体制が整っています。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+  '2c7ac6fc-ceba-4d88-b336-9ce516905f15': {
+    tier: 'コヅクラスポンサー',
+    name: '北日本新聞社',
+    logo: '/images/sponsors/2c7ac6fc-ceba-4d88-b336-9ce516905f15.svg',
+    website: 'https://www.kitanippon.co.jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [
+      '北日本新聞社は1884（明治17）年創刊の「中越新聞」を源流とし、140年以上にわたって富山県民の皆さんとともに歩んできました。2023年に創刊した総合情報サイト「webunプラス」では、事件・事故や災害情報の速報体制を強化し、動画も積極的に取り入れるなど、デジタルメディアならではの可能性に挑んでいます。新聞掲載記事に加え、記者それぞれの視点を生かしたウェブオリジナル記事や富山の暮らし・子育て情報を充実させ、地域の魅力を多角的に発信しています。'
+    ],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
+};
+
+export function getStaticPaths() {
+  return Object.keys(sponsorData).map((key) => ({ params: { id: key } }));
+}
+
+const { id } = Astro.params;
+const sponsor = sponsorData[id];
+---
+
+<Layout>
+  {!sponsor ? (
+    <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 flex items-center justify-center px-4">
+      <div class="text-center bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+        <h1 class="text-2xl text-gray-900 mb-4">スポンサー情報が見つかりません</h1>
+        <a href="/#sponsors" class="text-teal-700 underline underline-offset-4 hover:text-teal-800">スポンサー一覧に戻る</a>
+      </div>
+    </div>
+  ) : (
+    <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50">
+      <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <img src="/images/burikaigi-logo.png" alt="BuriKaigi ロゴ" class="w-10 h-10 object-contain" />
+            <a href="/" class="font-semibold text-lg hover:text-teal-600 transition-colors">BuriKaigi 2026</a>
+          </div>
+          <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+            <a href="/#about" class="hover:text-teal-600 transition-colors">概要</a>
+            <a href="/#keynote" class="hover:text-teal-600 transition-colors">基調講演</a>
+            <a href="/#workshops" class="hover:text-teal-600 transition-colors">ワークショップ</a>
+            <a href="/#sponsors" class="hover:text-teal-600 transition-colors">スポンサー</a>
+            <a href="/#event-info" class="hover:text-teal-600 transition-colors">開催情報</a>
+            <a href="https://fortee.jp/burikaigi-2026/timetable" target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 transition-colors">タイムテーブル</a>
+            <a href="/coc" class="hover:text-teal-600 transition-colors">CoC</a>
+            <a href="https://toyama-eng.connpass.com/event/372229/" target="_blank" rel="noopener noreferrer" class="bg-black text-white px-4 py-2 rounded-full hover:bg-teal-600 transition-colors">申し込む</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="pt-10 pb-16">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <section class="bg-white rounded-2xl p-8 shadow-xl border-2 border-gray-900">
+            <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+              <div class="w-48 flex items-center justify-center overflow-hidden flex-shrink-0 px-4 py-3">
+                <img src={sponsor.logo} alt={sponsor.name} class="max-w-full h-auto object-contain" />
+              </div>
+              <div class="flex-1 text-center md:text-left space-y-3">
+                <div class="text-sm text-teal-700 font-semibold">{sponsor.tier}</div>
+                <h1 class="text-4xl text-gray-900">{sponsor.name}</h1>
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start text-sm text-gray-700">
+                  {sponsor.location && (
+                    <div class="flex items-center gap-2">
+                      <MapPin className="w-4 h-4" aria-hidden="true" />
+                      <span>{sponsor.location}</span>
+                    </div>
+                  )}
+                  {sponsor.employees && (
+                    <div class="flex items-center gap-2">
+                      <Users className="w-4 h-4" aria-hidden="true" />
+                      <span>{sponsor.employees}</span>
+                    </div>
+                  )}
+                  {sponsor.website && (
+                    <a
+                      href={sponsor.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex items-center gap-2 text-teal-700 hover:text-teal-800"
+                    >
+                      <Globe className="w-4 h-4" aria-hidden="true" />
+                      <span>Webサイト</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
+            <div class="flex items-center gap-3 mb-6">
+              <Briefcase className="w-6 h-6 text-teal-700" aria-hidden="true" />
+              <h2 class="text-2xl text-gray-900">概要</h2>
+            </div>
+            <ul class="space-y-2 text-gray-700">
+              {sponsor.business.map((item) => (
+                <li class="text-gray-700 leading-relaxed">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section class="rounded-2xl p-8 text-center">
+            <a
+              href="/#sponsors"
+              class="inline-flex items-center justify-center gap-2 bg-teal-700 text-white px-6 py-3 rounded-full hover:bg-teal-800 transition-colors shadow-lg"
+            >
+              <ArrowLeft className="w-5 h-5" aria-hidden="true" />
+              <span>スポンサー一覧に戻る</span>
+            </a>
+          </section>
+        </div>
+      </main>
+    </div>
+  )}
+</Layout>
