@@ -1,75 +1,604 @@
 ---
 import Layout from '~/layouts/Vanilla.astro';
-import { Sponsors } from '~/components/2025/Sponsors'
+import { BookOpen, Users, Zap, Heart, Code, Cpu, Brain, Calendar, MapPin, Ticket, Train, Car } from 'lucide-react';
 
-const allSponsors = await Astro.glob('./2025/sponsors/*.md');
-const sponsors: any[] = allSponsors.map(sponsor => ({
-  ...sponsor.frontmatter,
-  url: sponsor.url
-}))
+const features = [
+  {
+    title: 'テスト駆動開発',
+    description: '和田卓人氏による基調講演とTDD BootCampで、実践的なテスト技術を習得',
+    icon: BookOpen,
+  },
+  {
+    title: 'ネットワーク',
+    description: '富山・石川・福井のテック企業やコミュニティメンバーとの直接交流',
+    icon: Users,
+  },
+  {
+    title: '最新技術のハンズオン',
+    description: 'TinyGo、AI Engine、クラウド技術など、実機で学べるワークショップ',
+    icon: Zap,
+  },
+  {
+    title: '2日間・完全無料',
+    description: '基調講演3本、ワークショップ多数、懇親会も含めてすべて無料で参加可能',
+    icon: Heart,
+  },
+];
 
-const buriSponsors = sponsors.filter(v => v.type === "Buri")
-const gandoSponsors = sponsors.filter(v => v.type === "Gando")
-const fukuragiSponsors = sponsors.filter(v => v.type === "Fukuragi")
-const sponsorshipSponsors = sponsors.filter(v => v.type === "後援")
-// const noveltySponsors = sponsors.filter(v => v.type === "ノベルティ")
-// const sponsorship = sponsors.filter(v => v.type === "後援")
-// sponsorship[0].className = "col-start-2"
+const speakers = [
+  {
+    day: 'DAY 1',
+    name: '和田 卓人',
+    title: 'タワーズ・クエスト株式会社',
+    image: 'https://fortee.jp/files/burikaigi-2026/speaker/3598d303-b8d0-4fa1-a2e2-cc7aee242416.png',
+    topic: '2026年のソフトウェアエンジニアリング',
+    bio: '2026年はAIとの協業を前提としたソフトウェアエンジニアリングが求められます。これまで「人間が設計・実装する」前提だった開発の変化を捉え、AI活用時代の設計と実装の在り方を考えます。',
+    twitter: 't_wada',
+    session: {
+      url: 'https://fortee.jp/burikaigi-2026/proposal/22dcc885-d47d-4615-a42f-428b48c21a38',
+      title: '2026年のソフトウェアエンジニアリング',
+      abstract:
+        '2025年はプログラミングが変わった年でした。2026年、AIを活用したソフトウェア開発はより大規模化し、プログラミングを超えたソフトウェアエンジニアリングが必要になります。本セッションでは、AIとの協業を前提にした2026年のソフトウェアエンジニアリングを考えます。',
+      track: 'Room 201',
+      startsAt: '2026-01-09 11:00',
+      lengthMin: 50,
+    },
+  },
+  {
+    day: 'DAY 2',
+    name: '井上 章',
+    title: '日本マイクロソフト株式会社',
+    image: 'https://fortee.jp/files/burikaigi-2026/speaker/350d8499-038e-45a9-a2b7-befc0db44856.jpg',
+    topic: '旬のブリと旬の技術で楽しむ AI エージェント設計開発レシピ',
+    bio: 'AIエージェント設計開発の「旬」を楽しむレシピをデモ中心に紹介。マルチエージェントのオーケストレーションパターンやMicrosoft Agent Framework、Azure AI Foundry、.NET 10の最新機能を盛り込んで解説します。',
+    twitter: 'chack411',
+    session: {
+      url: 'https://fortee.jp/burikaigi-2026/proposal/a53df822-ebb9-4204-9ac4-cb3cb2b7f12b',
+      title: '旬のブリと旬の技術で楽しむ AI エージェント設計開発レシピ',
+      abstract:
+        'BuriKaigiならではの「技術の旬」を味わえるセッション。業務分解と連携のためのマルチエージェントオーケストレーションパターンを前菜に、Microsoft Agent FrameworkやAzure AI Foundry、.NET 10、Visual Studio 2026/VS Codeの新機能を組み合わせたAIエージェント開発デモをメインで紹介します。',
+      track: 'Room 203',
+      startsAt: '2026-01-10 11:00',
+      lengthMin: 50,
+    },
+  },
+  {
+    day: 'DAY 2',
+    name: '櫻庭 祐一',
+    title: 'Javaエキスパート',
+    image: 'https://fortee.jp/files/burikaigi-2026/speaker/cb9bf31f-7987-450f-a208-8d34c1d4a2ce.gif',
+    topic: 'Java 25に至る道',
+    bio: 'Java 22〜25に導入された代表的機能を俯瞰し、Javaが向かう方向性を考察するセッションです。2年ぶりのLTSであるJava 25を中心に、進化の背景と最新トレンドを解説します。',
+    twitter: 'skrb',
+    session: {
+      url: 'https://fortee.jp/burikaigi-2026/proposal/7223008e-adf7-4a91-a485-2f58bb17d215',
+      title: 'Java 25に至る道',
+      abstract:
+        'Java 25（2025年9月リリース）は2年ぶりのLTSとして多くの機能を取り込みました。Java 21から25までの新機能を俯瞰することで、現在のJavaが向かう方向性を読み解きます。本セッションではJava 22〜25の代表的な機能を紹介しつつ、その進化の意図を探ります。',
+      track: 'Room 201',
+      startsAt: '2026-01-10 11:00',
+      lengthMin: 50,
+    },
+  },
+];
+
+const workshops = [
+  {
+    title: 'TDD BootCamp',
+    instructor: 'テスト駆動開発実践',
+    description: 'テスト駆動開発（TDD）の基礎から実践まで、ハンズオン形式で学びます。実際のコーディングを通じてテストファーストを体験。',
+    duration: '3時間',
+    level: '初級〜中級',
+    capacity: '30名',
+    icon: Code,
+    registrationLinks: [
+      { label: 'DAY1(13:00-14:50)', href: 'https://toyama-eng.connpass.com/event/374721/' },
+      { label: 'DAY1(15:00-16:50)', href: 'https://toyama-eng.connpass.com/event/376363/' },
+      { label: 'DAY2(12:20-14:10)', href: 'https://toyama-eng.connpass.com/event/376364/' },
+      { label: 'DAY2(14:20-16:10)', href: 'https://toyama-eng.connpass.com/event/376365/' },
+    ],
+  },
+  {
+    title: 'TinyGo Keeb Tour',
+    instructor: 'Go言語で組み込み開発',
+    description: 'TinyGoを使ったキーボード開発を体験。ハードウェアとソフトウェアの融合を学びます。',
+    duration: '2.5時間',
+    level: '中級',
+    capacity: '20名',
+    icon: Cpu,
+    registrationLinks: [
+      { label: 'zero-kb02', href: 'https://toyama-eng.connpass.com/event/375313/' },
+      { label: 'conf2025badge その1', href: 'https://toyama-eng.connpass.com/event/375656/' },
+      { label: 'conf2025badge その2', href: 'https://toyama-eng.connpass.com/event/376181/' },
+    ],
+  },
+  {
+    title: 'さくらのAI Engine ハンズオン',
+    instructor: 'AIアプリケーション開発',
+    description: 'さくらインターネットのAI Engineを使って実践的なAIアプリケーションを構築。最新のAI技術を手軽に活用する方法を習得します。',
+    duration: '2時間',
+    level: '初級〜中級',
+    capacity: '40名',
+    icon: Brain,
+    registrationLinks: [
+      { label: '13:00 〜 15:00', href: 'https://toyama-eng.connpass.com/event/377342/' },
+    ],
+  },
+];
+
+const sponsors = {
+  buri: [
+    { id: '1232fa5b-f456-436c-a76d-1030cfd5ad5b', name: '株式会社Codeer', logo: '/images/2026/sponsors/1232fa5b-f456-436c-a76d-1030cfd5ad5b.svg' },
+    { id: '5f3f30d9-f5a1-42bd-8f06-d699a16b8971', name: 'クラスメソッド株式会社', logo: '/images/2026/sponsors/5f3f30d9-f5a1-42bd-8f06-d699a16b8971.png' },
+    { id: 'f7449494-81e2-4b97-9580-ba4d69f18aff', name: 'CodeRabbit', logo: '/images/2026/sponsors/f7449494-81e2-4b97-9580-ba4d69f18aff.svg' },
+    { id: '9a79f08e-8de6-402c-8e2d-31a36575e0e8', name: 'アサイクル株式会社', logo: '/images/2026/sponsors/9a79f08e-8de6-402c-8e2d-31a36575e0e8.jpg' },
+    { id: 'b82081a9-b2e1-47ba-9ac8-148baf28d9df', name: 'CData Connect AI', logo: '/images/2026/sponsors/b82081a9-b2e1-47ba-9ac8-148baf28d9df.png' },
+    { id: '630f03f6-af01-41fe-ae0d-a5165ba812e4', name: '株式会社日本オープンシステムズ', logo: '/images/2026/sponsors/630f03f6-af01-41fe-ae0d-a5165ba812e4.png' },
+    { id: 'ad787bcf-4be5-4033-889f-78428549cf65', name: 'さくらインターネット株式会社', logo: '/images/2026/sponsors/ad787bcf-4be5-4033-889f-78428549cf65.svg' },
+    { id: '3f642e46-7d02-4078-9115-308ae1be6fbb', name: '株式会社Helpfeel', logo: '/images/2026/sponsors/3f642e46-7d02-4078-9115-308ae1be6fbb.png' },
+  ],
+  gando: [
+    { id: '351e6e60-b4e1-40fc-9d60-00b975d06cfb', name: 'TechTrain', logo: '/images/2026/sponsors/351e6e60-b4e1-40fc-9d60-00b975d06cfb.png' },
+    { id: '94ee3ccb-2400-425b-8597-c5e7ac5c091b', name: '転職ドラフト（株式会社リブセンス）', logo: '/images/burikaigi-logo.png' },
+    { id: 'bbc1a306-aaa9-4e43-b01c-9fc630ce8a42', name: 'サイボウズ株式会社', logo: '/images/2026/sponsors/bbc1a306-aaa9-4e43-b01c-9fc630ce8a42.png' },
+    { id: '3345b5f3-5229-4566-bde5-fcdb5c2979d6', name: '株式会社サムライズム', logo: '/images/2026/sponsors/3345b5f3-5229-4566-bde5-fcdb5c2979d6.svg' },
+    { id: 'ea42dad8-863f-4cec-b95d-5a18b049ad04', name: 'アイオートラストサービス', logo: '/images/2026/sponsors/ea42dad8-863f-4cec-b95d-5a18b049ad04.png' },
+    { id: 'ba9bd53a-224f-4340-87e6-23ca80b08238', name: '株式会社サイバーエージェント', logo: '/images/2026/sponsors/ba9bd53a-224f-4340-87e6-23ca80b08238.png' },
+    { id: 'd6c2c624-fb4d-4f93-93ba-806d1b1b3ed7', name: '株式会社jig.jp', logo: '/images/2026/sponsors/d6c2c624-fb4d-4f93-93ba-806d1b1b3ed7.png' },
+  ],
+  fukuragi: [
+    { id: '5b222f6a-09a3-47cb-9144-d45ad18b88dd', name: 'Postman株式会社', logo: '/images/2026/sponsors/5b222f6a-09a3-47cb-9144-d45ad18b88dd.svg' },
+    { id: '5ae3afef-fd42-4112-a4a6-b57796d6d887', name: 'クラウドリモートデスクトップ「Avalon」', logo: '/images/2026/sponsors/5ae3afef-fd42-4112-a4a6-b57796d6d887.png' },
+    { id: '812f1345-25cb-4ab1-9760-6b26cc23f6cc', name: '株式会社ビヨンド', logo: '/images/2026/sponsors/812f1345-25cb-4ab1-9760-6b26cc23f6cc.svg' },
+    { id: 'd747a69d-bc08-48c2-a96d-22f724015e86', name: '株式会社クレディセゾン', logo: '/images/2026/sponsors/d747a69d-bc08-48c2-a96d-22f724015e86.jpg' },
+  ],
+  kozukura: [
+    { id: '2c7ac6fc-ceba-4d88-b336-9ce516905f15', name: '北日本新聞社', logo: '/images/2026/sponsors/2c7ac6fc-ceba-4d88-b336-9ce516905f15.svg' },
+  ],
+};
+
+const eventDetails = [
+  {
+    title: '開催日時',
+    icon: Calendar,
+    items: ['DAY 1: 2026年1月9日（金）10:30〜', 'DAY 2: 2026年1月10日（土）10:30〜18:00'],
+  },
+  {
+    title: '会場',
+    icon: MapPin,
+    items: ['富山国際会議場', '富山県富山市大手町1番2号', 'JR富山駅から徒歩約15分', '市内電車利用で約7分'],
+  },
+  {
+    title: '参加対象',
+    icon: Users,
+    items: ['IT技術を学びたいすべてのエンジニア', '実践的な知識を深めたい方', 'ネットワーキングしたい方', '初心者・学生も歓迎'],
+  },
+  {
+    title: '参加費',
+    icon: Ticket,
+    items: ['無料', '事前登録制（Connpass）', '2日間参加も1日のみも可能'],
+  },
+];
+
+const accessInfo = {
+  train: ['JR富山駅から徒歩15分', '市内電車「国際会議場前」下車 徒歩3分'],
+  car: ['北陸自動車道「富山IC」から約15分', '※駐車場は近隣のコインパーキングをご利用ください'],
+};
+
+const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
 
 ---
 
 <Layout>
-  <div class="bg-gray-900 flex flex-col items-center justify-center relative px-4 py-60">
-    <h1 class="text-5xl md:text-8xl text-white font-bold mb-8 z-10">BuriKaigi 2026</h1>
-    <p class="text-white text-xl md:text-2xl mb-5 z-10">
-      2026.1.9(Fri) - 1.10(Sat)
-    </p>
-    <p class="text-white text-xl md:text-2xl mb-10 z-10">
-      富山国際会議場
-    </p>
+  <div class="bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 text-gray-900 scroll-smooth">
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="/images/burikaigi-logo.png" alt="BuriKaigi ロゴ" class="w-10 h-10 object-contain" />
+          <span class="font-semibold text-lg">BuriKaigi 2026</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="#about" class="hover:text-teal-600 transition-colors">概要</a>
+          <a href="#keynote" class="hover:text-teal-600 transition-colors">基調講演</a>
+          <a href="#workshops" class="hover:text-teal-600 transition-colors">ワークショップ</a>
+          <a href="#sponsors" class="hover:text-teal-600 transition-colors">スポンサー</a>
+          <a href="#event-info" class="hover:text-teal-600 transition-colors">開催情報</a>
+          <a href="https://fortee.jp/burikaigi-2026/timetable" target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 transition-colors">タイムテーブル</a>
+          <a href="/coc" class="hover:text-teal-600 transition-colors">CoC</a>
+          <a href="https://toyama-eng.connpass.com/event/372229/" target="_blank" rel="noopener noreferrer" class="bg-black text-white px-4 py-2 rounded-full hover:bg-teal-600 transition-colors">申し込む</a>
+        </nav>
+      </div>
+    </header>
 
-    <div class="flex space-x-4 mb-6 z-10 flex-col text-black gap-y-10 justify-center">
-      <a href="https://toyama-eng.connpass.com/event/372229/" target="_blank" class="border-2 border-white-800 bg-white font-bold py-3 px-6 rounded hover:opacity-50 transition underline underline-offset-4" >
-        参加申し込みはこちらから
-      </a>
-    </div>
-    <div class="flex mb-6 z-10 flex-col text-white gap-y-10">
-      <div>
-        2025-09-09ごろより <strong>スポンサー募集が始まりました。（締切：11月中を予定）</strong><br/>
-        <a href="https://fortee.jp/burikaigi-2026/sponsor/brochure-request" target="_blank" rel="noopener noreferrer" class="text-white z-10 underline underline-offset-4 hover:opacity-50 transition">
-        詳細などこちらから確認しご応募
-        </a>
-        よろしくお願いいたします。<br/>
-        ※
-        リンク先は「資料請求フォーム」となっていますが、資料請求は必須ではございません。
-        <br/>
-        文中にある資料をご確認の上、
-        <a href="https://fortee.jp/burikaigi-2026/sponsor/form" target="_blank" rel="noopener noreferrer" class="text-white z-10 underline underline-offset-4 hover:opacity-50 transition">
-          申し込みフォーム
-        </a>
-        からお申し込みください。
+    <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-16">
+      <div class="absolute inset-0">
+        <img src="/images/6ee144801b1e5221410445f7e824b669.png" alt="BuriKaigi Background" class="w-full h-full object-cover opacity-30" />
       </div>
-      <div>
-        <s>
-        2025-09-23 <strong>プロポーザル募集（登壇募集）が始まりました。（締切：2025-10-27 23:59 JST予定）</strong><br/>
-        <a href="https://fortee.jp/burikaigi-2026/speaker/proposal/cfp" target="_blank" rel="noopener noreferrer" class="text-white z-10 underline underline-offset-4 hover:opacity-50 transition">
-          詳細などこちらから確認し応募
-        </a>
-        をお願いします。よろしくお願いします。
-        </s>
+      <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+        <div>
+          <p class="inline-flex items-center gap-2 bg-teal-600 text-white px-5 py-2 rounded-full text-sm shadow">北陸ITエンジニアカンファレンス</p>
+        </div>
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900">BuriKaigi 2026</h1>
+        <p class="text-xl sm:text-2xl text-gray-700">
+          ITエンジニアのための2日間、<br />最新技術セッション・ワークショップ・交流が集結。
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="https://toyama-eng.connpass.com/event/372229/" target="_blank" rel="noopener noreferrer" class="bg-black text-white px-10 py-4 rounded-full hover:bg-teal-600 transition-colors shadow-lg">Connpassで申し込む</a>
+          <a href="#about" class="bg-white text-gray-900 px-10 py-4 rounded-full border-2 border-gray-900 hover:bg-gray-100 transition-colors">詳細を見る</a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div class="bg-white rounded-2xl p-6 border-2 border-gray-900 shadow">
+            <div class="text-sm text-gray-600 mb-3 flex flex-col items-center gap-2 text-center">
+              <Calendar className="w-10 h-10" aria-hidden="true" />
+              <span>開催日時</span>
+            </div>
+            <div>2026年1月9日（金）</div>
+            <div>2026年1月10日（土）</div>
+            <div class="text-sm text-gray-600 mt-1">10:30 - 18:00</div>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border-2 border-gray-900 shadow">
+            <div class="text-sm text-gray-600 mb-3 flex flex-col items-center gap-2 text-center">
+              <MapPin className="w-10 h-10" aria-hidden="true" />
+              <span>会場</span>
+            </div>
+            <div>富山国際会議場</div>
+            <div class="text-sm text-gray-600 mt-1">富山市大手町1-2</div>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border-2 border-gray-900 shadow">
+            <div class="text-sm text-gray-600 mb-3 flex flex-col items-center gap-2 text-center">
+              <Ticket className="w-10 h-10" aria-hidden="true" />
+              <span>参加費</span>
+            </div>
+            <div>無料</div>
+            <div class="text-sm text-gray-600 mt-1">どなたでも歓迎</div>
+          </div>
+        </div>
       </div>
-      <div>
-        公式な最新情報は <a href="https://x.com/burikaigi" target="_blank" rel="noopener noreferrer">X（旧Twitter）の @burikaigi</a> にて順次お知らせします。
+    </section>
+
+    <section id="about" class="py-20 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl sm:text-5xl mb-4">BuriKaigiとは</h2>
+          <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            年に一度、寒ブリの季節にソフトウェア開発・ITにおける各分野で最前線で活躍するエキスパートを全国から北陸へ招待し、技術の旬を持ち寄り、講義・ディスカッションを行う勉強会です。
+            2026年は1月9日（金）・10日（土）の2日間、富山国際会議場で開催します。
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {features.map((feature) => (
+            <div class="bg-gray-50 rounded-2xl p-6 border-2 border-gray-200 hover:border-teal-600 transition-colors shadow-sm">
+              <div class="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center mb-4">
+                <feature.icon className="w-7 h-7" aria-hidden="true" />
+              </div>
+              <h3 class="text-xl mb-3">{feature.title}</h3>
+              <p class="text-gray-600 leading-relaxed">{feature.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-    <div class="text-white z-10 underline underline-offset-4 hover:opacity-50 transition mb-4">
-      <a href="https://fortee.jp/burikaigi-2025/timetable">2025年の様子はこちら(fortee)</a>
-    </div>
-    <div class="text-white z-10 underline underline-offset-4 hover:opacity-50 transition">
-      <a href="/2024">2024年の様子はこちら</a>
-    </div>
-    <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-30"
-      style="background-image: url('/images/6ee144801b1e5221410445f7e824b669.png');">
-    </div>
+    </section>
+
+    <section id="keynote" class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl sm:text-5xl mb-4">基調講演</h2>
+          <p class="text-lg text-gray-700">業界を牽引するエキスパートから学ぶ</p>
+        </div>
+        <div class="space-y-8 max-w-5xl mx-auto">
+          {speakers.map((speaker) => (
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-900">
+              <div class="grid md:grid-cols-4 gap-8 p-8">
+                <div class="md:col-span-1 flex flex-col items-center md:items-start">
+                  <div class="inline-block px-4 py-1.5 bg-black text-white text-sm rounded-full mb-6">{speaker.day}</div>
+                  <div class="relative">
+                    <img src={speaker.image} alt={speaker.name} class="w-36 h-36 object-cover rounded-2xl shadow-xl border-2 border-gray-900" />
+                    {speaker.twitter && (
+                      <div class="mt-3">
+                        <a
+                          href={`https://twitter.com/${speaker.twitter}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="inline-flex w-11 h-11 rounded-lg bg-white text-white items-center justify-center shadow-lg border border-gray-300 hover:border-teal-500 transition-colors"
+                          aria-label={`${speaker.name} のTwitter`}
+                        >
+                          <span class="text-black">X</span>
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div class="md:col-span-3 space-y-4 md:pl-6">
+                  <div>
+                    <h3 class="text-3xl md:text-4xl mb-1">{speaker.name}</h3>
+                    <p class="text-lg text-gray-600">{speaker.title}</p>
+                  </div>
+                  <div>
+                    <p class="text-sm text-teal-700 mb-1">講演テーマ</p>
+                    {speaker.session ? (
+                      <a
+                        href={speaker.session.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-xl text-teal-700 underline underline-offset-4 hover:text-teal-800"
+                      >
+                        {speaker.topic}
+                      </a>
+                    ) : (
+                      <p class="text-xl">{speaker.topic}</p>
+                    )}
+                  </div>
+                  {speaker.session && (
+                    <div class="space-y-2">
+                      <p class="text-gray-700 text-base leading-relaxed">{speaker.session.abstract}</p>
+                      <p class="text-gray-700 text-sm">
+                        {speaker.session.startsAt} / {speaker.session.lengthMin}分
+                      </p>
+                    </div>
+                  )}
+                  {!speaker.session && <p class="text-gray-700 leading-relaxed">{speaker.bio}</p>}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="workshops" class="py-20 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl sm:text-5xl mb-4">ワークショップ</h2>
+          <p class="text-lg text-gray-700">実践的なハンズオンで技術を習得</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {workshops.map((workshop, index) => (
+            <div class={`bg-gray-50 rounded-2xl p-8 border-2 border-gray-900 hover:border-teal-600 transition-colors shadow-md ${index === 2 ? 'md:col-span-2 md:justify-self-center md:max-w-xl' : ''}`}>
+              <div class="flex items-start gap-4 mb-4">
+                <div class="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center">
+                  <workshop.icon className="w-7 h-7" aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 class="text-2xl">{workshop.title}</h3>
+                  <p class="text-sm text-gray-600">{workshop.instructor}</p>
+                </div>
+              </div>
+              <p class="text-gray-700 leading-relaxed mb-6">{workshop.description}</p>
+              {workshop.registrationLinks && (
+                <div class="mb-4">
+                  <div class="flex flex-wrap gap-2">
+                    {workshop.registrationLinks.map((link) => (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-block px-3 py-1 text-sm rounded-full border border-gray-300 bg-white hover:bg-teal-50 hover:border-teal-300 text-teal-700"
+                      >
+                        {link.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="sponsors" class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl sm:text-5xl mb-4">スポンサー</h2>
+          <p class="text-lg text-gray-700">BuriKaigiを支えてくださるスポンサー企業</p>
+        </div>
+
+        <div class="mb-14">
+          <div class="text-center mb-6">
+            <h3 class="text-2xl mb-2 bg-gradient-to-r from-blue-700 to-cyan-700 bg-clip-text text-transparent">ブリスポンサー</h3>
+            <div class="w-20 h-1 bg-gradient-to-r from-blue-700 to-cyan-700 mx-auto rounded-full"></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {sponsors.buri.map((sponsor) => (
+              <a href={`/sponsors/${sponsor.id}`} data-animate="sponsor-card" class="block p-2 transition-transform duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-lg will-change-transform">
+                <div class="w-full aspect-square flex items-center justify-center">
+                  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" />
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div class="mb-14">
+          <div class="text-center mb-6">
+            <h3 class="text-2xl mb-2 bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">ガンドスポンサー</h3>
+            <div class="w-20 h-1 bg-gradient-to-r from-emerald-600 to-teal-600 mx-auto rounded-full"></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {sponsors.gando.map((sponsor) => (
+              <a href={`/sponsors/${sponsor.id}`} data-animate="sponsor-card" class="block p-2 transition-transform duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-lg will-change-transform">
+                <div class="w-full aspect-square flex items-center justify-center">
+                  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" />
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div class="mb-14">
+          <div class="text-center mb-6">
+            <h3 class="text-2xl mb-2 bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">フクラギスポンサー</h3>
+            <div class="w-20 h-1 bg-gradient-to-r from-yellow-600 to-orange-600 mx-auto rounded-full"></div>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {sponsors.fukuragi.map((sponsor) => (
+              <a href={`/sponsors/${sponsor.id}`} data-animate="sponsor-card" class="block p-2 transition-transform duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-lg will-change-transform">
+                <div class="w-full aspect-square flex items-center justify-center">
+                  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" />
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div class="text-center mb-6">
+            <h3 class="text-2xl mb-2 bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">コヅクラスポンサー</h3>
+            <div class="w-20 h-1 bg-gradient-to-r from-pink-600 to-rose-600 mx-auto rounded-full"></div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+            {sponsors.kozukura.map((sponsor) => (
+              <a href={`/sponsors/${sponsor.id}`} data-animate="sponsor-card" class="block p-2 transition-transform duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-lg will-change-transform">
+                <div class="w-full aspect-square flex items-center justify-center">
+                  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" />
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div class="mt-14 text-center">
+          <div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-gray-900 max-w-3xl mx-auto">
+            <h4 class="text-2xl mb-4">スポンサー募集中</h4>
+            <p class="text-gray-600 mb-6">
+              BuriKaigiを一緒に盛り上げてくださるスポンサー企業を募集しています。詳細はお気軽にお問い合わせください。
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="https://toyama-eng.connpass.com/event/372229/inquiry/" target="_blank" rel="noopener noreferrer" class="inline-block bg-teal-600 text-white px-8 py-3 rounded-full hover:bg-teal-700 transition-colors">お問い合わせ</a>
+              <a href="https://fortee.jp/burikaigi-2026/sponsor/form" target="_blank" rel="noopener noreferrer" class="inline-block bg-black text-white px-8 py-3 rounded-full hover:bg-gray-800 transition-colors">申し込みフォーム</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="event-info" class="py-20 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl sm:text-5xl mb-4">開催情報</h2>
+          <p class="text-lg text-gray-700">BuriKaigi 2026の詳細情報</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="space-y-6">
+            {eventDetails.map((item) => (
+              <div class="bg-gray-50 rounded-2xl p-6 shadow-lg border-2 border-gray-200">
+                <div class="flex items-center gap-3 mb-2">
+                  <div class="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center">
+                    <item.icon className="w-5 h-5" aria-hidden="true" />
+                  </div>
+                  <h3 class="text-xl">{item.title}</h3>
+                </div>
+                <ul class="space-y-1 text-gray-700 text-sm pl-14">
+                  {item.items.map((entry) => (
+                    <li>{entry}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-8 shadow-lg border-2 border-gray-200">
+              <h3 class="text-2xl mb-6">アクセス</h3>
+              <div class="space-y-4">
+                <div>
+                  <h4 class="font-semibold mb-2 flex items-center gap-2">
+                    <div class="w-9 h-9 rounded-lg bg-black text-white flex items-center justify-center">
+                      <Train className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    電車でお越しの方
+                  </h4>
+                  <ul class="space-y-2 text-gray-700 text-sm ml-1">
+                    {accessInfo.train.map((item) => (
+                      <li class="bg-white p-3 rounded-lg border border-gray-200">{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-2 flex items-center gap-2">
+                    <div class="w-9 h-9 rounded-lg bg-black text-white flex items-center justify-center">
+                      <Car className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    お車でお越しの方
+                  </h4>
+                  <ul class="space-y-2 text-gray-700 text-sm ml-1">
+                    {accessInfo.car.map((item) => (
+                      <li class="bg-white p-3 rounded-lg border border-gray-200">{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div class="mt-6 text-center">
+                  <a
+                    href={venueMapLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full hover:bg-teal-700 transition-colors shadow"
+                  >
+                    <MapPin className="w-5 h-5" aria-hidden="true" />
+                    Google Mapで開く
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl border-2 border-gray-900">
+              <img src="/images/2026/guide.jpg" alt="BuriKaigi 2025 会場の様子" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+        <div class="mt-12 text-center">
+          <a href="https://toyama-eng.connpass.com/event/372229/" target="_blank" rel="noopener noreferrer" class="inline-block bg-black text-white px-12 py-4 rounded-full hover:bg-teal-600 transition-colors text-lg shadow-lg">今すぐ申し込む</a>
+          <p class="text-gray-600 mt-3 text-sm">定員に達し次第、受付を終了いたします</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <img src="/images/burikaigi-logo.png" alt="BuriKaigi ロゴ" class="w-12 h-12 object-contain" />
+              <span class="text-2xl">BuriKaigi 2026</span>
+            </div>
+            <p class="text-gray-400 leading-relaxed">
+              北陸から発信する、ITエンジニアのための技術カンファレンス。2026年1月9-10日開催
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg mb-4">リンク</h3>
+            <ul class="space-y-3 text-sm">
+              <li><a href="https://toyama-eng.connpass.com/event/372229/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-teal-400 transition-colors">イベント申し込み</a></li>
+              <li><a href="https://fortee.jp/burikaigi-2026/timetable" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-teal-400 transition-colors">タイムテーブル</a></li>
+              <li><a href="#about" class="text-gray-400 hover:text-teal-400 transition-colors">概要</a></li>
+              <li><a href="#keynote" class="text-gray-400 hover:text-teal-400 transition-colors">基調講演</a></li>
+              <li><a href="#sponsors" class="text-gray-400 hover:text-teal-400 transition-colors">スポンサー</a></li>
+              <li><a href="/coc" class="text-gray-400 hover:text-teal-400 transition-colors">行動規範（CoC）</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg mb-4">お問い合わせ</h3>
+            <div class="flex gap-3 mb-4">
+              <a href="https://x.com/burikaigi" target="_blank" rel="noopener noreferrer" class="w-11 h-11 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-teal-600 transition-colors border border-gray-700">X</a>
+              <a href="https://toyama-eng.connpass.com/event/372229/inquiry/" target="_blank" rel="noopener noreferrer" class="w-11 h-11 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-teal-600 transition-colors border border-gray-700">✉️</a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+          &copy; 2025 BuriKaigi. All rights reserved.
+        </div>
+      </div>
+    </footer>
   </div>
 </Layout>
+
+<script type="module">
+  import { inView, animate } from 'motion';
+
+  inView('[data-animate="sponsor-card"]', (entry) => {
+    animate(
+      entry.target,
+      { opacity: [0, 1], y: [16, 0] },
+      { duration: 0.6, easing: 'ease-out' }
+    );
+    entry.unobserve();
+  }, { margin: '0px 0px -10% 0px' });
+</script>
