@@ -1,12 +1,13 @@
 ---
 import Layout from '~/layouts/Vanilla.astro';
-import { ArrowLeft, MapPin, Users, Globe, Briefcase, Mail } from 'lucide-react';
+import { ArrowLeft, MapPin, Users, Globe, Briefcase, Mail, X } from 'lucide-react';
 
 type SponsorData = {
   tier: string;
   name: string;
   logo: string;
   website: string;
+  x?: string;
   location: string;
   employees: string;
   description: string;
@@ -38,6 +39,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: 'クラスメソッド株式会社',
     logo: '/images/2026/sponsors/5f3f30d9-f5a1-42bd-8f06-d699a16b8971.png',
     website: 'https://classmethod.jp/',
+    x: "classmethod",
     location: '',
     employees: '',
     description: '',
@@ -53,6 +55,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: 'CodeRabbit',
     logo: '/images/2026/sponsors/f7449494-81e2-4b97-9580-ba4d69f18aff.svg',
     website: 'https://www.coderabbit.ai/',
+    x: "coderabbitaija",
     location: '',
     employees: '',
     description: '',
@@ -83,6 +86,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: 'CData Connect AI',
     logo: '/images/2026/sponsors/b82081a9-b2e1-47ba-9ac8-148baf28d9df.png',
     website: 'https://jp.cdata.com/ai/',
+    x: "CDataJapan",
     location: '',
     employees: '',
     description: '',
@@ -98,6 +102,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: '株式会社日本オープンシステムズ',
     logo: '/images/2026/sponsors/630f03f6-af01-41fe-ae0d-a5165ba812e4.png',
     website: 'https://www.jops.co.jp/',
+    x: "JOPS_JP",
     location: '',
     employees: '',
     description: '',
@@ -111,6 +116,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: 'さくらインターネット株式会社',
     logo: '/images/2026/sponsors/ad787bcf-4be5-4033-889f-78428549cf65.svg',
     website: 'https://www.sakura.ad.jp/',
+    x: "sakura_users",
     location: '',
     employees: '',
     description: '',
@@ -124,8 +130,9 @@ export const sponsorData: Record<string, SponsorData> = {
   '3f642e46-7d02-4078-9115-308ae1be6fbb': {
     tier: 'ブリスポンサー',
     name: '株式会社Helpfeel',
-    logo: '/images/2026/sponsors/3f642e46-7d02-4078-9115-308ae1be6fbb.png',
+    logo: '/images/2026/sponsors/3f642e46-7d02-4078-9115-308ae1be6fbb.svg',
     website: 'https://www.helpfeel.com/',
+    x: "Helpfeel_jp",
     location: '',
     employees: '',
     description: '',
@@ -141,6 +148,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: 'TechTrain',
     logo: '/images/2026/sponsors/351e6e60-b4e1-40fc-9d60-00b975d06cfb.png',
     website: 'https://service.techtrain.dev',
+    x: "TechBowl1",
     location: '',
     employees: '',
     description: '',
@@ -156,6 +164,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: '転職ドラフト（株式会社リブセンス）',
     logo: '/images/burikaigi-logo.png',
     website: 'https://job-draft.jp/',
+    x: "tensyoku_draft",
     location: '',
     employees: '',
     description: '',
@@ -184,6 +193,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: '株式会社サムライズム',
     logo: '/images/2026/sponsors/3345b5f3-5229-4566-bde5-fcdb5c2979d6.svg',
     website: 'https://samuraism.com/',
+    x: "Samuraism",
     location: '',
     employees: '',
     description: '',
@@ -214,6 +224,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: '株式会社サイバーエージェント',
     logo: '/images/2026/sponsors/ba9bd53a-224f-4340-87e6-23ca80b08238.png',
     website: 'https://www.cyberagent.co.jp/',
+    x: "ca_tec_des",
     location: '',
     employees: '',
     description: '',
@@ -229,6 +240,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: '株式会社jig.jp',
     logo: '/images/2026/sponsors/d6c2c624-fb4d-4f93-93ba-806d1b1b3ed7.png',
     website: 'https://jig.jp/',
+    x: "jigjp_recruit",
     location: '',
     employees: '',
     description: '',
@@ -244,6 +256,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: 'Postman株式会社',
     logo: '/images/2026/sponsors/5b222f6a-09a3-47cb-9144-d45ad18b88dd.svg',
     website: 'https://www.postman.com/jp/',
+    x: "postman_japan",
     location: '',
     employees: '',
     description: '',
@@ -274,6 +287,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: '株式会社ビヨンド',
     logo: '/images/2026/sponsors/812f1345-25cb-4ab1-9760-6b26cc23f6cc.svg',
     website: 'https://beyondjapan.com/',
+    x: "beyondjapaninfo",
     location: '',
     employees: '',
     description: '',
@@ -289,6 +303,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: '株式会社クレディセゾン',
     logo: '/images/2026/sponsors/d747a69d-bc08-48c2-a96d-22f724015e86.jpg',
     website: 'https://www.saisoncard.co.jp/',
+    x: "kaori_saison",
     location: '',
     employees: '',
     description: '',
@@ -304,6 +319,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: '北日本新聞社',
     logo: '/images/2026/sponsors/2c7ac6fc-ceba-4d88-b336-9ce516905f15.svg',
     website: 'https://www.kitanippon.co.jp/',
+    x: "webun_news",
     location: '',
     employees: '',
     description: '',
@@ -385,6 +401,17 @@ const sponsor = sponsorData[id];
                     >
                       <Globe className="w-4 h-4" aria-hidden="true" />
                       <span>Webサイト</span>
+                    </a>
+                  )}
+                  {sponsor.x && (
+                    <a
+                      href={`https://x.com/${sponsor.x}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex items-center gap-2 text-teal-700 hover:text-teal-800"
+                    >
+                      <X className="w-4 h-4 border stroke-white bg-teal-700" aria-hidden="true" />
+                      <span>{`@${sponsor.x}`}</span>
                     </a>
                   )}
                 </div>
