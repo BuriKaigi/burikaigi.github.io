@@ -139,7 +139,7 @@ const sponsors = {
   ],
   gando: [
     { id: '351e6e60-b4e1-40fc-9d60-00b975d06cfb', name: 'TechTrain', logo: '/images/2026/sponsors/351e6e60-b4e1-40fc-9d60-00b975d06cfb.png' },
-    { id: '94ee3ccb-2400-425b-8597-c5e7ac5c091b', name: '転職ドラフト（株式会社リブセンス）', logo: '/images/burikaigi-logo.png' },
+    { id: '94ee3ccb-2400-425b-8597-c5e7ac5c091b', name: '転職ドラフト（株式会社リブセンス）', logo: '' },
     { id: 'bbc1a306-aaa9-4e43-b01c-9fc630ce8a42', name: 'サイボウズ株式会社', logo: '/images/2026/sponsors/bbc1a306-aaa9-4e43-b01c-9fc630ce8a42.png' },
     { id: '3345b5f3-5229-4566-bde5-fcdb5c2979d6', name: '株式会社サムライズム', logo: '/images/2026/sponsors/3345b5f3-5229-4566-bde5-fcdb5c2979d6.svg' },
     { id: 'ea42dad8-863f-4cec-b95d-5a18b049ad04', name: 'アイオートラストサービス', logo: '/images/2026/sponsors/ea42dad8-863f-4cec-b95d-5a18b049ad04.png' },
@@ -402,7 +402,7 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
             {sponsors.buri.map((sponsor) => (
               <a href={`/sponsors/${sponsor.id}`} data-animate="sponsor-card" class="block p-2 transition-transform duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-lg will-change-transform">
                 <div class="w-full aspect-square flex items-center justify-center">
-                  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" />
+                  { sponsor.logo ?  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" /> : sponsor.name}
                 </div>
               </a>
             ))}
@@ -418,7 +418,7 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
             {sponsors.gando.map((sponsor) => (
               <a href={`/sponsors/${sponsor.id}`} data-animate="sponsor-card" class="block p-2 transition-transform duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-lg will-change-transform">
                 <div class="w-full aspect-square flex items-center justify-center">
-                  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" />
+                  { sponsor.logo ?  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" /> : sponsor.name}
                 </div>
               </a>
             ))}
@@ -434,7 +434,7 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
             {sponsors.fukuragi.map((sponsor) => (
               <a href={`/sponsors/${sponsor.id}`} data-animate="sponsor-card" class="block p-2 transition-transform duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-lg will-change-transform">
                 <div class="w-full aspect-square flex items-center justify-center">
-                  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" />
+                  { sponsor.logo ?  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" /> : sponsor.name}
                 </div>
               </a>
             ))}
@@ -450,7 +450,7 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
             {sponsors.kozukura.map((sponsor) => (
               <a href={`/sponsors/${sponsor.id}`} data-animate="sponsor-card" class="block p-2 transition-transform duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-lg will-change-transform">
                 <div class="w-full aspect-square flex items-center justify-center">
-                  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" />
+                  { sponsor.logo ?  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" /> : sponsor.name}
                 </div>
               </a>
             ))}
