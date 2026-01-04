@@ -52,8 +52,9 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
           </div>
           <div class="mb-6 flex flex-wrap justify-center gap-2">
             <a href="#check-in" class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">受付・入場</a>
-            <a href="#help" class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">困ったときは</a>
             <a href="#timetable" class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">タイムテーブル</a>
+            <a href="#help" class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">困ったときは</a>
+            <a href="#map" class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">会場マップ</a>
             <a href="#hashtags" class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">ハッシュタグ</a>
             <a href="#break" class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">休憩・充電・Wi-Fi</a>
             <a href="#requests" class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">お願い</a>
@@ -73,7 +74,6 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
           </div>
         </div>
       </section>
-
       <section id="check-in" class="py-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
@@ -98,7 +98,27 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
           </div>
         </div>
       </section>
-
+      <section id="timetable" class="pb-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
+            <h2 class="text-2xl font-semibold mb-4">タイムテーブル</h2>
+            <ul class="list-disc list-outside pl-5 space-y-3 text-gray-700 marker:text-teal-600 marker:text-[1.5em]">
+              <li>最新のセッション時間・会場割りはForteeのタイムテーブルで確認してください。</li>
+              <li>当日も変更の可能性があるため、開始前の再確認を推奨します。</li>
+            </ul>
+            <div class="mt-6">
+              <a
+                href={timetableLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full hover:bg-teal-600 transition-colors shadow"
+              >
+                タイムテーブルを見る
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
       <section id="help" class="pb-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
@@ -119,7 +139,6 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
           </div>
         </div>
       </section>
-
       <section id="map" class="pb-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
@@ -153,29 +172,6 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
           </div>
         </div>
       </section>
-
-      <section id="timetable" class="pb-10">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
-            <h2 class="text-2xl font-semibold mb-4">タイムテーブル</h2>
-            <ul class="list-disc list-outside pl-5 space-y-3 text-gray-700 marker:text-teal-600 marker:text-[1.5em]">
-              <li>最新のセッション時間・会場割りはForteeのタイムテーブルで確認してください。</li>
-              <li>当日も変更の可能性があるため、開始前の再確認を推奨します。</li>
-            </ul>
-            <div class="mt-6">
-              <a
-                href={timetableLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full hover:bg-teal-600 transition-colors shadow"
-              >
-                タイムテーブルを見る
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section id="hashtags" class="pb-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
@@ -216,7 +212,6 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
           </div>
         </div>
       </section>
-
       <section id="break" class="pb-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
@@ -229,7 +224,6 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
           </div>
         </div>
       </section>
-
       <section id="requests" class="pb-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
@@ -254,7 +248,6 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
           </div>
         </div>
       </section>
-
       <section id="food" class="pb-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
@@ -269,7 +262,6 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
           </div>
         </div>
       </section>
-
       <section id="after-party" class="pb-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
@@ -322,7 +314,6 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
           </div>
         </div>
       </section>
-
       <section id="survey-end" class="pb-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="bg-teal-600 rounded-3xl p-8 shadow-xl border border-teal-600">
