@@ -57,7 +57,7 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
             <a href="#check-in"
                class="inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">受付・入場</a>
             <a href="#baggage"
-               class="inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">荷物・忘れもの</a>
+               class="inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">荷物(クローク)・忘れもの</a>
             <a href="#help"
                class="inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">困ったときは</a>
             <a href="#map"
@@ -72,8 +72,10 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
                class="inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">お願い</a>
             <a href="#food"
                class="inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">飲食</a>
+            <a href="#smoke"
+               class="inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">喫煙室</a>
             <a href="#after-party"
-               class="inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">懇親会場</a>
+               class="inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-teal-400 hover:text-teal-600 transition-colors">懇親会</a>
           </div>
           <div class="bg-teal-600 rounded-3xl p-8 shadow-xl border border-teal-600">
             <h2 class="text-2xl font-semibold mb-4 text-white">参加者アンケート</h2>
@@ -122,9 +124,14 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
       <section id="baggage" class="pb-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
-            <h2 class="text-2xl font-semibold mb-4">荷物・忘れもの</h2>
+            <h2 class="text-2xl font-semibold mb-4">荷物(クローク)・忘れもの</h2>
             <ul class="list-disc list-outside pl-5 space-y-3 text-gray-700 marker:text-teal-600 marker:text-[1.5em]">
-              <li>クロークや荷物預かりは設置していません。貴重品は各自管理でお願いします。</li>
+              <li>DAY1/2は基調講演後に1階101号室をセルフスタイルの荷物預かり(クローク)にします。</li>
+              <li>荷札を置いておくので、本券・半券ともに名前を書いて、荷物につけてください。半券はストラップに入れて無くさないようにしてください。</li>
+              <li>貴重品(財布・パソコン・スマホなど)は預けないでください！</li>
+              <li>クロークはお昼までに施錠します。<strong>途中で荷物を出せません！</strong>名刺入れとか財布を出し忘れた！などご注意ください！</li>
+              <li>DAY1は本会終了後、アンカンファレンス前(17時ごろ予定)にクロークを開きます。荷物を必ずこのときにとりにきてください。</li>
+              <li>DAY2はクロージング終了後(18時20分ごろ予定)にクロークを開きます。荷物を必ずとりにきてください。</li>
               <li>忘れものにご注意ください。見つけた場合は、受付までお届けください。</li>
               <li>休憩場所や充電コーナーに放置されているものは忘れものとして回収するかもしれません。ご注意ください。</li>
             </ul>
@@ -386,13 +393,69 @@ const timetableLink = 'https://fortee.jp/burikaigi-2026/timetable';
           </div>
         </div>
       </section>
-      <section id="after-party" class="pb-10">
+      <section id="smoke" class="pb-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
-            <h2 class="text-2xl font-semibold mb-4">懇親会場への移動</h2>
+            <h2 class="text-2xl font-semibold mb-4">喫煙所</h2>
+            <ul class="list-disc list-outside pl-5 space-y-3 text-gray-700 marker:text-teal-600 marker:text-[1.5em]">
+              <li>喫煙所以外は禁煙です。ご注意ください。</li>
+              <li>喫煙所は1階へエスカレーターをおりて右手側、交流ギャラリーの奥、自販機あたりにあります。</li>
+            </ul>
+          </div>
+        </div>
+      </section>      <section id="after-party" class="pb-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-200">
+            <h2 class="text-2xl font-semibold mb-4">懇親会</h2>
             <div class="space-y-4 text-gray-700">
               <div>
-                <h3 class="font-semibold mb-2 flex items-center gap-2">
+                <h3 class="font-semibold my-2 flex items-center gap-2">
+                  懇親会受付用QR(以下のどれかです)
+                </h3>
+                <div class="mt-5">
+                  <a
+                    href="https://toyama-eng.connpass.com/event/378268/ticket/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 bg-black text-white px-5 py-2 rounded-full hover:bg-teal-600 transition-colors shadow"
+                  >
+                    『BuriKaigi 2026 懇親会(早割編)』QRコードを開く
+                  </a>
+                </div>
+                <div class="mt-5">
+                  <a
+                    href="https://toyama-eng.connpass.com/event/378591/ticket/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 bg-black text-white px-5 py-2 rounded-full hover:bg-teal-600 transition-colors shadow"
+                  >
+                    『BuriKaigi 2026 懇親会(早割編v2)』QRコードを開く
+                  </a>
+                </div>
+                <div class="mt-5">
+                  <a
+                    href="https://toyama-eng.connpass.com/event/379925/ticket/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 bg-black text-white px-5 py-2 rounded-full hover:bg-teal-600 transition-colors shadow"
+                  >
+                    『BuriKaigi 2026 懇親会(スポンサー/登壇者限定)』QRコードを開く
+                  </a>
+                </div>
+                <div class="mt-5">
+                  <a
+                    href="https://toyama-eng.connpass.com/event/380094/ticket/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 bg-black text-white px-5 py-2 rounded-full hover:bg-teal-600 transition-colors shadow"
+                  >
+                  『BuriKaigi 2026 懇親会(通常編)』QRコードを開く
+                  </a>
+                </div>
+                <h2 class="text-xl font-semibold py-2 my-2 flex items-center gap-2">
+                  会場への移動
+                </h2>
+                <h3 class="font-semibold my-2 flex items-center gap-2">
                   <MapPin className="w-4 h-4" aria-hidden="true"/>
                   公共交通機関
                 </h3>
