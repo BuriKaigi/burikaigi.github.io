@@ -155,6 +155,9 @@ const sponsors = {
   kozukura: [
     { id: '2c7ac6fc-ceba-4d88-b336-9ce516905f15', name: '北日本新聞社', logo: '/images/2026/sponsors/2c7ac6fc-ceba-4d88-b336-9ce516905f15.svg' },
   ],
+  supporters: [
+    { id: 'toyama-city', name: '富山市', logo: '' },
+  ],
 };
 
 const eventDetails = [
@@ -448,6 +451,22 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
             {sponsors.kozukura.map((sponsor) => (
+              <a href={`/sponsors/${sponsor.id}`} data-animate="sponsor-card" class="block p-2 transition-transform duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-lg will-change-transform">
+                <div class="w-full aspect-square flex items-center justify-center">
+                  { sponsor.logo ?  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" /> : sponsor.name}
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div class="mt-14">
+          <div class="text-center mb-6">
+            <h3 class="text-2xl mb-2 bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent">後援</h3>
+            <div class="w-20 h-1 bg-gradient-to-r from-slate-600 to-slate-800 mx-auto rounded-full"></div>
+          </div>
+          <div class="flex justify-center">
+            {sponsors.supporters.map((sponsor) => (
               <a href={`/sponsors/${sponsor.id}`} data-animate="sponsor-card" class="block p-2 transition-transform duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-lg will-change-transform">
                 <div class="w-full aspect-square flex items-center justify-center">
                   { sponsor.logo ?  <img src={sponsor.logo} alt={sponsor.name} class="max-w-full max-h-full object-contain" /> : sponsor.name}

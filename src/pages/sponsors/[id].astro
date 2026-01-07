@@ -330,6 +330,19 @@ export const sponsorData: Record<string, SponsorData> = {
     benefits: [],
     message: ''
   },
+  'toyama-city': {
+    tier: '後援',
+    name: '富山市',
+    logo: '',
+    website: 'https://www.city.toyama.lg.jp/',
+    location: '',
+    employees: '',
+    description: '',
+    business: [],
+    techStack: [],
+    benefits: [],
+    message: ''
+  },
 };
 
 export function getStaticPaths() {
@@ -423,19 +436,21 @@ const sponsor = sponsorData[id];
             </div>
           </section>
 
-          <section class="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
-            <div class="flex items-center gap-3 mb-6">
-              <Briefcase className="w-6 h-6 text-teal-700" aria-hidden="true" />
-              <h2 class="text-2xl text-gray-900">概要</h2>
-            </div>
-            <ul class="space-y-2 text-gray-700">
-              {sponsor.business.map((item) => (
-                <li class="text-gray-700 leading-relaxed">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
+          {sponsor.business.length > 0 && (
+            <section class="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
+              <div class="flex items-center gap-3 mb-6">
+                <Briefcase className="w-6 h-6 text-teal-700" aria-hidden="true" />
+                <h2 class="text-2xl text-gray-900">概要</h2>
+              </div>
+              <ul class="space-y-2 text-gray-700">
+                {sponsor.business.map((item) => (
+                  <li class="text-gray-700 leading-relaxed">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           <section class="rounded-2xl p-8 text-center">
             <a
