@@ -303,6 +303,7 @@ export const sponsorData: Record<string, SponsorData> = {
     name: '株式会社クレディセゾン',
     logo: '/images/2026/sponsors/d747a69d-bc08-48c2-a96d-22f724015e86.jpg',
     website: 'https://www.saisoncard.co.jp/',
+    jobSite: 'https://hrmos.co/pages/980004249767264257/jobs/0000148',
     x: "kaori_saison",
     location: '',
     employees: '',
@@ -451,6 +452,23 @@ const sponsor = sponsorData[id];
               </ul>
             </section>
           )}
+
+          { sponsor.jobSite ? (
+            <section class="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
+              <div class="flex flex-col items-center gap-6 mb-6">
+                <Mail size={32} className="mx-auto text-teal-600" />
+                <h2 class="text-2xl text-gray-900 mb-6">採用情報</h2>
+                <a
+                  href={sponsor.jobSite}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="items-center justify-center gap-2 bg-teal-700 text-white px-6 py-3 rounded-full hover:bg-teal-800 transition-colors shadow-lg"
+                >
+                  <span>採用ページへ</span>
+                </a>
+              </div>
+            </section>
+          ) : null}
 
           <section class="rounded-2xl p-8 text-center">
             <a
