@@ -1,0 +1,214 @@
+---
+import Layout from '~/layouts/Vanilla.astro';
+
+const managementReportPosts = [
+  {
+    title: 'BuriKaigi 2026 ができるまで / 運営目線',
+    date: '2026-01-14',
+    image: 'https://res.cloudinary.com/zenn/image/upload/s--Thi4h8Jm--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:BuriKaigi%25202026%2520%25E3%2581%258C%25E3%2581%25A7%25E3%2581%258D%25E3%2582%258B%25E3%2581%25BE%25E3%2581%25A7%2520%252F%2520%25E9%2581%258B%25E5%2596%25B6%25E7%259B%25AE%25E7%25B7%259A%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:xin9le%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzU2YWIzNmRlZWYuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACAGSGT',
+    url: 'https://zenn.dev/xin9le/articles/c3ddd0412b3b22',
+    account: 'xin9le',
+  },
+];
+
+const reportPosts = [
+  {
+    title: 'BuriKaigi 2026参戦ログ',
+    date: '2026-01-10',
+    image: 'https://blog.koxya.me/_astro/blog-placeholder-1.Bx0Zcyzv.jpg',
+    url: 'https://blog.koxya.me/blog/burkaigi-2026/',
+    account: 'koxya',
+  },
+  {
+    title: 'BuriKaigi 2026でUnicodeの行く末についていろいろなプログラミング言語を調べたトークをしてきました #burikaigi',
+    date: '2026-01-10',
+    image: 'https://img.tekitoh-memdhoi.info/media/filter/l/img/PXL_20260110_063600922.png',
+    url: 'https://tekitoh-memdhoi.info/views/928',
+    account: 'youkidearitai',
+  },
+  {
+    title: '【イベントレポート】BuriKaigi 2026（スタッフ + TDD Bootcamp）',
+    date: '2026-01-11',
+    image:
+      'https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-user-contents.imgix.net%2Fhttps%253A%252F%252Fcdn.qiita.com%252Fassets%252Fpublic%252Farticle-ogp-background-afbab5eb44e0b055cce1258705637a91.png%3Fixlib%3Drb-4.0.0%26w%3D1200%26blend64%3DaHR0cHM6Ly9xaWl0YS11c2VyLXByb2ZpbGUtaW1hZ2VzLmltZ2l4Lm5ldC9odHRwcyUzQSUyRiUyRnFpaXRhLWltYWdlLXN0b3JlLnMzLmFwLW5vcnRoZWFzdC0xLmFtYXpvbmF3cy5jb20lMkYwJTJGMzU1MDQ4JTJGcHJvZmlsZS1pbWFnZXMlMkYxNzUyMzcxMTIxP2l4bGliPXJiLTQuMC4wJmFyPTElM0ExJmZpdD1jcm9wJm1hc2s9ZWxsaXBzZSZiZz1GRkZGRkYmZm09cG5nMzImcz1lOWRhOWQ1ZDg2YzgyNzVkMDdiOTJlNWUzZGM1OTM3NA%26blend-x%3D120%26blend-y%3D467%26blend-w%3D82%26blend-h%3D82%26blend-mode%3Dnormal%26s%3D52db0484de81389ea187e911704018a1?ixlib=rb-4.0.0&w=1200&fm=jpg&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjAuMCZ3PTk2MCZoPTMyNCZ0eHQ9JUUzJTgwJTkwJUUzJTgyJUE0JUUzJTgzJTk5JUUzJTgzJUIzJUUzJTgzJTg4JUUzJTgzJUFDJUUzJTgzJTlEJUUzJTgzJUJDJUUzJTgzJTg4JUUzJTgwJTkxQnVyaUthaWdpJTIwMjAyNiVFRiVCQyU4OCVFMyU4MiVCOSVFMyU4MiVCRiVFMyU4MyU4MyVFMyU4MyU5NSUyMCUyQiUyMFRERCUyMEJvb3RjYW1wJUVGJUJDJTg5JnR4dC1hbGlnbj1sZWZ0JTJDdG9wJnR4dC1jb2xvcj0lMjMxRTIxMjEmdHh0LWZvbnQ9SGlyYWdpbm8lMjBTYW5zJTIwVzYmdHh0LXNpemU9NTYmdHh0LXBhZD0wJnM9YzAwMTQ1NmU5OGIxNTdkMDZhMTc1OTFkOTE0NjczZmI&mark-x=120&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjAuMCZ3PTgzOCZoPTU4JnR4dD0lNDBrX2FkYWNoaV8wMSZ0eHQtY29sb3I9JTIzMUUyMTIxJnR4dC1mb250PUhpcmFnaW5vJTIwU2FucyUyMFc2JnR4dC1zaXplPTM2JnR4dC1wYWQ9MCZzPWIxN2Q1OTg1MzI0OGZkOTc2MzYyMzdlZGRhNmZlNmY0&blend-x=242&blend-y=480&blend-w=838&blend-h=46&blend-fit=crop&blend-crop=left%2Cbottom&blend-mode=normal&s=7c15a019a710f1e7ddbd29a5d0ace041',
+    url: 'https://qiita.com/k_adachi_01/items/4aae3afde8f93a0d44a1',
+    account: 'k_adachi_01',
+  },
+  {
+    title: 'TinyGo Keeb Tour 2026 in Toyama with BuriKaigi を開催しました',
+    date: '2026-01-11',
+    image: 'https://tinygo-keeb.org/blog/wp-content/uploads/2026/01/PXL_20260109_040724167-scaled.jpg',
+    url: 'https://tinygo-keeb.org/blog/?p=166',
+    account: 'sago35',
+  },
+  {
+    title: 'BuriKaigi 2026は、とても良いカンファレンスでした。 #burikaigi',
+    date: '2026-01-12',
+    image: 'https://cdn.blog.st-hatena.com/images/theme/og-image-1500.png',
+    url: 'https://kaitou.hatenadiary.com/entry/2026/01/12/002936',
+    account: 'kaitou',
+  },
+  {
+    title: 'BuriKaigi 2026に参加し登壇しました｜Capi(かぴ )',
+    date: '2026-01-11',
+    image: 'https://assets.st-note.com/production/uploads/images/242828535/rectangle_large_type_2_c5e2d2a820ac2dbb7373602cc392a099.jpeg?fit=bounds&quality=85&width=1280',
+    url: 'https://note.com/yousaku98/n/n04ab9f067895',
+    account: 'yousaku98',
+  },
+  {
+    title: 'BuriKaigi 2026 2日目に参加した',
+    date: '2026-01-10',
+    image: 'https://cdn.blog.st-hatena.com/images/theme/og-image-1500.png',
+    url: 'https://namonakimichi.hatenablog.com/entry/2026/01/10/194306',
+    account: 'namonakimichi',
+  },
+  {
+    title: 'BuriKaigiで TinyGo Keeb Tour と LT をしてきた話',
+    date: '2026-01-11',
+    image:
+      'https://res.cloudinary.com/zenn/image/upload/s--eU3IP561--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:BuriKaigi%25E3%2581%25A7%2520TinyGo%2520Keeb%2520Tour%2520%25E3%2581%25A8%2520LT%2520%25E3%2582%2592%25E3%2581%2597%25E3%2581%25A6%25E3%2581%258D%25E3%2581%259F%25E8%25A9%25B1%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:senoue%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzBhMjYyYWE0MTYuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACAGSGT',
+    url: 'https://zenn.dev/senoue/articles/f0de786085de4e',
+    account: 'senoue',
+  },
+];
+
+const sortedManagementReportPosts = [...managementReportPosts].sort((a, b) =>
+  a.date.localeCompare(b.date)
+);
+const sortedReportPosts = [...reportPosts].sort((a, b) => a.date.localeCompare(b.date));
+---
+
+<Layout title="参加レポート">
+  <div class="bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 text-gray-900 scroll-smooth">
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="/images/burikaigi-logo.png" alt="BuriKaigi ロゴ" class="w-10 h-10 object-contain" />
+          <span class="font-semibold text-lg">BuriKaigi 2026</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="/#about" class="hover:text-teal-600 transition-colors">概要</a>
+          <a href="/#keynote" class="hover:text-teal-600 transition-colors">基調講演</a>
+          <a href="/#workshops" class="hover:text-teal-600 transition-colors">ワークショップ</a>
+          <a href="/#sponsors" class="hover:text-teal-600 transition-colors">スポンサー</a>
+          <a href="/#event-info" class="hover:text-teal-600 transition-colors">開催情報</a>
+          <a href="/report" class="text-teal-700">参加レポート</a>
+          <a href="/coc" class="hover:text-teal-600 transition-colors">CoC</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="relative overflow-hidden pt-20 pb-10">
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
+          <p class="inline-flex items-center gap-2 bg-teal-600 text-white px-5 py-2 rounded-full text-sm shadow">イベント終了</p>
+          <h1 class="text-4xl sm:text-5xl font-semibold tracking-tight">BuriKaigi 2026 参加レポート</h1>
+          <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            ご参加・ご登壇・ご協賛いただきありがとうございます。<br />イベント当日の雰囲気を簡潔にまとめました。
+          </p>
+          <div class="mx-auto max-w-2xl rounded-2xl border border-teal-200 bg-teal-50 px-5 py-4 text-base text-teal-900 shadow-sm">
+            <p class="font-semibold">内容は順次追記していきます。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="management-reports" class="pb-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-8">
+            <h2 class="text-2xl sm:text-3xl font-semibold">運営レポート</h2>
+            <p class="text-gray-700 mt-2">運営チームからのレポートをご紹介します。</p>
+          </div>
+          {sortedManagementReportPosts.length === 0 ? (
+            <div class="mx-auto max-w-2xl rounded-2xl border border-gray-200 bg-white px-6 py-6 text-center text-gray-600 shadow-sm">
+              近日公開予定です。
+            </div>
+          ) : (
+            <div class="grid gap-6 sm:grid-cols-2">
+              {sortedManagementReportPosts.map((post) => (
+                <a
+                  href={post.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-200 hover:border-teal-500 hover:shadow-xl transition-colors"
+                >
+                  <div class="aspect-[16/9] bg-gray-100 overflow-hidden">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      class="h-full w-full object-cover group-hover:scale-105 transition-transform"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="p-6">
+                    <div class="flex items-center justify-between text-xs text-gray-500">
+                      <span>{post.date}</span>
+                      <span>@{post.account}</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mt-2">{post.title}</h3>
+                    <span class="inline-flex items-center gap-2 text-sm text-teal-700 mt-4">
+                      ブログを読む
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section id="reports" class="pb-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-8">
+            <h2 class="text-2xl sm:text-3xl font-semibold">参加レポート</h2>
+            <p class="text-gray-700 mt-2">参加いただいた皆さんのレポートをご紹介します。</p>
+          </div>
+          <div class="grid grid-cols-2 gap-6 lg:grid-cols-3">
+            {sortedReportPosts.map((post) => (
+              <a
+                href={post.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-200 hover:border-teal-500 hover:shadow-xl transition-colors"
+              >
+                <div class="aspect-[16/9] bg-gray-100 overflow-hidden">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    class="h-full w-full object-cover group-hover:scale-105 transition-transform"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center justify-between text-xs text-gray-500">
+                    <span>{post.date}</span>
+                    <span>@{post.account}</span>
+                  </div>
+                  <h3 class="text-lg font-semibold text-gray-900 mt-2">{post.title}</h3>
+                  <span class="inline-flex items-center gap-2 text-sm text-teal-700 mt-4">
+                    ブログを読む
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="next" class="pb-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="bg-teal-600 rounded-3xl p-8 shadow-xl border border-teal-600 text-white">
+            <h2 class="text-2xl font-semibold mb-4">次回に向けて</h2>
+            <p class="text-teal-50 leading-relaxed">
+              BuriKaigiは皆さまのフィードバックでより良いイベントへ成長していきます。感想やご意見がありましたら、公式Xやコミュニティ経由でお寄せください。
+            </p>
+            <div class="mt-6">
+              <a href="/" class="inline-flex items-center gap-2 bg-white text-teal-700 px-6 py-3 rounded-full shadow">
+                トップページへ戻る
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</Layout>
