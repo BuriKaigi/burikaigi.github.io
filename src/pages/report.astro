@@ -1,6 +1,16 @@
 ---
 import Layout from '~/layouts/Vanilla.astro';
 
+const managementReportPosts = [
+  {
+    title: 'BuriKaigi 2026 ができるまで / 運営目線',
+    date: '2026-01-14',
+    image: 'https://res.cloudinary.com/zenn/image/upload/s--Thi4h8Jm--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:BuriKaigi%25202026%2520%25E3%2581%258C%25E3%2581%25A7%25E3%2581%258D%25E3%2582%258B%25E3%2581%25BE%25E3%2581%25A7%2520%252F%2520%25E9%2581%258B%25E5%2596%25B6%25E7%259B%25AE%25E7%25B7%259A%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:xin9le%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzU2YWIzNmRlZWYuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACAGSGT',
+    url: 'https://zenn.dev/xin9le/articles/c3ddd0412b3b22',
+    account: 'xin9le',
+  },
+];
+
 const reportPosts = [
   {
     title: 'BuriKaigi 2026参戦ログ',
@@ -62,6 +72,9 @@ const reportPosts = [
   },
 ];
 
+const sortedManagementReportPosts = [...managementReportPosts].sort((a, b) =>
+  a.date.localeCompare(b.date)
+);
 const sortedReportPosts = [...reportPosts].sort((a, b) => a.date.localeCompare(b.date));
 ---
 
@@ -99,13 +112,57 @@ const sortedReportPosts = [...reportPosts].sort((a, b) => a.date.localeCompare(b
         </div>
       </section>
 
+      <section id="management-reports" class="pb-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-8">
+            <h2 class="text-2xl sm:text-3xl font-semibold">運営レポート</h2>
+            <p class="text-gray-700 mt-2">運営チームからのレポートをご紹介します。</p>
+          </div>
+          {sortedManagementReportPosts.length === 0 ? (
+            <div class="mx-auto max-w-2xl rounded-2xl border border-gray-200 bg-white px-6 py-6 text-center text-gray-600 shadow-sm">
+              近日公開予定です。
+            </div>
+          ) : (
+            <div class="grid gap-6 sm:grid-cols-2">
+              {sortedManagementReportPosts.map((post) => (
+                <a
+                  href={post.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-200 hover:border-teal-500 hover:shadow-xl transition-colors"
+                >
+                  <div class="aspect-[16/9] bg-gray-100 overflow-hidden">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      class="h-full w-full object-cover group-hover:scale-105 transition-transform"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="p-6">
+                    <div class="flex items-center justify-between text-xs text-gray-500">
+                      <span>{post.date}</span>
+                      <span>@{post.account}</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mt-2">{post.title}</h3>
+                    <span class="inline-flex items-center gap-2 text-sm text-teal-700 mt-4">
+                      ブログを読む
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
       <section id="reports" class="pb-12">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-8">
             <h2 class="text-2xl sm:text-3xl font-semibold">参加レポート</h2>
             <p class="text-gray-700 mt-2">参加いただいた皆さんのレポートをご紹介します。</p>
           </div>
-          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="grid grid-cols-2 gap-6 lg:grid-cols-3">
             {sortedReportPosts.map((post) => (
               <a
                 href={post.url}
