@@ -1,0 +1,57 @@
+---
+import Layout from '~/layouts/Vanilla.astro';
+import { Header } from '~/components/2025/Header'
+import { Hero } from '~/components/2025/Hero'
+import { Sponsors } from '~/components/2025/Sponsors'
+import { Button } from '~/components/Button'
+
+const allSponsors = Object.values(import.meta.glob('./sponsors/*.md', { eager: true }));
+const sponsors: any[] = allSponsors.map((sponsor: any) => ({
+  ...sponsor.frontmatter,
+  url: sponsor.url
+}))
+
+const buriSponsors = sponsors.filter(v => v.type === "Buri")
+const gandoSponsors = sponsors.filter(v => v.type === "Gando")
+const fukuragiSponsors = sponsors.filter(v => v.type === "Fukuragi")
+---
+
+<Layout>
+  <Header />
+  <main class="flex-auto">
+    <Hero />
+
+    <section class="relative z-10 pb-12">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div class="rounded-2xl px-6 py-8 text-center text-slate-900 sm:px-10">
+          <div class="flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-center">
+            <Button href="https://fortee.jp/burikaigi-2025" className="w-full sm:w-auto" blank>
+              セッション詳細を見る
+            </Button>
+            <Button href="/2024" className="w-full sm:w-auto">
+              2024年の様子を見る
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Sponsors sponsors={buriSponsors}
+      title="Buri-Sponsors"
+      titleClassName='mx-auto max-w-2xl text-center font-display text-4xl font-medium tracking-tighter text-gray-900 sm:text-5xl'
+      className="mx-auto mt-20 grid max-w-5xl grid-cols-1 place-content-center gap-x-12 gap-y-12 px-4 sm:grid-cols-2 lg:grid-cols-3"
+    />
+
+    <Sponsors sponsors={gandoSponsors}
+      title="Gando-Sponsors"
+      titleClassName='mx-auto max-w-2xl text-center font-display text-4xl font-medium tracking-tighter text-gray-900 sm:text-5xl'
+      className="mx-auto mt-20 grid max-w-6xl grid-cols-2 place-content-center gap-x-8 gap-y-12 px-4 sm:grid-cols-3 lg:grid-cols-4"
+    />
+
+    <Sponsors sponsors={fukuragiSponsors}
+      title="Fukuragi-Sponsors"
+      titleClassName='mx-auto max-w-2xl text-center font-display text-4xl font-medium tracking-tighter text-gray-900 sm:text-5xl'
+      className="mx-auto mt-20 grid max-w-6xl grid-cols-2 place-content-center gap-x-8 gap-y-12 px-4 sm:grid-cols-3 lg:grid-cols-4"
+    />
+  </main>
+</Layout>
