@@ -7,13 +7,13 @@ import { Schedule } from '~/components/Schedule'
 import { Speakers } from '~/components/Speakers.tsx'
 import { Sponsors } from '~/components/Sponsors'
 
-const allSpeakers = await Astro.glob('./speakers/*.md');
+const allSpeakers = Object.values(import.meta.glob('./speakers/*.md', { eager: true }));
 const speakers: any[] = allSpeakers.map(speaker => ({
   ...speaker.frontmatter,
   url: speaker.url
 }))
 
-const allSponsors = await Astro.glob('./sponsors/*.md');
+const allSponsors = Object.values(import.meta.glob('./sponsors/*.md', { eager: true }));
 const sponsors: any[] = allSponsors.map(sponsor => ({
   ...sponsor.frontmatter,
   url: sponsor.url

@@ -14,7 +14,7 @@ const { title, name } = Astro.props;
 const myTitle= ['BuriKaigi', title, name].filter(Boolean).join(' | ')
 
 
-const allSponsors = await Astro.glob('../pages/2024/sponsors/*.md');
+const allSponsors = Object.values(import.meta.glob('../pages/2024/sponsors/*.md', { eager: true }));
 const index = allSponsors.findIndex(speaker => speaker.frontmatter.name === frontmatter.name)
 const first = index === 0
 const last = index === allSponsors.length - 1;

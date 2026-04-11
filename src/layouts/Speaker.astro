@@ -12,7 +12,7 @@ interface Props {
 
 const { title, frontmatter } = Astro.props;
 const my_title = ['BuriKaigi', frontmatter.title, frontmatter.name].filter(Boolean).join(' | ')
-const allSpeakers = await Astro.glob('../pages/2024/speakers/*.md');
+const allSpeakers = Object.values(import.meta.glob('../pages/2024/speakers/*.md', { eager: true }));
 const index = allSpeakers.findIndex(speaker => speaker.frontmatter.name === frontmatter.name)
 const first = index === 0
 const last = index === allSpeakers.length - 1;

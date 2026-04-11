@@ -13,7 +13,7 @@ interface Props {
 const { title, frontmatter } = Astro.props;
 const myTitle = ['BuriKaigi', frontmatter.title, frontmatter.name].filter(Boolean).join(' | ')
 
-const allSponsors = await Astro.glob('../../pages/2025/sponsors/*.md');
+const allSponsors = Object.values(import.meta.glob('../../pages/2025/sponsors/*.md', { eager: true }));
 const sponsors = allSponsors.filter(sponsor => sponsor.frontmatter.type === frontmatter.type)
 const index = sponsors.findIndex(sponsor => sponsor.frontmatter.name === frontmatter.name)
 const first = index === 0
