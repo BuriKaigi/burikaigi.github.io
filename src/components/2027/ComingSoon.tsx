@@ -153,7 +153,14 @@ export default function ComingSoon() {
               rel="noopener noreferrer"
               className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full border border-white/10 hover:border-white/30 transition-all duration-300"
             >
-              <span className="text-lg sm:text-xl font-medium group-hover:scale-110 transition-transform inline-block">X</span>
+              <img
+                src="/images/x.svg"
+                alt=""
+                width={20}
+                height={20}
+                className="h-5 w-5 sm:h-6 sm:w-6 shrink-0 object-contain invert opacity-90 group-hover:scale-110 group-hover:opacity-100 transition-all"
+                aria-hidden
+              />
               <span className="text-base sm:text-lg">Follow for updates</span>
             </a>
           </motion.div>
