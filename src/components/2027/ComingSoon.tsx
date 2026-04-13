@@ -57,9 +57,14 @@ function SnowParticles() {
   );
 }
 
+const bizUdpFontHref =
+  'https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap';
+
 export default function ComingSoon() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white overflow-hidden relative">
+    <>
+      <link rel="stylesheet" href={bizUdpFontHref} />
+      <div className="font-biz-udp min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white overflow-hidden relative">
       {/* Animated gradient overlay */}
       <motion.div
         className="absolute inset-0"
@@ -216,5 +221,6 @@ export default function ComingSoon() {
         <SnowParticles />
       </div>
     </div>
+    </>
   );
 }
