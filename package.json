@@ -12,12 +12,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/react": "3.6.3",
-    "@astrojs/tailwind": "5.1.5",
+    "@astrojs/react": "5.0.3",
+    "@astrojs/tailwind": "6.0.2",
     "@headlessui/react": "1.7.19",
     "@types/react": "18.3.24",
     "@types/react-dom": "18.3.7",
-    "astro": "3.6.5",
+    "astro": "5.18.1",
     "clsx": "2.1.1",
     "lucide-react": "0.562.0",
     "motion": "12.23.26",
@@ -28,6 +28,7 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
+      "version": "10.17.1",
       "onFail": "error"
     }
   }
