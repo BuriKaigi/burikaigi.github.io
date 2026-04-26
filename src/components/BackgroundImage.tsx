@@ -3,9 +3,11 @@ import clsx from 'clsx'
 export function BackgroundImage({
   className,
   position = 'full',
+  src = '/images/6ee144801b1e5221410445f7e824b669.png',
 }: {
   className?: string
   position?: 'hidden' | "full"
+  src?: string
 }) {
   return (
     <div
@@ -22,7 +24,7 @@ export function BackgroundImage({
           position === 'full' &&
             'xl:w-full xl:h-auto opacity-30 object-cover h-full w-auto',
         )}
-        src={"/images/6ee144801b1e5221410445f7e824b669.png"}
+        src={src}
         alt=""
         width={918}
         height={1495}

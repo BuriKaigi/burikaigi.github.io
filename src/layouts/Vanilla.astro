@@ -1,7 +1,16 @@
 ---
-const { title, name } = Astro.props;
-const myTitle = ['BuriKaigi', title, name].filter(Boolean).join(' | ')
+interface Props {
+  title?: string;
+  name?: string;
+  ogTitle?: string;
+}
 
+const { title, name, ogTitle } = Astro.props;
+const myTitle = ['BuriKaigi', title, name].filter(Boolean).join(' | ');
+const ogTitleResolved = ogTitle ?? 'BuriKaigi';
+const siteDescription = '寒ブリとIT技術者のマリアージュ';
+const ogImageUrl = 'https://burikaigi.dev/images/ogp.png';
+const ogExtended = ogTitle !== undefined && ogTitle !== '';
 ---
 
 <!DOCTYPE html>
@@ -16,7 +25,7 @@ const myTitle = ['BuriKaigi', title, name].filter(Boolean).join(' | ')
       gtag('config', 'G-3ENE2XQ27C');
     </script>
     <meta charset="UTF-8" />
-    <meta name="description" content="寒ブリとIT技術者のマリアージュ">
+    <meta name="description" content={siteDescription}>
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" sizes="16x16" href="/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -24,11 +33,20 @@ const myTitle = ['BuriKaigi', title, name].filter(Boolean).join(' | ')
     <meta name="generator" content={Astro.generator} />
     <head prefix="og: https://ogp.me/ns#">
     <meta property="og:url" content="https://burikaigi.dev" />
-    <meta property="og:title" content="BuriKaigi" />
+    <meta property="og:title" content={ogTitleResolved} />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content="寒ブリとIT技術者のマリアージュ" />
+    <meta property="og:description" content={siteDescription} />
     <meta property="og:site_name" content="BuriKaigi" />
-    <meta property="og:image" content="https://burikaigi.dev/images/ogp.png" />
+    <meta property="og:image" content={ogImageUrl} />
+    {ogExtended && (
+      <>
+        <meta property="og:locale" content="ja_JP" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={ogTitleResolved} />
+        <meta name="twitter:description" content={siteDescription} />
+        <meta name="twitter:image" content={ogImageUrl} />
+      </>
+    )}
     <title>{myTitle}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
