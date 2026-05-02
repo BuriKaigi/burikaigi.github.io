@@ -1,8 +1,21 @@
 ---
 import Layout from '~/layouts/Vanilla.astro';
 import ComingSoon from '~/components/2027/ComingSoon';
+import type { NewsItem, NewsModule } from '~/types/news';
+
+const allNews = Object.values(
+  import.meta.glob<NewsModule>('./news/*.md', { eager: true })
+);
+
+const latestNews: NewsItem[] = allNews
+  .map((m) => ({
+    ...m.frontmatter,
+    url: m.url.endsWith('/') ? m.url : `${m.url}/`,
+  }))
+  .sort((a, b) => (a.date < b.date ? 1 : -1))
+  .slice(0, 3);
 ---
 
 <Layout title="2027" ogTitle="BuriKaigi 2027">
-  <ComingSoon client:load />
+  <ComingSoon news={latestNews} client:load />
 </Layout>
