@@ -8,8 +8,11 @@ interface Props {
 
 const { frontmatter } = Astro.props;
 
+const pathWithSlash = Astro.url.pathname.endsWith('/')
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`;
 const shareUrl = Astro.site
-  ? new URL(Astro.url.pathname, Astro.site).toString()
+  ? new URL(pathWithSlash, Astro.site).toString()
   : Astro.url.toString();
 const shareIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
   frontmatter.title

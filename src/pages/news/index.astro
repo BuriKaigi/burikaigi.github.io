@@ -12,7 +12,7 @@ const news: NewsItem[] = allNews
     ...m.frontmatter,
     url: m.url.endsWith('/') ? m.url : `${m.url}/`,
   }))
-  .sort((a, b) => (a.date < b.date ? 1 : -1));
+  .sort((a, b) => b.date.localeCompare(a.date));
 ---
 
 <Layout title="お知らせ" ogTitle="お知らせ | BuriKaigi">
