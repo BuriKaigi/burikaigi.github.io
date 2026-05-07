@@ -3,9 +3,13 @@ import Layout from '~/layouts/Vanilla.astro';
 import type { NewsItem, NewsModule } from '~/types/news';
 import { resolveLink } from '~/types/news';
 
-const allNews = Object.values(
+// `_` プレフィックスのファイルは Astro routing から除外されるため、一覧側でも
+// 同じ規約で除外しないと詳細ページなしのリンクが出てしまう（404 リンク化）。
+const allNews = Object.entries(
   import.meta.glob<NewsModule>('./*.md', { eager: true })
-);
+)
+  .filter(([path]) => !/\/_[^/]+$/.test(path))
+  .map(([, m]) => m);
 
 const news: NewsItem[] = allNews
   .map((m) => ({
