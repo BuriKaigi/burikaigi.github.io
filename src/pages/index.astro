@@ -1,8 +1,25 @@
 ---
 import Layout from '~/layouts/Vanilla.astro';
 import ComingSoon from '~/components/2027/ComingSoon';
+import type { NewsItem, NewsModule } from '~/types/news';
+
+// `_` プレフィックスのファイルは Astro routing から除外されるため、TOP の
+// 最新一覧側でも同じ規約で除外する（詳細なしのリンク出力を防ぐ）。
+const allNews = Object.entries(
+  import.meta.glob<NewsModule>('./news/*.md', { eager: true })
+)
+  .filter(([path]) => !/\/_[^/]+$/.test(path))
+  .map(([, m]) => m);
+
+const latestNews: NewsItem[] = allNews
+  .map((m) => ({
+    ...m.frontmatter,
+    url: m.url.endsWith('/') ? m.url : `${m.url}/`,
+  }))
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .slice(0, 3);
 ---
 
 <Layout title="2027" ogTitle="BuriKaigi 2027">
-  <ComingSoon client:load />
+  <ComingSoon news={latestNews} client:load />
 </Layout>
