@@ -1,0 +1,108 @@
+---
+import { User } from 'lucide-react';
+
+// 「私たちについて」ページ（/about）で使うメンバー紹介カード。
+// 2027 のダークテーマ（グラスモーフィズム）に合わせたスタイル。
+export interface Member {
+  /** 表示名 */
+  name: string;
+  /** 所属・肩書きなど（任意） */
+  role?: string;
+  /** アイコン画像パス（public 配下 例: '/images/2027/members/01.jpg'）。未指定ならプレースホルダ表示 */
+  image?: string;
+  /** X(Twitter) のユーザー名（@ は不要・任意） */
+  x?: string;
+  /** Facebook のユーザー名（任意） */
+  facebook?: string;
+  /** GitHub のユーザー名（任意） */
+  github?: string;
+  /** 役割区分。名前の下の色分けバッジに反映される */
+  group: 'core' | 'annual';
+}
+
+interface Props {
+  member: Member;
+}
+
+const { member } = Astro.props;
+
+// group に応じたバッジのラベルと配色。色は 2 種で対等に区別する。
+// group は必須なので badge は常に確定する（フォールバック不要）。
+const badge =
+  member.group === 'core'
+    ? { label: 'コアメンバー', class: 'bg-cyan-400/15 text-cyan-200 border-cyan-300/30' }
+    : { label: '年間運営スタッフ', class: 'bg-indigo-400/15 text-indigo-200 border-indigo-300/30' };
+
+// SNS リンク（X → Facebook → GitHub の順）。値が入っているものだけ表示する。
+type Social = { label: string; href: string; icon: string };
+const socials: Social[] = [
+  member.x && { label: 'X', href: `https://x.com/${member.x}`, icon: '/images/x.svg' },
+  member.facebook && {
+    label: 'Facebook',
+    href: `https://www.facebook.com/${member.facebook}`,
+    icon: '/images/facebook.svg',
+  },
+  member.github && { label: 'GitHub', href: `https://github.com/${member.github}`, icon: '/images/github.svg' },
+].filter((s): s is Social => Boolean(s));
+---
+
+<div
+  class="group flex flex-col items-center text-center bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 hover:border-white/30 transition-all duration-300 p-5 sm:p-6"
+>
+  <div
+    class="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden flex items-center justify-center ring-2 ring-white/10 group-hover:ring-cyan-300/40 bg-gradient-to-br from-blue-500/30 to-cyan-400/20 transition-all"
+  >
+    {member.image ? (
+      <img
+        src={member.image}
+        alt={member.name}
+        width={112}
+        height={112}
+        loading="lazy"
+        class="w-full h-full object-cover"
+      />
+    ) : (
+      <User className="w-10 h-10 text-white/50" aria-hidden="true" />
+    )}
+  </div>
+
+  <h3 class="mt-4 text-base sm:text-lg font-semibold text-white/90 group-hover:text-white transition-colors">
+    {member.name}
+  </h3>
+
+  <span
+    class:list={[
+      'mt-2 inline-block text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full border font-light tracking-wide',
+      badge.class,
+    ]}
+  >
+    {badge.label}
+  </span>
+
+  {member.role && (
+    <p class="mt-2 text-xs sm:text-sm text-white/60 font-light leading-snug">{member.role}</p>
+  )}
+
+  {socials.length > 0 && (
+    <div class="mt-3 flex items-center gap-2">
+      {socials.map((social) => (
+        <a
+          href={social.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${member.name} の ${social.label}`}
+          class="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/30 flex items-center justify-center transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+        >
+          <img
+            src={social.icon}
+            alt=""
+            width={16}
+            height={16}
+            class="h-4 w-4 object-contain invert opacity-80 group-hover:opacity-100 transition-opacity"
+            aria-hidden="true"
+          />
+        </a>
+      ))}
+    </div>
+  )}
+</div>
