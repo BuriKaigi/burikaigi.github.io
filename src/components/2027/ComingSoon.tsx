@@ -191,6 +191,19 @@ export default function ComingSoon({ news = [] }: ComingSoonProps) {
                 />
                 <span className="text-base sm:text-lg text-white/90">Follow for updates</span>
               </a>
+              <a
+                href="/about/"
+                aria-label="BuriKaigi 実行委員会について"
+                className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full border border-white/10 hover:border-white/30 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+              >
+                <span className="text-base sm:text-lg text-white/90">私たちについて</span>
+                <span
+                  aria-hidden="true"
+                  className="text-white/70 group-hover:translate-x-0.5 transition-transform"
+                >
+                  →
+                </span>
+              </a>
             </motion.div>
 
             {/* Latest News */}

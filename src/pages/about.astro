@@ -1,0 +1,177 @@
+---
+import Layout from '~/layouts/Vanilla.astro';
+import MemberCard from '~/components/2027/MemberCard.astro';
+import type { Member } from '~/components/2027/MemberCard.astro';
+
+// ============================================================================
+// メンバー追加時の記入項目:
+//   name     … 表示名
+//   group    … 'core'（コアメンバー）/ 'annual'（年間運営スタッフ）。色分けバッジに反映
+//   role     … 所属・肩書きなど（任意。省略時は非表示）
+//   image    … アイコン画像パス（任意）。public 配下 例: '/images/2027/members/xxx.png'、
+//              または外部URL。未指定なら人物アイコンのプレースホルダを表示
+//   x        … X(Twitter) のユーザー名（@ は不要・任意）
+//   facebook … Facebook のユーザー名（任意）
+//   github   … GitHub のユーザー名（任意）
+//
+// コアメンバー・年間運営スタッフは 1 つの「実行委員会」として並べ、
+// 各カードの色分けバッジ（group）で区別する。
+//
+// 【表示順】この配列の並び順をそのまま表示する（自動ソートはしない）。
+// メンバー追加時は適切な位置に挿入すること。
+// ============================================================================
+
+const members: Member[] = [
+  {
+    name: '石川湧基',
+    group: 'annual',
+    image: '/images/2027/members/wakasy.png',
+    x: 'wakasy',
+  },
+  {
+    name: 'kunitoo',
+    group: 'annual',
+    image: 'https://avatars.githubusercontent.com/kunitoo',
+    x: 'kunitoo',
+    github: 'kunitoo',
+  },
+  {
+    name: '金子雄一',
+    group: 'core',
+    image: '/images/2027/members/rdkaneko.png',
+    x: 'rdkaneko',
+  },
+  {
+    name: 'なぎせゆうき',
+    group: 'core',
+    image: '/images/2027/members/nagise.jpg',
+    x: 'nagise',
+  },
+  {
+    name: 'くまぜん',
+    group: 'core',
+    image: '/images/2027/members/kumazen.png',
+    x: 'kumazen',
+  },
+  {
+    name: '小島 富治雄',
+    group: 'core',
+    image: '/images/2027/members/fujiwo.png',
+    x: 'Fujiwo',
+    github: 'Fujiwo',
+  },
+  {
+    name: 'ssakita',
+    group: 'annual',
+    image: '/images/2027/members/ssakita.png',
+    x: 'ssakita_555',
+  },
+  {
+    name: '鈴木 孝明',
+    group: 'core',
+    image: '/images/2027/members/xin9le.png',
+    x: 'xin9le',
+    github: 'xin9le',
+  },
+  {
+    name: '土本 幸多',
+    group: 'annual',
+    image: '/images/2027/members/mocho.png',
+    x: 'mocho271828',
+  },
+  {
+    name: '冨岡 佳史',
+    group: 'annual',
+    image: '/images/2027/members/gummycandy.png',
+    x: 'GummyCandy1206',
+  },
+  {
+    name: 'mugi_uno',
+    group: 'core',
+    image: 'https://avatars.githubusercontent.com/mugi-uno',
+    x: 'mugi_uno',
+    github: 'mugi-uno',
+  },
+  {
+    name: 'hikaruworld',
+    group: 'core',
+    image: 'https://pbs.twimg.com/profile_images/332815632/icon_128_400x400.png',
+    x: 'hikaruworld',
+    github: 'hikaruworld',
+  },
+  {
+    name: '山田 弘隆',
+    group: 'annual',
+    image: '/images/2027/members/yda.png',
+    x: '_yda',
+  },
+];
+---
+
+<Layout
+  title="私たちについて"
+  ogTitle="私たちについて | BuriKaigi"
+  ogDescription="BuriKaigi を企画・運営する実行委員会のメンバー紹介です。コアメンバーと年間運営スタッフが力を合わせて、寒ブリの季節の北陸で開催しています。"
+>
+  <div class="font-biz-udp min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-slate-950/80 via-slate-900/70 to-blue-950/80 pointer-events-none"></div>
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-300/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-200/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <header class="relative z-10 sticky top-0 bg-slate-950/60 backdrop-blur-md border-b border-white/10">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a
+          href="/"
+          class="text-lg font-semibold bg-gradient-to-r from-blue-400 via-cyan-300 to-white bg-clip-text text-transparent hover:opacity-80 transition-opacity rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
+        >
+          BuriKaigi
+        </a>
+        <span class="text-sm text-white/60 font-light tracking-widest uppercase">About Us</span>
+      </div>
+    </header>
+
+    <main class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+      <!-- Hero -->
+      <div class="text-center mb-12 sm:mb-16">
+        <p class="text-xs sm:text-sm text-white/60 font-light tracking-widest uppercase mb-3">
+          About Us
+        </p>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-wide bg-gradient-to-r from-blue-400 via-cyan-300 to-white bg-clip-text text-transparent">
+          私たちについて
+        </h1>
+        <p class="mt-6 max-w-2xl mx-auto text-sm sm:text-base text-white/75 font-light leading-[2.4]">BuriKaigi は、有志のメンバーが集まる<span class="text-cyan-300">実行委員会方式</span>で運営しています。<br class="hidden sm:inline" />一人ひとりが力を合わせて、毎年の開催を作り上げています。<br class="hidden sm:inline" />BuriKaigi 2027 からは新たな取り組みとして、<br class="hidden sm:inline" />準備・企画の段階から関わる<span class="text-cyan-300">年間運営スタッフ</span>を迎えています。</p>
+      </div>
+
+      <!-- 実行委員会 -->
+      <section aria-labelledby="members-heading" class="mb-16 sm:mb-20">
+        <div class="text-center mb-6 sm:mb-8">
+          <h2
+            id="members-heading"
+            class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-400 via-cyan-300 to-white bg-clip-text text-transparent"
+          >
+            実行委員会
+          </h2>
+          <p class="mt-2 text-xs sm:text-sm text-white/60 font-light">
+            BuriKaigi を企画・運営するメンバー
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          {members.map((member) => (
+            <MemberCard member={member} />
+          ))}
+        </div>
+      </section>
+
+      <!-- Back to top -->
+      <div class="mt-16 text-center">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full border border-white/10 hover:border-white/30 text-white/85 hover:text-white transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+        >
+          ← トップに戻る
+        </a>
+      </div>
+    </main>
+  </div>
+</Layout>
