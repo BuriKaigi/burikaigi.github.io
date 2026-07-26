@@ -17,8 +17,7 @@ import type { Member } from '~/components/2027/MemberCard.astro';
 // コアメンバー・年間運営スタッフは 1 つの「実行委員会」として並べ、
 // 各カードの色分けバッジ（group）で区別する。
 //
-// 【表示順】この配列の並び順をそのまま表示する（自動ソートはしない）。
-// メンバー追加時は適切な位置に挿入すること。
+// 【表示順】name（名前）の辞書順で表示する。
 // ============================================================================
 
 const members: Member[] = [
@@ -93,7 +92,16 @@ const members: Member[] = [
     x: 'hikaruworld',
     github: 'hikaruworld',
   },
+  {
+    name: 'ふぁらお加藤',
+    group: 'core',
+    image: 'https://pxw.me/images/photo-2025-buri.webp',
+    x: 'PharaohKJ',
+    github: 'PharaohKJ',
+  },
 ];
+
+const sortedMembers = [...members].sort((a, b) => a.name.localeCompare(b.name, 'ja'));
 ---
 
 <Layout
@@ -145,7 +153,7 @@ const members: Member[] = [
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {members.map((member) => (
+          {sortedMembers.map((member) => (
             <MemberCard member={member} />
           ))}
         </div>
