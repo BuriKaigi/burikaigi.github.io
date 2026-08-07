@@ -17,7 +17,7 @@ export interface Member {
   /** GitHub のユーザー名（任意） */
   github?: string;
   /** 役割区分。名前の下の色分けバッジに反映される */
-  group: 'core' | 'annual';
+  group: 'core' | 'annual' | 'creative' ;
 }
 
 interface Props {
@@ -26,12 +26,14 @@ interface Props {
 
 const { member } = Astro.props;
 
-// group に応じたバッジのラベルと配色。色は 2 種で対等に区別する。
+// group に応じたバッジのラベルと配色。
 // group は必須なので badge は常に確定する（フォールバック不要）。
 const badge =
   member.group === 'core'
     ? { label: 'コアメンバー', class: 'bg-cyan-400/15 text-cyan-200 border-cyan-300/30' }
-    : { label: '年間運営スタッフ', class: 'bg-indigo-400/15 text-indigo-200 border-indigo-300/30' };
+    : member.group === 'creative'
+      ? { label: 'クリエイティブスタッフ', class: 'bg-fuchsia-400/15 text-fuchsia-200 border-fuchsia-300/30' }
+      : { label: '年間運営スタッフ', class: 'bg-indigo-400/15 text-indigo-200 border-indigo-300/30' };
 
 // SNS リンク（X → Facebook → GitHub の順）。値が入っているものだけ表示する。
 type Social = { label: string; href: string; icon: string };
