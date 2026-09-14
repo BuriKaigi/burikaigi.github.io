@@ -9,7 +9,11 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check:build": "astro build",
+    "check:site": "astro build && playwright test",
+    "check:links": "astro build && playwright test --grep \"リンク\"",
+    "check:images": "astro build && playwright test --grep \"画像\""
   },
   "dependencies": {
     "@astrojs/markdown-remark": "7.3.1",
@@ -38,5 +42,8 @@
     "overrides": {
       "postcss": "8.5.28"
     }
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
   }
 }
