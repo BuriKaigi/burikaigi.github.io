@@ -5,6 +5,7 @@ import { Hero } from '~/components/2024/Hero';
 import { Container } from "~/components/Container";
 import { Newsletter } from '~/components/Newsletter';
 import { Button } from '~/components/Button';
+import { safeExternal } from '~/types/news';
 
 interface Props {
   title?: string;
@@ -12,6 +13,7 @@ interface Props {
 
 const { title, frontmatter } = Astro.props;
 const myTitle = ['BuriKaigi', frontmatter.title, frontmatter.name].filter(Boolean).join(' | ')
+const siteUrl = safeExternal(frontmatter.siteUrl);
 
 const allSponsors = Object.values(import.meta.glob('../../pages/2024/sponsors/*.md', { eager: true }));
 const index = allSponsors.findIndex(speaker => speaker.frontmatter.name === frontmatter.name)
@@ -22,7 +24,7 @@ const last = index === allSponsors.length - 1;
 
 <!DOCTYPE html>
 <html lang="ja">
-<head>
+<head prefix="og: https://ogp.me/ns#">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ENE2XQ27C"></script>
   <script>
@@ -39,7 +41,6 @@ const last = index === allSponsors.length - 1;
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta name="generator" content={Astro.generator} />
-  <head prefix="og: https://ogp.me/ns#">
     <meta property="og:url" content="https://burikaigi.dev" />
     <meta property="og:title" content="BuriKaigi" />
     <meta property="og:type" content="website" />
@@ -80,9 +81,13 @@ const last = index === allSponsors.length - 1;
             {frontmatter.name}
           </h3>
           <p class="mt-1 text-base tracking-tight text-slate-500">
-            <a href={frontmatter.siteUrl} target="_blank" rel="noopener noreferrer">
-              {frontmatter.siteUrl}
-            </a>
+            {siteUrl ? (
+              <a href={siteUrl} target="_blank" rel="noopener noreferrer">
+                {frontmatter.siteUrl}
+              </a>
+            ) : (
+              frontmatter.siteUrl
+            )}
           </p>
         </div>
         <div class="mt-2 flex gap-2 items-center">
