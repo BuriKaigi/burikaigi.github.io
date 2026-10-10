@@ -74,7 +74,7 @@ export function Speakers({ speakers = [] }: SpeakersProps) {
         <div className="mt-14 grid grid-cols-1 items-start gap-x-8 gap-y-8 sm:mt-16 sm:gap-y-16 lg:mt-24 lg:grid-cols-4">
           {speakers.map((speaker, speakerIndex) => (
             <div key={speaker.name}>
-              <div className="group relative h-[17.5rem] transform overflow-hidden rounded-4xl">
+              <div className="group relative h-70 transform overflow-hidden rounded-4xl">
                 <div
                   className={clsx(
                     'absolute bottom-6 left-0 right-4 top-0 rounded-4xl border transition duration-300 group-hover:scale-95 xl:right-6',

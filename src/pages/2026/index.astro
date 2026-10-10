@@ -193,8 +193,8 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
 ---
 
 <Layout>
-  <div class="bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 text-gray-900 scroll-smooth">
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200">
+  <div class="bg-linear-to-br from-slate-50 via-blue-50 to-cyan-50 text-gray-900 scroll-smooth">
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-sm border-b border-gray-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <img src="/images/2026/burikaigi-logo.png" alt="BuriKaigi ロゴ" class="w-10 h-10 object-contain" />
@@ -220,10 +220,10 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
       </div>
       <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
         <div>
-          <p class="inline-flex items-center gap-2 bg-teal-600 text-white px-5 py-2 rounded-full text-sm shadow">北陸ITエンジニアカンファレンス</p>
+          <p class="inline-flex items-center gap-2 bg-teal-600 text-white px-5 py-2 rounded-full text-sm shadow-sm">北陸ITエンジニアカンファレンス</p>
         </div>
         <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900">BuriKaigi 2026</h1>
-        <div class="mx-auto max-w-2xl rounded-2xl border-2 border-teal-600 bg-white/90 px-6 py-4 text-left text-sm sm:text-base text-gray-800 shadow">
+        <div class="mx-auto max-w-2xl rounded-2xl border-2 border-teal-600 bg-white/90 px-6 py-4 text-left text-sm sm:text-base text-gray-800 shadow-sm">
           <p class="font-semibold text-teal-700 mb-1 text-center">
             BuriKaigi 2026 は無事終了しました。<br />
             ご参加いただいた皆さまありがとうございました。
@@ -238,7 +238,7 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
           <a href="/2026/report" class="bg-white text-gray-900 px-10 py-4 rounded-full border-2 border-gray-900 hover:bg-gray-100 transition-colors">参加レポートを見る</a>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          <div class="bg-white rounded-2xl p-6 border-2 border-gray-900 shadow">
+          <div class="bg-white rounded-2xl p-6 border-2 border-gray-900 shadow-sm">
             <div class="text-sm text-gray-600 mb-3 flex flex-col items-center gap-2 text-center">
               <Calendar className="w-10 h-10" aria-hidden="true" />
               <span>開催日時</span>
@@ -247,7 +247,7 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
             <div>2026年1月10日（土）</div>
             <div class="text-sm text-gray-600 mt-1">10:30 - 18:00</div>
           </div>
-          <div class="bg-white rounded-2xl p-6 border-2 border-gray-900 shadow">
+          <div class="bg-white rounded-2xl p-6 border-2 border-gray-900 shadow-sm">
             <div class="text-sm text-gray-600 mb-3 flex flex-col items-center gap-2 text-center">
               <MapPin className="w-10 h-10" aria-hidden="true" />
               <span>会場</span>
@@ -255,7 +255,7 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
             <div>富山国際会議場</div>
             <div class="text-sm text-gray-600 mt-1">富山市大手町1-2</div>
           </div>
-          <div class="bg-white rounded-2xl p-6 border-2 border-gray-900 shadow">
+          <div class="bg-white rounded-2xl p-6 border-2 border-gray-900 shadow-sm">
             <div class="text-sm text-gray-600 mb-3 flex flex-col items-center gap-2 text-center">
               <Ticket className="w-10 h-10" aria-hidden="true" />
               <span>参加費</span>
@@ -278,7 +278,7 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature) => (
-            <div class="bg-gray-50 rounded-2xl p-6 border-2 border-gray-200 hover:border-teal-600 transition-colors shadow-sm">
+            <div class="bg-gray-50 rounded-2xl p-6 border-2 border-gray-200 hover:border-teal-600 transition-colors shadow-xs">
               <div class="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center mb-4">
                 <feature.icon className="w-7 h-7" aria-hidden="true" />
               </div>
@@ -406,8 +406,8 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
 
         <div class="mb-14">
           <div class="text-center mb-6">
-            <h3 class="text-2xl mb-2 bg-gradient-to-r from-blue-700 to-cyan-700 bg-clip-text text-transparent">ブリスポンサー</h3>
-            <div class="w-20 h-1 bg-gradient-to-r from-blue-700 to-cyan-700 mx-auto rounded-full"></div>
+            <h3 class="text-2xl mb-2 bg-linear-to-r from-blue-700 to-cyan-700 bg-clip-text text-transparent">ブリスポンサー</h3>
+            <div class="w-20 h-1 bg-linear-to-r from-blue-700 to-cyan-700 mx-auto rounded-full"></div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {sponsors.buri.map((sponsor) => (
@@ -422,8 +422,8 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
 
         <div class="mb-14">
           <div class="text-center mb-6">
-            <h3 class="text-2xl mb-2 bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">ガンドスポンサー</h3>
-            <div class="w-20 h-1 bg-gradient-to-r from-emerald-600 to-teal-600 mx-auto rounded-full"></div>
+            <h3 class="text-2xl mb-2 bg-linear-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">ガンドスポンサー</h3>
+            <div class="w-20 h-1 bg-linear-to-r from-emerald-600 to-teal-600 mx-auto rounded-full"></div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {sponsors.gando.map((sponsor) => (
@@ -438,8 +438,8 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
 
         <div class="mb-14">
           <div class="text-center mb-6">
-            <h3 class="text-2xl mb-2 bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">フクラギスポンサー</h3>
-            <div class="w-20 h-1 bg-gradient-to-r from-yellow-600 to-orange-600 mx-auto rounded-full"></div>
+            <h3 class="text-2xl mb-2 bg-linear-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">フクラギスポンサー</h3>
+            <div class="w-20 h-1 bg-linear-to-r from-yellow-600 to-orange-600 mx-auto rounded-full"></div>
           </div>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {sponsors.fukuragi.map((sponsor) => (
@@ -454,8 +454,8 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
 
         <div>
           <div class="text-center mb-6">
-            <h3 class="text-2xl mb-2 bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">コヅクラスポンサー</h3>
-            <div class="w-20 h-1 bg-gradient-to-r from-pink-600 to-rose-600 mx-auto rounded-full"></div>
+            <h3 class="text-2xl mb-2 bg-linear-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">コヅクラスポンサー</h3>
+            <div class="w-20 h-1 bg-linear-to-r from-pink-600 to-rose-600 mx-auto rounded-full"></div>
           </div>
           <div class="grid grid-cols-3 md:grid-cols-5 gap-6 max-w-5xl mx-auto">
             {sponsors.kozukura.map((sponsor) => (
@@ -472,8 +472,8 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
 
         <div class="mt-14">
           <div class="text-center mb-6">
-            <h3 class="text-2xl mb-2 bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent">後援</h3>
-            <div class="w-20 h-1 bg-gradient-to-r from-slate-600 to-slate-800 mx-auto rounded-full"></div>
+            <h3 class="text-2xl mb-2 bg-linear-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent">後援</h3>
+            <div class="w-20 h-1 bg-linear-to-r from-slate-600 to-slate-800 mx-auto rounded-full"></div>
           </div>
           <div class="grid grid-cols-3 md:grid-cols-5 gap-6 max-w-5xl mx-auto">
             {sponsors.supporters.map((sponsor) => (
@@ -564,7 +564,7 @@ const venueMapLink = 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37';
                     href={venueMapLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full hover:bg-teal-700 transition-colors shadow"
+                    class="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full hover:bg-teal-700 transition-colors shadow-sm"
                   >
                     <MapPin className="w-5 h-5" aria-hidden="true" />
                     Google Mapで開く

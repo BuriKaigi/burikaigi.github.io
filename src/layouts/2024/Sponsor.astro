@@ -1,4 +1,5 @@
 ---
+import '~/styles/global.css';
 import clsx from 'clsx'
 import { Header } from '~/components/Header';
 import { Hero } from '~/components/2024/Hero';
@@ -68,7 +69,7 @@ const last = index === allSponsors.length - 1;
     </Container>
     <Container className="flex gap-8 mt-12 flex-col">
       <div class="max-lg:flex max-lg:flex-col max-lg:items-center">
-        <div class="h-auto w-[30rem] max-w-full transform">
+        <div class="h-auto w-120 max-w-full transform">
           <img
             class="inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-110"
             src={frontmatter.image}

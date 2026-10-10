@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 
 import react from "@astrojs/react";
@@ -19,7 +19,10 @@ const sanitizeSchema = {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://burikaigi.dev',
-  integrations: [tailwind(), react()],
+  integrations: [react()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   markdown: {
     rehypePlugins: [[rehypeSanitize, sanitizeSchema]],
   },

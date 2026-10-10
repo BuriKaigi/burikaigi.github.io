@@ -480,7 +480,7 @@ function TimeSlots({ day, className, speakers }: { day: Day; className?: string,
       role="list"
       className={clsx(
         className,
-        'space-y-4 bg-white/60 px-10 py-14 text-center shadow-xl shadow-gray-900/5 backdrop-blur',
+        'space-y-4 bg-white/60 px-10 py-14 text-center shadow-xl shadow-gray-900/5 backdrop-blur-sm',
       )}
     >
       {day.timeSlots.map((timeSlot, timeSlotIndex) => (

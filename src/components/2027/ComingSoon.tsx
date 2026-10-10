@@ -72,7 +72,7 @@ export default function ComingSoon({ news = [] }: ComingSoonProps) {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="font-biz-udp min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white overflow-hidden relative">
+      <div className="font-biz-udp min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-blue-950 text-white overflow-hidden relative">
         {/* Animated gradient overlay (静止時はベース1色) */}
         {reduceMotion ? (
           <div
@@ -128,7 +128,7 @@ export default function ComingSoon({ news = [] }: ComingSoonProps) {
               className="space-y-4 sm:space-y-6"
             >
               <h1 className="text-6xl sm:text-8xl font-bold tracking-wide">
-                <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-white bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-blue-400 via-cyan-300 to-white bg-clip-text text-transparent">
                   BuriKaigi
                 </span>
               </h1>
@@ -179,7 +179,7 @@ export default function ComingSoon({ news = [] }: ComingSoonProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X で BuriKaigi をフォロー"
-                className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full border border-white/10 hover:border-white/30 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+                className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full border border-white/10 hover:border-white/30 transition-all duration-300 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
               >
                 <img
                   src="/images/x.svg"
@@ -194,7 +194,7 @@ export default function ComingSoon({ news = [] }: ComingSoonProps) {
               <a
                 href="/about/"
                 aria-label="BuriKaigi 実行委員会について"
-                className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full border border-white/10 hover:border-white/30 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+                className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full border border-white/10 hover:border-white/30 transition-all duration-300 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
               >
                 <span className="text-base sm:text-lg text-white/90">私たちについて</span>
                 <span
@@ -227,12 +227,12 @@ export default function ComingSoon({ news = [] }: ComingSoonProps) {
                   </p>
                   <a
                     href="/news/"
-                    className="text-[10px] sm:text-xs text-white/60 hover:text-white/90 transition-colors rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+                    className="text-[10px] sm:text-xs text-white/60 hover:text-white/90 transition-colors rounded-sm focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
                   >
                     すべて見る →
                   </a>
                 </div>
-                <ul className="flex flex-col divide-y divide-white/10 border border-white/10 rounded-lg bg-white/5 backdrop-blur-sm overflow-hidden">
+                <ul className="flex flex-col divide-y divide-white/10 border border-white/10 rounded-lg bg-white/5 backdrop-blur-xs overflow-hidden">
                   {news.map((item, index) => {
                     const { href, isExternal } = resolveLink(item);
                     return (
@@ -246,7 +246,7 @@ export default function ComingSoon({ news = [] }: ComingSoonProps) {
                           href={href}
                           target={isExternal ? '_blank' : undefined}
                           rel={isExternal ? 'noopener noreferrer' : undefined}
-                          className="group flex items-center gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5 hover:bg-white/5 transition-colors text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cyan-300"
+                          className="group flex items-center gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5 hover:bg-white/5 transition-colors text-left focus-visible:outline-solid focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-300"
                         >
                           <time
                             dateTime={item.date}
@@ -306,7 +306,7 @@ export default function ComingSoon({ news = [] }: ComingSoonProps) {
               href={`/${year}/`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group px-2.5 sm:px-3 py-1 sm:py-1.5 bg-white/5 hover:bg-white/10 backdrop-blur-sm rounded-md border border-white/10 hover:border-white/30 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+              className="group px-2.5 sm:px-3 py-1 sm:py-1.5 bg-white/5 hover:bg-white/10 backdrop-blur-xs rounded-md border border-white/10 hover:border-white/30 transition-all duration-300 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
             >
               <span className="text-xs sm:text-sm text-white/75 group-hover:text-white font-light transition-colors">
                 {year}

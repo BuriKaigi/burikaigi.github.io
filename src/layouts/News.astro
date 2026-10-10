@@ -26,8 +26,8 @@ const shareIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
   ogDescription={frontmatter.summary}
   publishedTime={`${frontmatter.date}T00:00:00+09:00`}
 >
-  <div class="font-biz-udp min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-slate-950/80 via-slate-900/70 to-blue-950/80 pointer-events-none"></div>
+  <div class="font-biz-udp min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-blue-950 text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-linear-to-br from-slate-950/80 via-slate-900/70 to-blue-950/80 pointer-events-none"></div>
     <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-cyan-300/10 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-200/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -35,13 +35,13 @@ const shareIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <a
           href="/"
-          class="text-lg font-semibold bg-gradient-to-r from-blue-400 via-cyan-300 to-white bg-clip-text text-transparent hover:opacity-80 transition-opacity rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
+          class="text-lg font-semibold bg-linear-to-r from-blue-400 via-cyan-300 to-white bg-clip-text text-transparent hover:opacity-80 transition-opacity rounded-sm focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
         >
           BuriKaigi
         </a>
         <a
           href="/news/"
-          class="text-sm text-white/70 hover:text-white/90 transition-colors rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
+          class="text-sm text-white/70 hover:text-white/90 transition-colors rounded-sm focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
         >
           お知らせ一覧
         </a>
@@ -53,7 +53,7 @@ const shareIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         <p class="text-xs sm:text-sm text-white/60 font-light tracking-widest uppercase mb-3">
           News
         </p>
-        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold leading-snug mb-4 bg-gradient-to-r from-blue-400 via-cyan-300 to-white bg-clip-text text-transparent">
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold leading-snug mb-4 bg-linear-to-r from-blue-400 via-cyan-300 to-white bg-clip-text text-transparent">
           {frontmatter.title}
         </h1>
         <time
@@ -75,7 +75,7 @@ const shareIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
             href={shareIntent}
             target="_blank"
             rel="noopener noreferrer"
-            class="group inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full border border-white/10 hover:border-white/30 text-white/85 hover:text-white transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+            class="group inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full border border-white/10 hover:border-white/30 text-white/85 hover:text-white transition-all duration-300 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
             aria-label="この記事を X でシェア"
           >
             <img
@@ -94,7 +94,7 @@ const shareIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       <div class="mt-10 text-center">
         <a
           href="/news/"
-          class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full border border-white/10 hover:border-white/30 text-white/85 hover:text-white transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+          class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full border border-white/10 hover:border-white/30 text-white/85 hover:text-white transition-all duration-300 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
         >
           ← お知らせ一覧に戻る
         </a>
