@@ -1,5 +1,6 @@
 ---
 import Layout from '~/layouts/2027Sub.astro';
+import Prose from '~/components/2027/Prose.astro';
 import type { NewsFrontmatter } from '~/types/news';
 
 interface Props {
@@ -32,9 +33,9 @@ const shareIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       <time datetime={frontmatter.date}>{frontmatter.date.replaceAll('-', '.')}</time>
     </header>
 
-    <div class="news-body">
+    <Prose>
       <slot />
-    </div>
+    </Prose>
 
     <footer class="article-foot">
       <a class="btn ghost" href="/news/">← お知らせ一覧</a>
@@ -47,8 +48,9 @@ const shareIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
 </Layout>
 
 <style>
+  /* 本文 17px で 1 行およそ 54 字（全角のみの段落で実測） */
   article {
-    max-width: 760px;
+    max-width: 840px;
     margin: 0 auto;
   }
 
@@ -88,93 +90,5 @@ const shareIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     width: 16px;
     height: 16px;
     filter: invert(1);
-  }
-
-  /* Markdown 本文。要素は Markdown から生成されるので :global で当てる */
-  .news-body {
-    font-size: 16px;
-  }
-  .news-body :global(h2) {
-    margin: 2.5em 0 0.8em;
-    padding-left: 14px;
-    border-left: 4px solid var(--kin);
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: 22px;
-    line-height: 1.5;
-    color: var(--ai);
-  }
-  .news-body :global(h3) {
-    margin: 2em 0 0.6em;
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: 18px;
-    color: var(--ai);
-  }
-  .news-body :global(p) {
-    margin: 1em 0 0;
-    line-height: 1.95;
-  }
-  .news-body :global(strong) {
-    font-weight: 700;
-    color: var(--ai);
-  }
-  .news-body :global(a) {
-    color: var(--ai);
-    text-decoration: underline;
-    text-decoration-color: var(--kin);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.25em;
-  }
-  .news-body :global(a:hover) {
-    background: var(--washi);
-  }
-  .news-body :global(ul),
-  .news-body :global(ol) {
-    margin: 1em 0 0;
-    padding-left: 1.5em;
-  }
-  .news-body :global(ul) {
-    list-style: disc;
-  }
-  .news-body :global(ol) {
-    list-style: decimal;
-  }
-  .news-body :global(li) {
-    margin-top: 0.4em;
-  }
-  .news-body :global(li::marker) {
-    color: var(--kin-deep);
-  }
-  .news-body :global(code) {
-    background: var(--washi);
-    padding: 0.15em 0.45em;
-    border-radius: 4px;
-    font-size: 0.9em;
-  }
-  .news-body :global(pre) {
-    margin-top: 1.25em;
-    padding: 1em 1.25em;
-    border-radius: 8px;
-    overflow-x: auto;
-  }
-  .news-body :global(pre code) {
-    background: transparent;
-    padding: 0;
-  }
-  .news-body :global(blockquote) {
-    margin: 1.25em 0 0;
-    padding: 0.8em 1.2em;
-    border-left: 4px solid var(--kin);
-    background: var(--washi);
-    border-radius: 0 8px 8px 0;
-  }
-  .news-body :global(blockquote > :first-child) {
-    margin-top: 0;
-  }
-  .news-body :global(hr) {
-    border: 0;
-    border-top: 1px solid var(--line);
-    margin: 2.5em 0;
   }
 </style>
