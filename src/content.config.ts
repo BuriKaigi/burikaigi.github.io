@@ -17,8 +17,10 @@ const sponsors2027 = defineCollection({
   schema: z.object({
     name: z.string(),
     plan: z.enum(sponsorPlanIds),
-    logo: imagePath,
-    url: z.url(),
+    /** 未指定なら名前を文字で表示する */
+    logo: imagePath.optional(),
+    /** 未指定ならリンクにしない */
+    url: z.url().optional(),
     x: z.string().optional(),
     order: z.number().default(0),
   }),

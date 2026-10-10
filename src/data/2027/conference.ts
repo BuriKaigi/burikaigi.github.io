@@ -14,17 +14,34 @@ export const conference = {
   /** タイムテーブル（fortee など）。設定すると「BuriKaigiとは？」にリンクを出す */
   timetableUrl: undefined as string | undefined,
   x: 'burikaigi',
+  /**
+   * スポンサー募集中の告知。設定するとスポンサーが 0 件でもスポンサー欄を出し、その先頭に表示する。
+   * 募集が終わったら undefined にする
+   */
+  sponsorRecruitment: {
+    deadline: '2026 年 10 月末',
+    formUrl: 'https://fortee.jp/burikaigi-2027/sponsor/form',
+    documentUrl: 'https://drive.google.com/file/d/1PJenSFoLIWL4EzyfvIBebok39mOqKdoF/view?usp=sharing',
+    newsUrl: '/news/2026-09-10/',
+  } as { deadline: string; formUrl: string; documentUrl?: string; newsUrl?: string } | undefined,
   /** ハッシュタグ（# なし）。ヒーローの日付・会場の下に X の検索リンクとして出す */
   hashtag: 'burikaigi',
   /**
-   * 「BuriKaigiとは？」の上に大きく出す告知リンク（CFP 募集中など）。
-   * 終わったら undefined にすると消える
+   * 「BuriKaigiとは？」の上に大きく出す告知リンク（CFP 募集中など）。この順に並べる。
+   * 終わったものは配列から消す
    */
-  highlight: {
-    label: 'プロポーザル募集中',
-    href: 'https://fortee.jp/burikaigi-2027/speaker/proposal/cfp',
-    note: '締切 2026.10.25（日）23:59 JST',
-  } as { label: string; href: string; note?: string } | undefined,
+  highlights: [
+    {
+      label: 'プロポーザル募集中',
+      href: 'https://fortee.jp/burikaigi-2027/speaker/proposal/cfp',
+      note: '締切 2026.10.25（日）23:59 JST',
+    },
+    {
+      label: 'スポンサー募集中',
+      href: '#sponsors',
+      note: '締切 2026 年 10 月末',
+    },
+  ] as { label: string; href: string; note?: string }[],
 } as const;
 
 // 'YYYY-MM-DD' を日付表示用に分解する。タイムゾーンの影響を受けないよう UTC で曜日を求める。

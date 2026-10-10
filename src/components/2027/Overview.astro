@@ -2,24 +2,27 @@
 import { conference, toDayParts } from '~/data/2027/conference';
 
 const [first, last] = conference.days.map(toDayParts);
-const { highlight } = conference;
-const isExternal = highlight ? /^https?:\/\//.test(highlight.href) : false;
+const isExternal = (href: string) => /^https?:\/\//.test(href);
 ---
 
 <!-- 海：ヒーローの原画の下端の藍帯から地続き -->
 <section class="sea" id="overview">
   <div class="overview wrap">
-    {highlight && (
-      <p class="highlight">
-        <a
-          href={highlight.href}
-          target={isExternal ? '_blank' : undefined}
-          rel={isExternal ? 'noopener noreferrer' : undefined}
-        >
-          {highlight.label}<span class="arrow" aria-hidden="true">→</span>
-        </a>
-        {highlight.note && <span class="note">{highlight.note}</span>}
-      </p>
+    {conference.highlights.length > 0 && (
+      <ul class="highlights">
+        {conference.highlights.map((highlight) => (
+          <li>
+            <a
+              href={highlight.href}
+              target={isExternal(highlight.href) ? '_blank' : undefined}
+              rel={isExternal(highlight.href) ? 'noopener noreferrer' : undefined}
+            >
+              {highlight.label}<span class="arrow" aria-hidden="true">→</span>
+            </a>
+            {highlight.note && <span class="note">{highlight.note}</span>}
+          </li>
+        ))}
+      </ul>
     )}
     <h2 class="section-title">BuriKaigiとは？</h2>
     <div class="overview-grid">
@@ -76,11 +79,17 @@ const isExternal = highlight ? /^https?:\/\//.test(highlight.href) : false;
   }
 
   /* 告知リンク：藍の上に金で大きく出す。ホバーは色だけ変える */
-  .highlight {
+  .highlights {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px clamp(24px, 4vw, 56px);
+    list-style: none;
     margin: 0 0 clamp(56px, 8vw, 96px);
+    padding: 0;
     text-align: center;
   }
-  .highlight a {
+  .highlights a {
     display: inline-flex;
     align-items: center;
     gap: 0.5em;
@@ -96,10 +105,10 @@ const isExternal = highlight ? /^https?:\/\//.test(highlight.href) : false;
     text-decoration: none;
     transition: background 0.2s;
   }
-  .highlight a:hover {
+  .highlights a:hover {
     background: #ffd76e;
   }
-  .highlight .note {
+  .highlights .note {
     display: block;
     margin-top: 14px;
     font-size: 14px;

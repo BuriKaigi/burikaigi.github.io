@@ -7,6 +7,7 @@ import News from '~/components/2027/News.astro';
 import Keynotes from '~/components/2027/Keynotes.astro';
 import Events from '~/components/2027/Events.astro';
 import Sponsors from '~/components/2027/Sponsors.astro';
+import ComingSoonSection from '~/components/2027/ComingSoonSection.astro';
 import Footer from '~/components/2027/Footer.astro';
 import { conference } from '~/data/2027/conference';
 import { getEvents, getKeynotes, getSponsors } from '~/data/2027/content';
@@ -35,8 +36,10 @@ const sections = [
   { id: 'overview', label: 'BuriKaigiとは？', visible: true },
   { id: 'news', label: 'お知らせ', visible: latestNews.length > 0 },
   { id: 'keynotes', label: '基調講演', visible: keynotes.length > 0 },
+  // 内容が決まるまでは Coming Soon で出しておく
+  { id: 'workshops', label: 'ワークショップ', visible: true },
   { id: 'events', label: 'イベント', visible: events.length > 0 },
-  { id: 'sponsors', label: 'スポンサー', visible: sponsors.length > 0 },
+  { id: 'sponsors', label: 'スポンサー', visible: sponsors.length > 0 || conference.sponsorRecruitment !== undefined },
 ];
 const shown = new Set(sections.filter((s) => s.visible).map((s) => s.id));
 const nav = sections.filter((s) => s.visible).map((s) => ({ href: `#${s.id}`, label: s.label }));
@@ -49,6 +52,7 @@ const nav = sections.filter((s) => s.visible).map((s) => ({ href: `#${s.id}`, la
     <Overview />
     {shown.has('news') && <News news={latestNews} />}
     {shown.has('keynotes') && <Keynotes keynotes={keynotes} />}
+    {shown.has('workshops') && <ComingSoonSection id="workshops" title="ワークショップ" />}
     {shown.has('events') && <Events events={events} />}
     {shown.has('sponsors') && <Sponsors sponsors={sponsors} />}
   </main>

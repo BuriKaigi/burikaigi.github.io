@@ -3,8 +3,8 @@
 # _ で始まるファイルは読み込まれない。項目は src/content.config.ts の sponsors2027 を参照。
 name: 株式会社サンプル
 plan: buri # himi-buri / buri / gando / fukuragi / kozukura / supporter（src/data/2027/sponsorPlans.ts）
-logo: /images/2027/sponsors/sample.svg # public/images/2027/sponsors/ に置いたロゴ
-url: https://example.com/
+logo: /images/2027/sponsors/sample.svg # 任意。public/images/2027/sponsors/ に置いたロゴ。省略すると名前を文字で表示
+url: https://example.com/ # 任意。省略するとリンクにしない
 x: example # 任意。@ は不要
 order: 0 # 任意。同じプラン内の並び順（昇順）
 ---
