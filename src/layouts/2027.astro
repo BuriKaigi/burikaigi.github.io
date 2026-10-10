@@ -1,0 +1,128 @@
+---
+import Layout from '~/layouts/Vanilla.astro';
+
+type Props = {
+  title?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+};
+
+const props = Astro.props;
+---
+
+<Layout {...props}>
+  <Fragment slot="head">
+    <!-- Gen Interface JP（https://gen.typesetting.jp/ , OFL）。使うウェイトだけ読み込む -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/400.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/700.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/display-600.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/display-800.css" />
+  </Fragment>
+  <slot />
+</Layout>
+
+<style is:global>
+  /* 2027 のデザイントークン（イラストから実測した色） */
+  :root {
+    --ai: #0a2ea6; /* 藍：イラストの主色 */
+    --ai-deep: #061d73;
+    --ai-ink: #0b1a4d;
+    --kin: #f6c64c; /* 金：波の差し色・鰤の側線 */
+    --kin-deep: #d99a12;
+    --shiro: #ffffff;
+    --washi: #f7f4ec;
+    --line: rgba(10, 46, 166, 0.18);
+    --display: 'Gen Interface JP Display', 'Gen Interface JP', sans-serif; /* 見出し */
+    --text: 'Gen Interface JP', sans-serif; /* 本文 */
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--shiro);
+    color: var(--ai-ink);
+    font-family: var(--text);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a {
+    color: inherit;
+  }
+  /* Vanilla.astro の a:hover { opacity: .5 } を打ち消す（ホバー表現は各部品で持つ） */
+  :root a:hover {
+    opacity: 1;
+  }
+
+  /* 各セクション共通の部品 */
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(16px, 4vw, 40px);
+  }
+  .section-title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(26px, 3.4vw, 40px);
+    margin: 0 0 8px;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .section-title .en {
+    font-family: var(--text);
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    font-weight: 700;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    font-family: var(--text);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 0.85em 1.7em;
+    border-radius: 999px;
+    border: 2px solid var(--ai);
+    transition: transform 0.2s, background 0.2s, color 0.2s;
+  }
+  .btn.primary {
+    background: var(--ai);
+    color: var(--shiro);
+  }
+  .btn.primary:hover {
+    background: var(--ai-deep);
+    transform: translateY(-2px);
+  }
+  .btn.ghost {
+    background: var(--shiro);
+    color: var(--ai);
+  }
+  .btn.ghost:hover {
+    background: var(--washi);
+    transform: translateY(-2px);
+  }
+  .btn.kin {
+    background: var(--kin);
+    border-color: var(--kin);
+    color: var(--ai-ink);
+  }
+  .btn.kin:hover {
+    background: #ffd76e;
+    transform: translateY(-2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>

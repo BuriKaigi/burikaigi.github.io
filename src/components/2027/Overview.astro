@@ -1,0 +1,146 @@
+---
+import { conference, toDayParts } from '~/data/2027/conference';
+
+const [first, last] = conference.days.map(toDayParts);
+---
+
+<!-- 海：ヒーローの原画の下端の藍帯から地続き -->
+<section class="sea" id="overview">
+  <div class="overview wrap">
+    <h2 class="section-title">開催概要<span class="en">OVERVIEW</span></h2>
+    <div class="overview-grid">
+      <p class="lead">
+        {conference.lead[0]}<br />{conference.lead[1]}
+      </p>
+      <div>
+        <dl class="facts">
+          <div class="fact">
+            <dt>DATE</dt>
+            <dd>
+              <span class="big">{first.month}.{first.day}</span>
+              {first.weekdayJa} — <span class="big">{last.month}.{last.day}</span>
+              {last.weekdayJa} <small>{first.year}</small>
+            </dd>
+          </div>
+          <div class="fact">
+            <dt>VENUE</dt>
+            <dd>
+              <a href={conference.venue.mapUrl} target="_blank" rel="noopener noreferrer">{conference.venue.name}</a>
+              <span class="sub">{conference.venue.address}</span>
+            </dd>
+          </div>
+          <div class="fact">
+            <dt>STYLE</dt>
+            <dd>{conference.style}</dd>
+          </div>
+        </dl>
+        {(conference.registrationUrl || conference.timetableUrl) && (
+          <div class="actions">
+            {conference.registrationUrl && (
+              <a class="btn kin" href={conference.registrationUrl} target="_blank" rel="noopener noreferrer">
+                参加申し込み
+              </a>
+            )}
+            {conference.timetableUrl && (
+              <a class="btn ghost" href={conference.timetableUrl} target="_blank" rel="noopener noreferrer">
+                タイムテーブル
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sea {
+    position: relative;
+    background: var(--ai);
+    color: var(--shiro);
+    margin-top: -1px;
+  }
+  .section-title .en {
+    color: var(--kin);
+  }
+  .overview {
+    padding-block: clamp(56px, 8vw, 104px);
+  }
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+    margin-top: 32px;
+  }
+  .lead {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 2;
+    margin: 0;
+  }
+  .facts {
+    display: grid;
+    margin: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .fact {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    align-items: baseline;
+  }
+  .fact dt {
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: var(--kin);
+    font-weight: 700;
+  }
+  .fact dd {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(18px, 2vw, 22px);
+  }
+  .fact dd .big {
+    font-size: 1.6em;
+    color: var(--kin);
+  }
+  .fact dd a {
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-underline-offset: 0.25em;
+  }
+  .fact dd a:hover {
+    text-decoration-color: var(--kin);
+  }
+  .fact .sub {
+    display: block;
+    font-family: var(--text);
+    font-weight: 400;
+    font-size: 13px;
+    opacity: 0.8;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .actions .btn.ghost {
+    background: transparent;
+    border-color: var(--shiro);
+    color: var(--shiro);
+  }
+  .actions .btn.ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  @media (max-width: 760px) {
+    .overview-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,112 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { groupByPlan } from '~/data/2027/content';
+
+type Props = {
+  sponsors: CollectionEntry<'sponsors2027'>[];
+};
+
+const groups = groupByPlan(Astro.props.sponsors);
+---
+
+<section class="paper" id="sponsors">
+  <div class="wrap">
+    <h2 class="section-title">スポンサー<span class="en">SPONSORS</span></h2>
+    {
+      groups.map(({ plan, sponsors }) => (
+        <section class="plan">
+          <h3>{plan.label}</h3>
+          <ul class:list={['logos', plan.size]}>
+            {sponsors.map(({ data }) => (
+              <li>
+                <a href={data.url} target="_blank" rel="noopener noreferrer" title={data.name}>
+                  <img src={data.logo} alt={data.name} loading="lazy" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .paper {
+    padding-top: clamp(56px, 8vw, 104px);
+  }
+  .section-title {
+    color: var(--ai);
+  }
+  .section-title .en {
+    color: var(--kin-deep);
+  }
+  .plan {
+    margin-top: 32px;
+  }
+  .plan h3 {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 0 16px;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: var(--ai);
+  }
+  /* 見出しの右に罫線を引く */
+  .plan h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .logos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .logos.lg {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .logos.md {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .logos.sm {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .logos a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 2 / 1;
+    padding: 12% 10%;
+    background: var(--shiro);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .logos a:hover {
+    border-color: var(--ai);
+    transform: translateY(-2px);
+  }
+  .logos img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  @media (max-width: 760px) {
+    .logos.lg {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .logos.md {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .logos.sm {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

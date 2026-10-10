@@ -1,0 +1,59 @@
+---
+import { conference } from '~/data/2027/conference';
+
+const pastYears = [2026, 2025, 2024];
+---
+
+<!-- wave-low の SVG は絵のある y=470〜930 だけを切り出したもの（下端の白フチは切り落とし済み） -->
+<div class="footer-wave" aria-hidden="true">
+  <img src="/images/2027/wave-low.svg" alt="" width="2000" height="460" loading="lazy" />
+</div>
+<footer class="site-footer">
+  <div class="wrap">
+    <span>© BuriKaigi 実行委員会</span>
+    <nav class="links" aria-label="サイト">
+      <a href={`https://x.com/${conference.x}`} target="_blank" rel="noopener noreferrer">X @{conference.x}</a>
+      <a href="/about/">私たちについて</a>
+      <a href="/coc/">行動規範</a>
+      <span class="past">
+        過去の開催:
+        {pastYears.map((year) => <a href={`/${year}/`}>{year}</a>)}
+      </span>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .footer-wave {
+    margin-top: clamp(80px, 10vw, 128px);
+  }
+  .footer-wave img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .site-footer {
+    background: var(--ai);
+    color: var(--shiro);
+    padding: 32px 0 40px;
+    font-size: 13px;
+  }
+  .site-footer .wrap {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+  .links a {
+    color: var(--kin);
+  }
+  .past {
+    display: inline-flex;
+    gap: 10px;
+  }
+</style>
