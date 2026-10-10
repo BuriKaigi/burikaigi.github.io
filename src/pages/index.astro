@@ -8,6 +8,7 @@ import Keynotes from '~/components/2027/Keynotes.astro';
 import Events from '~/components/2027/Events.astro';
 import Sponsors from '~/components/2027/Sponsors.astro';
 import ComingSoonSection from '~/components/2027/ComingSoonSection.astro';
+import BuriEasterEgg from '~/components/2027/BuriEasterEgg.astro';
 import Footer from '~/components/2027/Footer.astro';
 import { conference } from '~/data/2027/conference';
 import { getEvents, getKeynotes, getSponsors } from '~/data/2027/content';
@@ -57,4 +58,5 @@ const nav = sections.filter((s) => s.visible).map((s) => ({ href: `#${s.id}`, la
     {shown.has('sponsors') && <Sponsors sponsors={sponsors} />}
   </main>
   <Footer />
+  <BuriEasterEgg />
 </Layout>
