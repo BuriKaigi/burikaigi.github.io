@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
+import { unified } from '@astrojs/markdown-remark';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 
 import react from "@astrojs/react";
@@ -19,8 +20,15 @@ const sanitizeSchema = {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://burikaigi.dev',
-  integrations: [tailwind(), react()],
+  // 改行をまたぐ空白を削除しない (削除すると文中のスペースが消える)
+  compressHTML: true,
+  integrations: [react()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   markdown: {
-    rehypePlugins: [[rehypeSanitize, sanitizeSchema]],
+    processor: unified({
+      rehypePlugins: [[rehypeSanitize, sanitizeSchema]],
+    }),
   },
 });

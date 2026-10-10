@@ -276,8 +276,8 @@ const sortedReportPosts = [...reportPosts].sort((a, b) => a.date.localeCompare(b
 ---
 
 <Layout title="参加レポート">
-  <div class="bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 text-gray-900 scroll-smooth">
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200">
+  <div class="bg-linear-to-br from-slate-50 via-blue-50 to-cyan-50 text-gray-900 scroll-smooth">
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-sm border-b border-gray-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <img src="/images/2026/burikaigi-logo.png" alt="BuriKaigi ロゴ" class="w-10 h-10 object-contain" />
@@ -298,12 +298,12 @@ const sortedReportPosts = [...reportPosts].sort((a, b) => a.date.localeCompare(b
     <main>
       <section class="relative overflow-hidden pt-20 pb-10">
         <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
-          <p class="inline-flex items-center gap-2 bg-teal-600 text-white px-5 py-2 rounded-full text-sm shadow">イベント終了</p>
+          <p class="inline-flex items-center gap-2 bg-teal-600 text-white px-5 py-2 rounded-full text-sm shadow-sm">イベント終了</p>
           <h1 class="text-4xl sm:text-5xl font-semibold tracking-tight">BuriKaigi 2026 参加レポート</h1>
           <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
             ご参加・ご登壇・ご協賛いただきありがとうございます。<br />イベント当日の雰囲気を簡潔にまとめました。
           </p>
-          <div class="mx-auto max-w-2xl rounded-2xl border border-teal-200 bg-teal-50 px-5 py-4 text-base text-teal-900 shadow-sm">
+          <div class="mx-auto max-w-2xl rounded-2xl border border-teal-200 bg-teal-50 px-5 py-4 text-base text-teal-900 shadow-xs">
             <p class="font-semibold">内容は順次追記していきます。</p>
           </div>
         </div>
@@ -316,7 +316,7 @@ const sortedReportPosts = [...reportPosts].sort((a, b) => a.date.localeCompare(b
             <p class="text-gray-700 mt-2">運営チームからのレポートをご紹介します。</p>
           </div>
           {sortedManagementReportPosts.length === 0 ? (
-            <div class="mx-auto max-w-2xl rounded-2xl border border-gray-200 bg-white px-6 py-6 text-center text-gray-600 shadow-sm">
+            <div class="mx-auto max-w-2xl rounded-2xl border border-gray-200 bg-white px-6 py-6 text-center text-gray-600 shadow-xs">
               近日公開予定です。
             </div>
           ) : (
@@ -328,7 +328,7 @@ const sortedReportPosts = [...reportPosts].sort((a, b) => a.date.localeCompare(b
                   rel="noopener noreferrer"
                   class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-200 hover:border-teal-500 hover:shadow-xl transition-colors"
                 >
-                  <div class="aspect-[16/9] bg-gray-100 overflow-hidden">
+                  <div class="aspect-video bg-gray-100 overflow-hidden">
                     <img
                       src={post.image}
                       alt={post.title}
@@ -367,7 +367,7 @@ const sortedReportPosts = [...reportPosts].sort((a, b) => a.date.localeCompare(b
                 rel="noopener noreferrer"
                 class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-200 hover:border-teal-500 hover:shadow-xl transition-colors"
               >
-                <div class="aspect-[16/9] bg-gray-100 overflow-hidden">
+                <div class="aspect-video bg-gray-100 overflow-hidden">
                   <img
                     src={post.image}
                     alt={post.title}
@@ -399,7 +399,7 @@ const sortedReportPosts = [...reportPosts].sort((a, b) => a.date.localeCompare(b
               BuriKaigiは皆さまのフィードバックでより良いイベントへ成長していきます。感想やご意見がありましたら、公式Xやコミュニティ経由でお寄せください。
             </p>
             <div class="mt-6">
-              <a href="/2026/" class="inline-flex items-center gap-2 bg-white text-teal-700 px-6 py-3 rounded-full shadow">
+              <a href="/2026/" class="inline-flex items-center gap-2 bg-white text-teal-700 px-6 py-3 rounded-full shadow-sm">
                 トップページへ戻る
               </a>
             </div>

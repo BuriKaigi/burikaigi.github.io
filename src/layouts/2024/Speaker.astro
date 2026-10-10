@@ -1,4 +1,5 @@
 ---
+import '~/styles/global.css';
 import clsx from 'clsx'
 import { Header } from '~/components/Header';
 import { Hero } from '~/components/2024/Hero';
@@ -40,7 +41,6 @@ const last = index === allSpeakers.length - 1;
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta name="generator" content={Astro.generator} />
-  <head prefix="og: https://ogp.me/ns#">
     <meta property="og:url" content="https://burikaigi.dev" />
     <meta property="og:title" content="BuriKaigi" />
     <meta property="og:type" content="website" />
@@ -68,8 +68,8 @@ const last = index === allSpeakers.length - 1;
       </div>
     </Container>
     <Container className="flex gap-8 mt-10 flex-col lg:flex-row">
-      <div class="flex-[0]">
-        <div class="group h-[17.5rem] w-[17.5rem] transform overflow-hidden rounded-4xl">
+      <div class="flex-0">
+        <div class="group h-70 w-70 transform overflow-hidden rounded-4xl">
           <img
             class="inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-110"
             src={frontmatter.image}

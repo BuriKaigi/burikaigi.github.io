@@ -52,7 +52,7 @@ const socials: Social[] = [
   class="group flex flex-col items-center text-center bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 hover:border-white/30 transition-all duration-300 p-5 sm:p-6"
 >
   <div
-    class="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden flex items-center justify-center ring-2 ring-white/10 group-hover:ring-cyan-300/40 bg-gradient-to-br from-blue-500/30 to-cyan-400/20 transition-all"
+    class="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden flex items-center justify-center ring-2 ring-white/10 group-hover:ring-cyan-300/40 bg-linear-to-br from-blue-500/30 to-cyan-400/20 transition-all"
   >
     {member.image ? (
       <img
@@ -93,7 +93,7 @@ const socials: Social[] = [
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${member.name} の ${social.label}`}
-          class="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/30 flex items-center justify-center transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+          class="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/30 flex items-center justify-center transition-all focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
         >
           <img
             src={social.icon}

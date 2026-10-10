@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { Tab } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { BackgroundImage } from './BackgroundImage'
@@ -480,7 +479,7 @@ function TimeSlots({ day, className, speakers }: { day: Day; className?: string,
       role="list"
       className={clsx(
         className,
-        'space-y-4 bg-white/60 px-10 py-14 text-center shadow-xl shadow-gray-900/5 backdrop-blur',
+        'space-y-4 bg-white/60 px-10 py-14 text-center shadow-xl shadow-gray-900/5 backdrop-blur-sm',
       )}
     >
       {day.timeSlots.map((timeSlot, timeSlotIndex) => (
