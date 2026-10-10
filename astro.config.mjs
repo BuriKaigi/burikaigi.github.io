@@ -20,7 +20,7 @@ const sanitizeSchema = {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://burikaigi.dev',
-  // Astro 7 の既定値 'jsx' は改行をまたぐ空白を削除し、文中のスペースが消えるため v6 までの挙動に戻す
+  // 改行をまたぐ空白を削除しない (削除すると文中のスペースが消える)
   compressHTML: true,
   integrations: [react()],
   vite: {

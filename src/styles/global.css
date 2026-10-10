@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 
 @theme {
-  /* Tailwind CSS v4 で既定のフォントスタックが変わったため v3 と同じ値を指定する */
   --font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --font-biz-udp: 'BIZ UDPGothic', sans-serif;
 }
