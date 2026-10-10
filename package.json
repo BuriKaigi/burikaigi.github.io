@@ -21,7 +21,7 @@
     "astro": "7.3.8",
     "clsx": "2.1.1",
     "lucide-react": "0.562.0",
-    "motion": "12.23.26",
+    "motion": "14.0.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "rehype-sanitize": "6.0.0",
