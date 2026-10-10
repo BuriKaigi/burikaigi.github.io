@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from "@tailwindcss/vite";
+import { unified } from '@astrojs/markdown-remark';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 
 import react from "@astrojs/react";
@@ -19,11 +20,15 @@ const sanitizeSchema = {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://burikaigi.dev',
+  // Astro 7 の既定値 'jsx' は改行をまたぐ空白を削除し、文中のスペースが消えるため v6 までの挙動に戻す
+  compressHTML: true,
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()],
   },
   markdown: {
-    rehypePlugins: [[rehypeSanitize, sanitizeSchema]],
+    processor: unified({
+      rehypePlugins: [[rehypeSanitize, sanitizeSchema]],
+    }),
   },
 });
