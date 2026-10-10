@@ -10,7 +10,7 @@ const { keynotes } = Astro.props;
 
 <section class="paper" id="keynotes">
   <div class="wrap">
-    <h2 class="section-title">基調講演<span class="en">KEYNOTES</span></h2>
+    <h2 class="section-title">基調講演</h2>
     <ul class="speakers">
       {
         keynotes.map(({ data }) => (
@@ -56,9 +56,6 @@ const { keynotes } = Astro.props;
   }
   .section-title {
     color: var(--ai);
-  }
-  .section-title .en {
-    color: var(--kin-deep);
   }
   .speakers {
     list-style: none;

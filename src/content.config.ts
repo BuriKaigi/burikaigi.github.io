@@ -47,8 +47,6 @@ const keynotes2027 = defineCollection({
 const events2027 = defineCollection({
   loader: glob({ pattern: '**/[^_]*.yaml', base: './src/content/2027/events' }),
   schema: z.object({
-    /** カード上部の英字ラベル（例: EVE PARTY） */
-    label: z.string(),
     title: z.string(),
     description: z.string(),
     link: z.object({ label: z.string(), href: z.string() }).optional(),

@@ -7,15 +7,13 @@ const [first, last] = conference.days.map(toDayParts);
 <!-- 海：ヒーローの原画の下端の藍帯から地続き -->
 <section class="sea" id="overview">
   <div class="overview wrap">
-    <h2 class="section-title">開催概要<span class="en">OVERVIEW</span></h2>
+    <h2 class="section-title">BuriKaigiとは？</h2>
     <div class="overview-grid">
-      <p class="lead">
-        {conference.lead[0]}<br />{conference.lead[1]}
-      </p>
+      <p class="lead">{conference.lead}</p>
       <div>
         <dl class="facts">
           <div class="fact">
-            <dt>DATE</dt>
+            <dt>日時</dt>
             <dd>
               <span class="big">{first.month}.{first.day}</span>
               {first.weekdayJa} — <span class="big">{last.month}.{last.day}</span>
@@ -23,15 +21,11 @@ const [first, last] = conference.days.map(toDayParts);
             </dd>
           </div>
           <div class="fact">
-            <dt>VENUE</dt>
+            <dt>会場</dt>
             <dd>
               <a href={conference.venue.mapUrl} target="_blank" rel="noopener noreferrer">{conference.venue.name}</a>
               <span class="sub">{conference.venue.address}</span>
             </dd>
-          </div>
-          <div class="fact">
-            <dt>STYLE</dt>
-            <dd>{conference.style}</dd>
           </div>
         </dl>
         {(conference.registrationUrl || conference.timetableUrl) && (
@@ -54,14 +48,14 @@ const [first, last] = conference.days.map(toDayParts);
 </section>
 
 <style>
+  /* ヒーローと同じ幅で止める（左右に藍がはみ出さないように） */
   .sea {
     position: relative;
+    max-width: var(--frame-max);
+    margin-inline: auto;
     background: var(--ai);
     color: var(--shiro);
     margin-top: -1px;
-  }
-  .section-title .en {
-    color: var(--kin);
   }
   .overview {
     padding-block: clamp(56px, 8vw, 104px);
@@ -94,8 +88,8 @@ const [first, last] = conference.days.map(toDayParts);
     align-items: baseline;
   }
   .fact dt {
-    font-size: 12px;
-    letter-spacing: 0.25em;
+    font-size: 14px;
+    letter-spacing: 0.1em;
     color: var(--kin);
     font-weight: 700;
   }

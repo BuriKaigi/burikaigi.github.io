@@ -1,11 +1,8 @@
 ---
+import type { ComponentProps } from 'astro/types';
 import Layout from '~/layouts/Vanilla.astro';
 
-type Props = {
-  title?: string;
-  ogTitle?: string;
-  ogDescription?: string;
-};
+type Props = ComponentProps<typeof Layout>;
 
 const props = Astro.props;
 ---
@@ -19,12 +16,21 @@ const props = Astro.props;
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/display-600.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/display-800.css" />
   </Fragment>
-  <slot />
+  <div class="y2027">
+    <slot />
+  </div>
 </Layout>
 
 <style is:global>
+  /*
+    お知らせ一覧など、お知らせの .md を import するページには、このレイアウトを使っていなくても
+    この CSS が載る（Astro は import したモジュールの CSS をページに含める）。
+    ほかのページに効かないよう、すべて .y2027 の中か、.y2027 を含むページだけに当てる。
+    :where() で包み、詳細度は素のセレクタと同じに保つ。
+  */
+
   /* 2027 のデザイントークン（イラストから実測した色） */
-  :root {
+  :root:has(.y2027) {
     --ai: #0a2ea6; /* 藍：イラストの主色 */
     --ai-deep: #061d73;
     --ai-ink: #0b1a4d;
@@ -35,34 +41,36 @@ const props = Astro.props;
     --line: rgba(10, 46, 166, 0.18);
     --display: 'Gen Interface JP Display', 'Gen Interface JP', sans-serif; /* 見出し */
     --text: 'Gen Interface JP', sans-serif; /* 本文 */
+    /* ヒーロー・ヘッダー・フッターの波の最大幅。ウルトラワイドで広がりすぎないよう 1920px で止め、
+       縦の短い画面でもヒーロー（2:1 の構図 + ヘッダー 72px）が最初の表示に収まる幅にする */
+    --frame-max: min(1920px, (100svh - 72px) * 2);
+    scroll-behavior: smooth;
+    background: var(--shiro);
   }
 
-  html {
-    scroll-behavior: smooth;
-  }
-  body {
+  .y2027 {
     background: var(--shiro);
     color: var(--ai-ink);
     font-family: var(--text);
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
-  a {
+  :where(.y2027) a {
     color: inherit;
   }
   /* Vanilla.astro の a:hover { opacity: .5 } を打ち消す（ホバー表現は各部品で持つ） */
-  :root a:hover {
+  .y2027 a:hover {
     opacity: 1;
   }
 
   /* 各セクション共通の部品 */
-  .wrap {
+  :where(.y2027) .wrap {
     max-width: 1120px;
     margin: 0 auto;
     padding: 0 clamp(16px, 4vw, 40px);
   }
-  .section-title {
+  :where(.y2027) .section-title {
     font-family: var(--display);
     font-weight: 800;
     font-size: clamp(26px, 3.4vw, 40px);
@@ -72,13 +80,7 @@ const props = Astro.props;
     align-items: baseline;
     gap: 16px;
   }
-  .section-title .en {
-    font-family: var(--text);
-    font-size: 12px;
-    letter-spacing: 0.3em;
-    font-weight: 700;
-  }
-  .btn {
+  :where(.y2027) .btn {
     display: inline-flex;
     align-items: center;
     gap: 0.6em;
@@ -89,38 +91,35 @@ const props = Astro.props;
     padding: 0.85em 1.7em;
     border-radius: 999px;
     border: 2px solid var(--ai);
-    transition: transform 0.2s, background 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.2s;
   }
-  .btn.primary {
+  :where(.y2027) .btn.primary {
     background: var(--ai);
     color: var(--shiro);
   }
-  .btn.primary:hover {
+  :where(.y2027) .btn.primary:hover {
     background: var(--ai-deep);
-    transform: translateY(-2px);
   }
-  .btn.ghost {
+  :where(.y2027) .btn.ghost {
     background: var(--shiro);
     color: var(--ai);
   }
-  .btn.ghost:hover {
+  :where(.y2027) .btn.ghost:hover {
     background: var(--washi);
-    transform: translateY(-2px);
   }
-  .btn.kin {
+  :where(.y2027) .btn.kin {
     background: var(--kin);
     border-color: var(--kin);
     color: var(--ai-ink);
   }
-  .btn.kin:hover {
+  :where(.y2027) .btn.kin:hover {
     background: #ffd76e;
-    transform: translateY(-2px);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    :where(.y2027) *,
+    :where(.y2027) *::before,
+    :where(.y2027) *::after {
       animation: none !important;
       transition: none !important;
     }

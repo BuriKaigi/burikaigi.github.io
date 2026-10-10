@@ -11,7 +11,7 @@ const groups = groupByPlan(Astro.props.sponsors);
 
 <section class="paper" id="sponsors">
   <div class="wrap">
-    <h2 class="section-title">スポンサー<span class="en">SPONSORS</span></h2>
+    <h2 class="section-title">スポンサー</h2>
     {
       groups.map(({ plan, sponsors }) => (
         <section class="plan">
@@ -37,9 +37,6 @@ const groups = groupByPlan(Astro.props.sponsors);
   }
   .section-title {
     color: var(--ai);
-  }
-  .section-title .en {
-    color: var(--kin-deep);
   }
   .plan {
     margin-top: 32px;
@@ -87,11 +84,10 @@ const groups = groupByPlan(Astro.props.sponsors);
     background: var(--shiro);
     border: 1px solid var(--line);
     border-radius: 12px;
-    transition: border-color 0.2s, transform 0.2s;
+    transition: border-color 0.2s;
   }
   .logos a:hover {
     border-color: var(--ai);
-    transform: translateY(-2px);
   }
   .logos img {
     max-width: 100%;

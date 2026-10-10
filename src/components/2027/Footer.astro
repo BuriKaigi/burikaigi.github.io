@@ -25,7 +25,8 @@ const pastYears = [2026, 2025, 2024];
 
 <style>
   .footer-wave {
-    margin-top: clamp(80px, 10vw, 128px);
+    max-width: var(--frame-max);
+    margin: clamp(80px, 10vw, 128px) auto 0;
   }
   .footer-wave img {
     display: block;
@@ -33,6 +34,8 @@ const pastYears = [2026, 2025, 2024];
     height: auto;
   }
   .site-footer {
+    max-width: var(--frame-max);
+    margin-inline: auto;
     background: var(--ai);
     color: var(--shiro);
     padding: 32px 0 40px;

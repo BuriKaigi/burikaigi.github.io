@@ -32,7 +32,7 @@ const [keynotes, events, sponsors] = await Promise.all([getKeynotes(), getEvents
 
 // データが 1 件もないセクションは、本文・ナビとも出さない
 const sections = [
-  { id: 'overview', label: '開催概要', visible: true },
+  { id: 'overview', label: 'BuriKaigiとは？', visible: true },
   { id: 'news', label: 'お知らせ', visible: latestNews.length > 0 },
   { id: 'keynotes', label: '基調講演', visible: keynotes.length > 0 },
   { id: 'events', label: 'イベント', visible: events.length > 0 },

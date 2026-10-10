@@ -69,8 +69,9 @@ const [first, last] = conference.days.map(toDayParts);
 <style>
   .hero {
     position: relative;
+    max-width: var(--frame-max);
+    margin-inline: auto;
     padding-top: 72px;
-    background: var(--shiro);
     container-type: inline-size;
   }
 
@@ -80,7 +81,7 @@ const [first, last] = conference.days.map(toDayParts);
     width: 100%;
     aspect-ratio: 2 / 1;
     overflow: hidden;
-    /* 原画の藍帯は y=975 で終わるので、下端を藍で埋めて開催概要の海へつなぐ */
+    /* 原画の藍帯は y=975 で終わるので、下端を藍で埋めて「BuriKaigiとは？」の海へつなぐ */
     background: linear-gradient(to top, var(--ai) 3%, transparent 3%);
   }
   /* 波の SVG は原画の端の白フチを切り落とした範囲（x=26〜1973, y=0〜972）。

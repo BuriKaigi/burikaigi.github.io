@@ -8,14 +8,10 @@ export const conference = {
     address: '富山県富山市大手町1番2号',
     mapUrl: 'https://maps.app.goo.gl/PN7ezeu4XtBsWrx37',
   },
-  style: 'オフライン開催',
-  lead: [
-    '年に一度、寒ブリの季節に。',
-    'ソフトウェア開発・IT の最前線に立つエキスパートを全国から北陸へお招きし、技術の旬を持ち寄るカンファレンスです。',
-  ],
-  /** 参加申し込み（connpass など）。設定するとヘッダーと開催概要に申し込みボタンを出す */
+  lead: '年に一度、寒ブリの季節に、ソフトウェア開発・IT の最前線に立つエキスパートを全国から北陸へお招きし、技術の旬を持ち寄るカンファレンスです。',
+  /** 参加申し込み（connpass など）。設定するとヘッダーと「BuriKaigiとは？」に申し込みボタンを出す */
   registrationUrl: undefined as string | undefined,
-  /** タイムテーブル（fortee など）。設定すると開催概要にリンクを出す */
+  /** タイムテーブル（fortee など）。設定すると「BuriKaigiとは？」にリンクを出す */
   timetableUrl: undefined as string | undefined,
   x: 'burikaigi',
 } as const;
