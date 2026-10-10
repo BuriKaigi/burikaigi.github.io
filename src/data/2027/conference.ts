@@ -14,6 +14,15 @@ export const conference = {
   /** タイムテーブル（fortee など）。設定すると「BuriKaigiとは？」にリンクを出す */
   timetableUrl: undefined as string | undefined,
   x: 'burikaigi',
+  /**
+   * 「BuriKaigiとは？」の上に大きく出す告知リンク（CFP 募集中など）。
+   * 終わったら undefined にすると消える
+   */
+  highlight: {
+    label: 'プロポーザル募集中',
+    href: 'https://fortee.jp/burikaigi-2027/speaker/proposal/cfp',
+    note: '締切 2026.10.25（日）23:59 JST',
+  } as { label: string; href: string; note?: string } | undefined,
 } as const;
 
 // 'YYYY-MM-DD' を日付表示用に分解する。タイムゾーンの影響を受けないよう UTC で曜日を求める。

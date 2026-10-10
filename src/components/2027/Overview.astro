@@ -2,11 +2,25 @@
 import { conference, toDayParts } from '~/data/2027/conference';
 
 const [first, last] = conference.days.map(toDayParts);
+const { highlight } = conference;
+const isExternal = highlight ? /^https?:\/\//.test(highlight.href) : false;
 ---
 
 <!-- 海：ヒーローの原画の下端の藍帯から地続き -->
 <section class="sea" id="overview">
   <div class="overview wrap">
+    {highlight && (
+      <p class="highlight">
+        <a
+          href={highlight.href}
+          target={isExternal ? '_blank' : undefined}
+          rel={isExternal ? 'noopener noreferrer' : undefined}
+        >
+          {highlight.label}<span class="arrow" aria-hidden="true">→</span>
+        </a>
+        {highlight.note && <span class="note">{highlight.note}</span>}
+      </p>
+    )}
     <h2 class="section-title">BuriKaigiとは？</h2>
     <div class="overview-grid">
       <p class="lead">{conference.lead}</p>
@@ -59,6 +73,38 @@ const [first, last] = conference.days.map(toDayParts);
   }
   .overview {
     padding-block: clamp(56px, 8vw, 104px);
+  }
+
+  /* 告知リンク：藍の上に金で大きく出す。ホバーは色だけ変える */
+  .highlight {
+    margin: 0 0 clamp(56px, 8vw, 96px);
+    text-align: center;
+  }
+  .highlight a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em 1.4em;
+    border-radius: 999px;
+    background: var(--kin);
+    color: var(--ai-ink);
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(20px, 2.6vw, 32px);
+    line-height: 1.4;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .highlight a:hover {
+    background: #ffd76e;
+  }
+  .highlight .note {
+    display: block;
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
   }
   .overview-grid {
     display: grid;
