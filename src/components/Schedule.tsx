@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { Tab } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { BackgroundImage } from './BackgroundImage'
