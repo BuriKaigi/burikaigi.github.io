@@ -1,10 +1,16 @@
 ---
 import { conference, toDayParts } from '~/data/2027/conference';
 
+type Props = {
+  /** アニメーションせず最終状態で表示し、ヘッダー分の余白も取らない（OG 画像の撮影用） */
+  still?: boolean;
+};
+
+const { still = false } = Astro.props;
 const [first, last] = conference.days.map(toDayParts);
 ---
 
-<section class="hero">
+<section class:list={['hero', { still }]}>
   <div class="stage" aria-label="日本海の荒波から寒ぶりが跳ねるイラスト">
     <!-- 重なり順：荒波 → 帯ロゴ → 鰤（鰤が帯にかぶる）。波と鰤は同じ .art の拡大で位置を揃える -->
     <div class="art">
@@ -23,12 +29,20 @@ const [first, last] = conference.days.map(toDayParts);
     <p class="date">
       {first.year}.{first.month}.{first.day}<small>{first.weekdayEn}</small>— {last.month}.{last.day}<small
         >{last.weekdayEn}</small
-      ><span class="venue">{conference.venue.name}</span>
+      ><span class="venue"
+        >{conference.venue.name}<a
+          class="tag"
+          href={`https://x.com/hashtag/${conference.hashtag}`}
+          target="_blank"
+          rel="noopener noreferrer">#{conference.hashtag}</a
+        ></span
+      >
     </p>
   </div>
 </section>
 
 <!-- 初回描画の前に動かし始めるため、モジュール化せず要素の直後で実行する -->
+{still ? null : (
 <script is:inline>
   (() => {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -65,13 +79,16 @@ const [first, last] = conference.days.map(toDayParts);
     );
   })();
 </script>
+)}
 
 <style>
   .hero {
     position: relative;
     max-width: var(--frame-max);
     margin-inline: auto;
-    padding-top: 72px;
+    /* 上のヘッダーの高さ。日付・会場の位置もこれを基準にする */
+    --hero-head: 72px;
+    padding-top: var(--hero-head);
     container-type: inline-size;
   }
 
@@ -148,7 +165,7 @@ const [first, last] = conference.days.map(toDayParts);
   .hero-meta {
     position: absolute;
     right: 21.5cqw;
-    top: calc(72px + 29.5cqw);
+    top: calc(var(--hero-head) + 29.5cqw);
     z-index: 5;
     text-align: right;
     color: var(--ai);
@@ -166,6 +183,18 @@ const [first, last] = conference.days.map(toDayParts);
     margin: 0 0.3em;
     letter-spacing: 0.06em;
   }
+  /* ハッシュタグ：会場名と同じ大きさで、PC では会場名の下の行に置く */
+  .hero-meta .tag {
+    display: block;
+    margin-top: 0.3em;
+    font-weight: 800;
+    color: var(--ai);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .hero-meta .tag:hover {
+    color: var(--kin-deep);
+  }
   .hero-meta .venue {
     display: block;
     font-size: 0.5em;
@@ -175,10 +204,10 @@ const [first, last] = conference.days.map(toDayParts);
   }
 
   /* 狭い画面でも PC と同じ配置をそのまま縮小する（帯・鰤・日付はすべて cqw 指定）。
-     日付と会場だけは読める大きさを下限にし、大きくなった分だけ帯の下へずらす */
+     日付・会場・ハッシュタグだけは読める大きさを下限にし、大きくなった分だけ帯の下へずらす */
   @media (max-width: 760px) {
     .hero-meta {
-      top: calc(72px + 30.5cqw);
+      top: calc(var(--hero-head) + 30.5cqw);
     }
     .hero-meta .date {
       font-size: max(2.8cqw, 14px);
@@ -186,5 +215,18 @@ const [first, last] = conference.days.map(toDayParts);
     .hero-meta .venue {
       font-size: max(0.5em, 10px);
     }
+    /* スマホは日付のすぐ下まで波が来るので、会場名と同じ行に並べる */
+    .hero-meta .tag {
+      display: inline;
+      margin: 0 0 0 0.8em;
+    }
+  }
+
+  /* 静止表示：ヘッダー分の余白なし、鰤は跳んだ後の位置 */
+  .hero.still {
+    --hero-head: 0px;
+  }
+  .hero.still .buri {
+    transform: none;
   }
 </style>

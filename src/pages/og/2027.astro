@@ -1,0 +1,23 @@
+---
+import Layout from '~/layouts/2027.astro';
+import Hero from '~/components/2027/Hero.astro';
+
+// OG 画像（public/images/2027/ogp.png）の撮影用ページ。サイトからはリンクしない。
+// 1200x630 で撮影する。ヒーロー（2:1）を幅 1260px・高さ 630px で置き、左右 30px ずつを切り落とす。
+// 撮影手順は scripts/render-og-2027.sh を参照。
+---
+
+<Layout title="OG 2027">
+  <div class="og">
+    <Hero still />
+  </div>
+</Layout>
+
+<style>
+  .og {
+    /* 2027 レイアウトの最大幅（画面の高さ基準）を外す */
+    --frame-max: none;
+    width: 1260px;
+    margin-left: -30px;
+  }
+</style>

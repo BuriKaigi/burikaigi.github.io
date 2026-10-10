@@ -4,7 +4,8 @@ import Layout from '~/layouts/Vanilla.astro';
 
 type Props = ComponentProps<typeof Layout>;
 
-const props = Astro.props;
+// 2027 のページは、ヒーローから作った OG 画像を使う（scripts/render-og-2027.sh で生成）
+const props = { ogImage: '/images/2027/ogp.png', ...Astro.props };
 ---
 
 <Layout {...props}>

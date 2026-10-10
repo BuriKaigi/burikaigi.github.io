@@ -14,6 +14,8 @@ export const conference = {
   /** タイムテーブル（fortee など）。設定すると「BuriKaigiとは？」にリンクを出す */
   timetableUrl: undefined as string | undefined,
   x: 'burikaigi',
+  /** ハッシュタグ（# なし）。ヒーローの日付・会場の下に X の検索リンクとして出す */
+  hashtag: 'burikaigi',
   /**
    * 「BuriKaigiとは？」の上に大きく出す告知リンク（CFP 募集中など）。
    * 終わったら undefined にすると消える
