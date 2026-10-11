@@ -1,0 +1,15 @@
+// レビュー用プレビュー環境 (Cloudflare Workers Previews) 専用の設定。
+// 本番は GitHub Pages で配信しており、この Worker を本番デプロイすることはない。
+// Preview 名は package.json のスクリプトで review に固定している。
+// 使い方は README の「プレビュー環境」を参照。
+{
+  "$schema": "https://unpkg.com/wrangler@4.149.0/config-schema.json",
+  "name": "burikaigi-preview",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  },
+  // Previews は本番設定を継承しないため必須。個別設定はないので空。
+  "previews": {}
+}

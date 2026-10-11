@@ -9,6 +9,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "preview:deploy": "pnpm build && pnpm dlx wrangler@4.149.0 preview --name review",
+    "preview:delete": "pnpm dlx wrangler@4.149.0 preview delete --name review",
     "astro": "astro"
   },
   "dependencies": {
