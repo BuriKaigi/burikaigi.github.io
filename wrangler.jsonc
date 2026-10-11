@@ -1,5 +1,6 @@
-// PR プレビュー環境 (Cloudflare Workers Previews) 専用の設定。
+// レビュー用プレビュー環境 (Cloudflare Workers Previews) 専用の設定。
 // 本番は GitHub Pages で配信しており、この Worker を本番デプロイすることはない。
+// Preview 名は package.json のスクリプトで review に固定している。
 // 使い方は README の「プレビュー環境」を参照。
 {
   "$schema": "https://unpkg.com/wrangler@4.149.0/config-schema.json",

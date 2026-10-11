@@ -28,7 +28,9 @@ All commands are run from the root of the project, from a terminal:
 ### プレビュー環境
 
 レビュー用のプレビュー環境は、手元から Cloudflare Workers Previews にデプロイします。
-プレビュー環境には `X-Robots-Tag: noindex` を付けているため、検索エンジンにはインデックスされません。
+環境は 1 つだけで、どのブランチからデプロイしても同じ環境の内容が上書きされます。
+
+`workers.dev` の Preview URL には Cloudflare が自動で `X-Robots-Tag: noindex` を付けるため、検索エンジンにはインデックスされません。
 ただし URL を知っていれば誰でも閲覧できます。
 
 #### 事前準備
@@ -42,20 +44,19 @@ pnpm dlx wrangler@4.149.0 login
 
 #### デプロイ
 
-プレビューしたいブランチで実行します。プレビュー名には現在のブランチ名が使われます。
+確認したいブランチで実行します。
 
 ```sh
 pnpm preview:deploy
 ```
 
-出力された URL を Discord で共有してください。同じブランチで再実行すると、同じ URL の内容が更新されます。
+デプロイ時に出力される URL を Discord で周知してください。
+複数人が続けてデプロイすると、後からデプロイした内容で上書きされます。
 
 #### 削除
 
-レビューが終わったら、該当ブランチで実行して削除します。
+通常は削除する必要はありません。環境ごと消したい場合は次を実行します。
 
 ```sh
 pnpm preview:delete
 ```
-
-削除し忘れたものは、Preview が上限数（Free プランで 100）を超えたときに古いものから自動で削除されます。

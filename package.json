@@ -9,8 +9,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "preview:deploy": "pnpm build && node -e \"require('node:fs').writeFileSync('dist/_headers', '/*\\n  X-Robots-Tag: noindex, nofollow\\n')\" && pnpm dlx wrangler@4.149.0 preview",
-    "preview:delete": "pnpm dlx wrangler@4.149.0 preview delete",
+    "preview:deploy": "pnpm build && pnpm dlx wrangler@4.149.0 preview --name review",
+    "preview:delete": "pnpm dlx wrangler@4.149.0 preview delete --name review",
     "astro": "astro"
   },
   "dependencies": {
