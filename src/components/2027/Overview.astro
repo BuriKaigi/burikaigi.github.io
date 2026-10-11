@@ -1,0 +1,195 @@
+---
+import { conference, toDayParts } from '~/data/2027/conference';
+
+const [first, last] = conference.days.map(toDayParts);
+const isExternal = (href: string) => /^https?:\/\//.test(href);
+---
+
+<!-- 海：ヒーローの原画の下端の藍帯から地続き -->
+<section class="sea" id="overview">
+  <div class="overview wrap">
+    {conference.highlights.length > 0 && (
+      <ul class="highlights">
+        {conference.highlights.map((highlight) => (
+          <li>
+            <a
+              href={highlight.href}
+              target={isExternal(highlight.href) ? '_blank' : undefined}
+              rel={isExternal(highlight.href) ? 'noopener noreferrer' : undefined}
+            >
+              {highlight.label}<span class="arrow" aria-hidden="true">→</span>
+            </a>
+            {highlight.note && <span class="note">{highlight.note}</span>}
+          </li>
+        ))}
+      </ul>
+    )}
+    <h2 class="section-title">BuriKaigiとは？</h2>
+    <div class="overview-grid">
+      <p class="lead">{conference.lead}</p>
+      <div>
+        <dl class="facts">
+          <div class="fact">
+            <dt>日時</dt>
+            <dd>
+              <span class="big">{first.month}.{first.day}</span>
+              {first.weekdayJa} — <span class="big">{last.month}.{last.day}</span>
+              {last.weekdayJa} <small>{first.year}</small>
+            </dd>
+          </div>
+          <div class="fact">
+            <dt>会場</dt>
+            <dd>
+              <a href={conference.venue.mapUrl} target="_blank" rel="noopener noreferrer">{conference.venue.name}</a>
+              <span class="sub">{conference.venue.address}</span>
+            </dd>
+          </div>
+        </dl>
+        {(conference.registrationUrl || conference.timetableUrl) && (
+          <div class="actions">
+            {conference.registrationUrl && (
+              <a class="btn kin" href={conference.registrationUrl} target="_blank" rel="noopener noreferrer">
+                参加申し込み
+              </a>
+            )}
+            {conference.timetableUrl && (
+              <a class="btn ghost" href={conference.timetableUrl} target="_blank" rel="noopener noreferrer">
+                タイムテーブル
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ヒーローと同じ幅で止める（左右に藍がはみ出さないように） */
+  .sea {
+    position: relative;
+    max-width: var(--frame-max);
+    margin-inline: auto;
+    background: var(--ai);
+    color: var(--shiro);
+    margin-top: -1px;
+  }
+  .overview {
+    padding-block: clamp(56px, 8vw, 104px);
+  }
+
+  /* 告知リンク：藍の上に金で大きく出す。ホバーは色だけ変える */
+  .highlights {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px clamp(24px, 4vw, 56px);
+    list-style: none;
+    margin: 0 0 clamp(56px, 8vw, 96px);
+    padding: 0;
+    text-align: center;
+  }
+  .highlights a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em 1.4em;
+    border-radius: 999px;
+    background: var(--kin);
+    color: var(--ai-ink);
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(20px, 2.6vw, 32px);
+    line-height: 1.4;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .highlights a:hover {
+    background: #ffd76e;
+  }
+  .highlights .note {
+    display: block;
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+    margin-top: 32px;
+  }
+  .lead {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 2;
+    margin: 0;
+  }
+  .facts {
+    display: grid;
+    margin: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .fact {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    align-items: baseline;
+  }
+  .fact dt {
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: var(--kin);
+    font-weight: 700;
+  }
+  .fact dd {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(18px, 2vw, 22px);
+  }
+  .fact dd .big {
+    font-size: 1.6em;
+    color: var(--kin);
+  }
+  .fact dd a {
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-underline-offset: 0.25em;
+  }
+  .fact dd a:hover {
+    text-decoration-color: var(--kin);
+  }
+  .fact .sub {
+    display: block;
+    font-family: var(--text);
+    font-weight: 400;
+    font-size: 13px;
+    opacity: 0.8;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .actions .btn.ghost {
+    background: transparent;
+    border-color: var(--shiro);
+    color: var(--shiro);
+  }
+  .actions .btn.ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  @media (max-width: 760px) {
+    .overview-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

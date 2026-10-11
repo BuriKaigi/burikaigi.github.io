@@ -1,0 +1,101 @@
+---
+import type { NewsItem } from '~/types/news';
+import { resolveLink } from '~/types/news';
+
+type Props = {
+  news: NewsItem[];
+  /** 各お知らせの summary をタイトルの下に出す（お知らせ一覧ページ用） */
+  withSummary?: boolean;
+};
+
+const { news, withSummary = false } = Astro.props;
+
+// '2026-09-14' → '2026.09.14'
+const formatDate = (iso: string) => iso.replaceAll('-', '.');
+---
+
+<ul class:list={['news-list', { 'with-summary': withSummary }]}>
+  {
+    news.map((item) => {
+      const { href, isExternal } = resolveLink(item);
+      return (
+        <li>
+          <a
+            href={href}
+            target={isExternal ? '_blank' : undefined}
+            rel={isExternal ? 'noopener noreferrer' : undefined}
+          >
+            <time datetime={item.date}>{formatDate(item.date)}</time>
+            <span class="t">
+              {item.title}
+              {isExternal && <span class="sr-only">（外部リンク）</span>}
+              {withSummary && item.summary && <span class="summary">{item.summary}</span>}
+            </span>
+            <span class="arrow" aria-hidden="true">
+              {isExternal ? '↗' : '→'}
+            </span>
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .news-list {
+    list-style: none;
+    margin: 28px 0 0;
+    padding: 0;
+    border-top: 2px solid var(--ai);
+  }
+  .news-list li {
+    border-bottom: 1px solid var(--line);
+  }
+  .news-list a {
+    display: grid;
+    grid-template-columns: 120px 1fr 24px;
+    gap: 20px;
+    padding: 22px 4px;
+    text-decoration: none;
+    align-items: center;
+    transition: background 0.2s;
+  }
+  /* 概要付きは行が高くなるので、日付・矢印をタイトルの 1 行目に揃える */
+  .news-list.with-summary a {
+    align-items: baseline;
+  }
+  .news-list a:hover {
+    background: var(--washi);
+  }
+  .news-list time {
+    font-family: var(--display);
+    font-weight: 800;
+    color: var(--ai);
+    letter-spacing: 0.05em;
+  }
+  .news-list .t {
+    font-weight: 700;
+  }
+  .news-list .summary {
+    display: block;
+    margin-top: 6px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.8;
+    opacity: 0.8;
+  }
+  .news-list .arrow {
+    color: var(--kin-deep);
+    font-weight: 700;
+  }
+  @media (max-width: 600px) {
+    .news-list a {
+      grid-template-columns: 1fr 20px;
+      gap: 4px 12px;
+    }
+    .news-list time {
+      grid-column: 1 / -1;
+      font-size: 14px;
+    }
+  }
+</style>

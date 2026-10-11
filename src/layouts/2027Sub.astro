@@ -1,0 +1,30 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Layout from '~/layouts/2027.astro';
+import Header from '~/components/2027/Header.astro';
+import Footer from '~/components/2027/Footer.astro';
+import { conference } from '~/data/2027/conference';
+
+// お知らせなど、トップ以外のページ（ヒーローなし）のレイアウト
+type Props = ComponentProps<typeof Layout>;
+
+const nav = [
+  { href: '/#overview', label: 'BuriKaigiとは？' },
+  { href: '/news/', label: 'お知らせ' },
+];
+---
+
+<Layout {...Astro.props}>
+  <Header nav={nav} registrationUrl={conference.registrationUrl} />
+  <main class="page wrap">
+    <slot />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ヘッダーは絶対配置なので、その高さ分を空ける */
+  .page {
+    padding-top: calc(72px + clamp(32px, 6vw, 72px));
+  }
+</style>

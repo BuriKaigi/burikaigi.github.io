@@ -1,0 +1,142 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+type Props = {
+  keynotes: CollectionEntry<'keynotes2027'>[];
+};
+
+const { keynotes } = Astro.props;
+---
+
+<section class="paper" id="keynotes">
+  <div class="wrap">
+    <h2 class="section-title">基調講演</h2>
+    <ul class="speakers">
+      {
+        keynotes.map(({ data }) => (
+          <li class="speaker">
+            <div class="photo">
+              {data.image ? (
+                <img src={data.image} alt="" width="320" height="320" loading="lazy" />
+              ) : (
+                <span class="placeholder" aria-hidden="true" />
+              )}
+              {data.day && <span class="day">DAY {data.day}</span>}
+            </div>
+            <div class="body">
+              {data.title && (
+                <p class="title">
+                  {data.url ? (
+                    <a href={data.url} target="_blank" rel="noopener noreferrer">
+                      {data.title}
+                    </a>
+                  ) : (
+                    data.title
+                  )}
+                </p>
+              )}
+              <p class="name">{data.name}</p>
+              {data.affiliation && <p class="affiliation">{data.affiliation}</p>}
+              {data.x && (
+                <a class="x" href={`https://x.com/${data.x}`} target="_blank" rel="noopener noreferrer">
+                  @{data.x}
+                </a>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .paper {
+    padding-top: clamp(56px, 8vw, 104px);
+  }
+  .section-title {
+    color: var(--ai);
+  }
+  .speakers {
+    list-style: none;
+    margin: 28px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .speaker {
+    border: 2px solid var(--ai);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .photo {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--ai);
+  }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .placeholder {
+    position: absolute;
+    inset: 0;
+    background: url('/images/2027/buri.svg') center / 70% no-repeat;
+    opacity: 0.25;
+  }
+  .day {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    background: var(--kin);
+    color: var(--ai-ink);
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    padding: 2px 10px;
+    border-radius: 999px;
+  }
+  .body {
+    padding: 20px 22px 24px;
+  }
+  .body p {
+    margin: 0;
+  }
+  .body .title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ai);
+    margin-bottom: 12px;
+  }
+  .title a {
+    text-decoration: none;
+  }
+  .title a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--kin);
+    text-underline-offset: 0.25em;
+  }
+  .name {
+    font-weight: 700;
+    font-size: 17px;
+  }
+  .affiliation {
+    font-size: 13px;
+    opacity: 0.8;
+  }
+  .x {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--kin-deep);
+    text-decoration: none;
+  }
+</style>
