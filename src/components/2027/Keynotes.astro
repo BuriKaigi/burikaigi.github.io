@@ -74,7 +74,6 @@ const { keynotes } = Astro.props;
   .speaker {
     border: 2px solid var(--ai);
     border-radius: 20px;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
   }
@@ -82,14 +81,29 @@ const { keynotes } = Astro.props;
     position: relative;
     aspect-ratio: 1;
     background: var(--ai);
+    /* 波を枠の外へはみ出させるためカードで切り抜かないので、上の角はここで丸める */
+    border-radius: 18px 18px 0 0;
   }
-  /* 正方形でない写真でも枠の大きさを変えないよう、枠いっぱいに重ねて切り抜く */
+  /* 正方形でない写真でも枠の大きさを変えないよう、枠に重ねて切り抜く。
+     背景が白い写真でも本文との境目が分かるよう、周りに枠の藍色を少し残して縁取る */
   .photo img {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    inset: 8px;
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
+    border-radius: 12px 12px 0 0;
     object-fit: cover;
+  }
+  /* 写真の下端にフッターと同じ波を被せる。フッターと同じく波の下端は藍色の縁に重ね、左右は枠から少しはみ出させる */
+  .photo:has(img)::after {
+    content: '';
+    position: absolute;
+    left: -20px;
+    right: -10px;
+    bottom: 6px;
+    aspect-ratio: 2000 / 460;
+    background: url('/images/2027/wave-low.svg') center bottom / 100% auto no-repeat;
+    pointer-events: none;
   }
   .placeholder {
     position: absolute;
