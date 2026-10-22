@@ -36,7 +36,7 @@ const [keynotes, events, sponsors] = await Promise.all([getKeynotes(), getEvents
 const sections = [
   { id: 'overview', label: 'BuriKaigiとは？', visible: true },
   { id: 'news', label: 'お知らせ', visible: latestNews.length > 0 },
-  { id: 'keynotes', label: '基調講演', visible: keynotes.length > 0 },
+  { id: 'keynotes', label: '招待講演', visible: keynotes.length > 0 },
   // 内容が決まるまでは Coming Soon で出しておく
   { id: 'workshops', label: 'ワークショップ', visible: true },
   { id: 'events', label: 'イベント', visible: events.length > 0 },

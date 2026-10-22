@@ -47,20 +47,21 @@ const recruitment = conference.sponsorRecruitment;
           <h3>{plan.label}</h3>
           <ul class:list={['logos', plan.size]}>
             {sponsors.map(({ data }) => {
-              // ロゴがなければ名前を文字で出す。URL がなければリンクにしない
+              // ロゴがなければ、鰤を透かした枠に名前を文字で出す。URL がなければリンクにしない
               const content = data.logo ? (
                 <img src={data.logo} alt={data.name} loading="lazy" />
               ) : (
                 <span class="name">{data.name}</span>
               );
+              const tileClass = ['tile', { 'no-logo': !data.logo }];
               return (
                 <li>
                   {data.url ? (
-                    <a class="tile" href={data.url} target="_blank" rel="noopener noreferrer" title={data.name}>
+                    <a class:list={tileClass} href={data.url} target="_blank" rel="noopener noreferrer" title={data.name}>
                       {content}
                     </a>
                   ) : (
-                    <div class="tile">{content}</div>
+                    <div class:list={tileClass}>{content}</div>
                   )}
                 </li>
               );
@@ -180,7 +181,19 @@ const recruitment = conference.sponsorRecruitment;
     max-height: 100%;
     object-fit: contain;
   }
+  /* ロゴ未掲載のダミー表示（招待講演の写真なしと同じく鰤を透かす） */
+  .tile.no-logo {
+    position: relative;
+  }
+  .tile.no-logo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/images/2027/buri.svg') center / auto 80% no-repeat;
+    opacity: 0.15;
+  }
   .tile .name {
+    position: relative;
     font-weight: 700;
     font-size: 13px;
     line-height: 1.4;

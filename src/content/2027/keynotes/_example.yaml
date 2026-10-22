@@ -1,7 +1,7 @@
-# 基調講演 1 件 = 1 ファイル。このファイルをコピーして、先頭の _ を外したファイル名で保存する（例: t-wada.yaml）。
+# 招待講演 1 件 = 1 ファイル。このファイルをコピーして、先頭の _ を外したファイル名で保存する（例: t-wada.yaml）。
 # _ で始まるファイルは読み込まれない。項目は src/content.config.ts の keynotes2027 を参照。
 name: 鰤 太郎
-affiliation: 株式会社サンプル # 任意
+affiliation: 株式会社サンプル # 任意。改行したい場合は |- で複数行にする
 image: /images/2027/keynotes/sample.png # 任意。public 配下のパスか https:// の URL
 title: 講演タイトル # 任意。未定なら省略
 day: 1 # 任意。1 = DAY 1, 2 = DAY 2
