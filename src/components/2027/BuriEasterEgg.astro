@@ -1,0 +1,1109 @@
+---
+// トップページ専用のイースターエッグ。ヒーローの鰤をクリックし続けると鰤が増え、
+// 20 匹で HYPER BURIKAIGI TIME（ページ全体がギラギラ＋鰤が飛び交う）になる。
+// トップ（src/pages/index.astro）からだけ読み込むこと。派手な CSS は html[data-hyper] のときだけ効く。
+---
+
+<script>
+  const SHAKE_ONLY = 5; // ここまではプルプルするだけ
+  const CLICKS_PER_BURI = 2; // それ以降、何回クリックごとに鰤を 1 匹出すか
+  const HYPER_AT = 20; // 何匹で HYPER BURIKAIGI TIME にするか
+  const STAGE_MAX = 40; // ヒーローに置く鰤の上限（HYPER 中もここまでは増える）
+  const HYPER_CLICKS_PER_STAGE_BURI = 5; // HYPER 中、何回クリックごとにヒーローの鰤を 1 匹足すか
+  const BURI_SRC = '/images/2027/buri.svg';
+  // 飛び交う鰤用のラスター画像（360x402）。大きさごとに SVG を描き直さないよう、1 枚を拡大縮小して使う
+  const PARTY_BURI_SRC = '/images/2027/buri-party.png';
+  const PARTY_BURI_W = 120;
+  const PARTY_BURI_H = (PARTY_BURI_W * 402) / 360;
+
+  // スマホなど（狭い画面・指で操作する端末）は軽量版にする。メモリ不足で落ちないよう数を抑え、
+  // ページ全体にかける重い演出（ビート・色相・浮遊）は使わない
+  const LITE = matchMedia('(max-width: 760px), (pointer: coarse)').matches;
+  const BUDGET = LITE
+    ? { maxFish: 40, autoMax: 25, autoBase: 10, perClickMax: 3, confetti: 15, eqBars: 16, sparkleRate: 0.5, maxSparkles: 60, giantRate: 2, rings: 1, clickFishRate: 0.45 }
+    : { maxFish: 160, autoMax: 90, autoBase: 25, perClickMax: 10, confetti: 40, eqBars: 32, sparkleRate: 1, maxSparkles: 250, giantRate: 3.5, rings: 3, clickFishRate: 0.7 };
+
+  const random = (min: number, max: number) => min + Math.random() * (max - min);
+
+  // 鰤の見た目（向き・大きさ・角度）をランダムに決める
+  const randomLook = () => ({
+    flip: Math.random() < 0.5 ? -1 : 1,
+    scale: random(0.5, 1.6),
+    tilt: random(-35, 35),
+  });
+
+  const shake = (el: Element) =>
+    el.animate(
+      [
+        { translate: '0 0' },
+        { translate: '-2% 1%' },
+        { translate: '2% -1%' },
+        { translate: '-1.5% -1%' },
+        { translate: '1.5% 1%' },
+        { translate: '0 0' },
+      ],
+      { duration: 320, easing: 'ease-in-out' },
+    );
+
+  const SPARKLE_COLORS = ['#f6c64c', '#ffffff', '#7fe3ff', '#ffe58a'];
+
+  // クリックした場所から星をはじけさせる。count と spread で派手さを変える
+  const sparkle = (x: number, y: number, requested: number, spread: number) => {
+    // 画面上の星は BUDGET.maxSparkles まで（連打で前の星が消える前に増え続けないように）
+    const room = BUDGET.maxSparkles - document.querySelectorAll('.buri-sparkle').length;
+    const count = Math.min(room, Math.max(2, Math.round(requested * BUDGET.sparkleRate)));
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('span');
+      el.className = 'buri-sparkle';
+      const size = random(14, 30) * Math.min(1.8, Math.max(1, spread / 90));
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      el.style.width = el.style.height = `${size}px`;
+      el.style.background = SPARKLE_COLORS[Math.floor(Math.random() * SPARKLE_COLORS.length)];
+      document.body.append(el);
+      const angle = (Math.PI * 2 * i) / count + random(-0.3, 0.3);
+      const dist = random(spread * 0.5, spread);
+      const dx = Math.cos(angle) * dist;
+      const dy = Math.sin(angle) * dist;
+      const at = (k: number, scale: number, rotate: number) =>
+        `translate(calc(-50% + ${dx * k}px), calc(-50% + ${dy * k}px)) scale(${scale}) rotate(${rotate}deg)`;
+      // 最初に一気に広がり、しばらく光ったまま漂ってから縮んで消える
+      el.animate(
+        [
+          { transform: at(0, 0, 0), opacity: 1, easing: 'cubic-bezier(.2,.9,.3,1)' },
+          { transform: at(0.7, 1.2, 60), opacity: 1, offset: 0.15 },
+          { transform: at(0.9, 1, 120), opacity: 1, offset: 0.6 },
+          { transform: at(1, 0, 200), opacity: 0 },
+        ],
+        { duration: random(700, 1000) },
+      ).onfinish = () => el.remove();
+    }
+  };
+
+  // 位置計算は .stage の幅・高さに対する %（x は幅、y は高さ）で行う
+  type Box = { x: number; y: number; w: number; h: number };
+  const BURI_ASPECT = 3320 / 2976; // buri.svg の高さ / 幅
+  const COLUMNS = 10; // 横位置を均等にするための列数
+  const MAX_TEXT_OVERLAP = 0.25; // 帯の文字に重なってよい割合（鰤の面積に対して）
+  const PLACE_TRIES = 12;
+  // 縦位置（鰤の上端）の範囲。0 未満だと上で切れるので少し下げ、文字の下（波から跳ねる位置）にも逃げられるようにする
+  const PLACE_TOP_MIN = 2;
+  const PLACE_TOP_MAX = 68;
+  const MIN_VISIBLE = 0.8; // 鰤の体のうち、ヒーローの中に見えていてほしい割合（下で隠れるとジャンプが見えない）
+  const FONT_PRELOAD_AT = 2; // 鰤が何匹増えた時点で HYPER 用のフォントを読み込み始めるか
+
+  // a の面積のうち b と重なっている割合
+  const overlapRatio = (a: Box, b: Box) => {
+    const w = Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x));
+    const h = Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
+    return (w * h) / (a.w * a.h);
+  };
+
+  // 要素の位置を .stage に対する % で返す
+  const boxIn = (el: Element, stageRect: DOMRect): Box => {
+    const r = el.getBoundingClientRect();
+    return {
+      x: ((r.left - stageRect.left) / stageRect.width) * 100,
+      y: ((r.top - stageRect.top) / stageRect.height) * 100,
+      w: (r.width / stageRect.width) * 100,
+      h: (r.height / stageRect.height) * 100,
+    };
+  };
+
+  // 列をシャッフルして順に使う（全部使ったら引き直す）。左右に偏らないようにするため
+  let columnBag: number[] = [];
+  const nextColumn = () => {
+    if (columnBag.length === 0) {
+      columnBag = [...Array(COLUMNS).keys()].sort(() => Math.random() - 0.5);
+    }
+    return columnBag.pop()!;
+  };
+
+  // 鰤の置き場所を決める。帯の文字に重なりすぎない場所を探し、見つからなければ一番ましな場所にする
+  const choosePlace = (stage: HTMLElement, w: number): Box => {
+    const stageRect = stage.getBoundingClientRect();
+    const h = w * BURI_ASPECT * (stageRect.width / stageRect.height);
+    const text = document.getElementById('hero-band-text');
+    const textBox = text ? boxIn(text, stageRect) : undefined;
+    const column = nextColumn();
+    let best: Box | undefined;
+    let bestOverlap = Infinity;
+    for (let i = 0; i < PLACE_TRIES; i++) {
+      const centerX = (column + random(0.15, 0.85)) * (100 / COLUMNS);
+      // 大きい鰤ほど下に置くと体が隠れるので、MIN_VISIBLE 以上見える高さまでにする
+      const maxTop = Math.max(PLACE_TOP_MIN, Math.min(PLACE_TOP_MAX, 100 - MIN_VISIBLE * h));
+      const place = { x: centerX - w / 2, y: random(PLACE_TOP_MIN, maxTop), w, h };
+      const overlap = textBox ? overlapRatio(place, textBox) : 0;
+      if (overlap <= MAX_TEXT_OVERLAP) return place;
+      if (overlap < bestOverlap) {
+        best = place;
+        bestOverlap = overlap;
+      }
+    }
+    return best!;
+  };
+
+  // ヒーローの中に鰤を 1 匹、下から跳ばして置く
+  const spawnInStage = (stage: HTMLElement) => {
+    const { flip, scale, tilt } = randomLook();
+    const place = choosePlace(stage, 16 * scale);
+    const img = document.createElement('img');
+    img.src = BURI_SRC;
+    img.alt = '';
+    img.className = 'buri-extra';
+    img.style.left = `${place.x}%`;
+    img.style.top = `${place.y}%`;
+    img.style.width = `${place.w}%`;
+    // HYPER 中に揺れるとき、全員そろわないようにずらす
+    img.style.animationDelay = `${-random(0, 0.5)}s`;
+    stage.append(img);
+    const rest = `scaleX(${flip}) rotate(${tilt}deg)`;
+    img.animate(
+      [
+        { transform: `translateY(160%) scaleX(${flip}) rotate(${tilt + 40 * flip}deg)` },
+        { transform: rest },
+      ],
+      { duration: 650, easing: 'cubic-bezier(.2,.8,.25,1)', fill: 'forwards' },
+    );
+  };
+
+  type Point = { x: number; y: number };
+
+  // HYPER 中に鰤を放物線で跳ばす。from を渡すとその位置から跳ぶ（なければ画面の下から）。sizeRate で大きさを変える
+  const launchPartyBuri = (layer: HTMLElement, from?: Point, sizeRate = 1) => {
+    const { flip, scale } = randomLook();
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const size = 120 * scale * sizeRate;
+    const x0 = from ? from.x - size / 2 : random(-size, w);
+    const y0 = from ? from.y - size / 2 : h + size;
+    const x1 = x0 + random(-w * 0.4, w * 0.4);
+    const peak = from ? Math.max(-size, y0 - random(h * 0.3, h * 0.7)) : random(h * 0.05, h * 0.6);
+    const k = size / PARTY_BURI_W;
+    const img = document.createElement('img');
+    img.src = PARTY_BURI_SRC;
+    img.alt = '';
+    img.className = 'buri-party-fish';
+    layer.append(img);
+    // (x, y) は拡大後の鰤の左上。中心を基準に拡大縮小するので、中心の位置に合わせて置く
+    const at = (x: number, y: number, r: number) => ({
+      transform: `translate(${x + size / 2 - PARTY_BURI_W / 2}px, ${y + (size * PARTY_BURI_H) / PARTY_BURI_W / 2 - PARTY_BURI_H / 2}px) scale(${k}) scaleX(${flip}) rotate(${r * flip}deg)`,
+    });
+    img.animate(
+      [
+        { ...at(x0, y0, 40), easing: 'cubic-bezier(.2,.7,.4,1)' },
+        { ...at((x0 + x1) / 2, peak, 0), easing: 'cubic-bezier(.6,0,.8,.3)' },
+        at(x1, h + size, -50),
+      ],
+      { duration: random(1400, 2600) },
+    ).onfinish = () => img.remove();
+  };
+
+  const RAINBOW = ['#ff004c', '#ff8a00', '#ffe600', '#00e676', '#00b0ff', '#7c4dff', '#ff4fd8'];
+  const pick = <T,>(list: T[]) => list[Math.floor(Math.random() * list.length)];
+  const MARQUEE_TEXT = 'BURI ★ SHIROEBI ★ HOTARUIKA ★ MASUZUSHI ★ ';
+
+  // 飾りを作る関数。HYPER の段階（TIERS）が上がるたびに足していく
+  // 文字帯は「文字列 × 2」を左へ半分ずらしてループさせる。横に長い 1 枚の層として動くので長すぎると重く、
+  // 短いと帯の途中で文字が途切れる。帯の幅を測り、半分の長さが帯の幅を超えるまで文字列を足す。
+  // 測った時点でフォント（Ranchers）が未読み込みだと幅が変わるので、1.3 倍の余裕をみる
+  const addMarquee = (layer: HTMLElement, side: 'a' | 'b') => {
+    const band = document.createElement('div');
+    band.className = `buri-party-marquee ${side}`;
+    const span = document.createElement('span');
+    band.append(span);
+    layer.append(band);
+    let text = MARQUEE_TEXT;
+    span.textContent = text + text;
+    while (span.scrollWidth / 2 < band.offsetWidth * 1.3 && text.length < MARQUEE_TEXT.length * 20) {
+      text += MARQUEE_TEXT;
+      span.textContent = text + text;
+    }
+  };
+  const addConfetti = (layer: HTMLElement, count: number) => {
+    for (let i = 0; i < count; i++) {
+      const c = document.createElement('i');
+      c.className = 'buri-party-confetti';
+      c.style.left = `${random(0, 100)}%`;
+      c.style.background = pick(RAINBOW);
+      c.style.animationDuration = `${random(2.5, 5)}s`;
+      c.style.animationDelay = `${-random(0, 5)}s`;
+      layer.append(c);
+    }
+  };
+  const addEqualizer = (layer: HTMLElement) => {
+    const eq = document.createElement('div');
+    eq.className = 'buri-party-eq';
+    for (let i = 0; i < BUDGET.eqBars; i++) {
+      const bar = document.createElement('i');
+      bar.style.background = `hsl(${(i / BUDGET.eqBars) * 360} 100% 60%)`;
+      bar.style.animationDuration = `${random(0.35, 0.8)}s`;
+      bar.style.animationDelay = `${-random(0, 0.8)}s`;
+      eq.append(bar);
+    }
+    layer.append(eq);
+  };
+  const addBalls = (layer: HTMLElement) =>
+    layer.insertAdjacentHTML(
+      'beforeend',
+      '<span class="buri-party-ball left">🪩</span><span class="buri-party-ball right">🪩</span>',
+    );
+  const addGrid = (layer: HTMLElement) => layer.insertAdjacentHTML('afterbegin', '<div class="buri-party-grid"></div>');
+
+  const addLights = (layer: HTMLElement) => layer.insertAdjacentHTML('afterbegin', '<div class="buri-party-lights"></div>');
+  const addBanner = (layer: HTMLElement) => {
+    layer.insertAdjacentHTML('beforeend', '<p class="buri-party-banner"><span>HYPER BURIKAIGI TIME</span></p>');
+    // 帯を叩きつける
+    layer.querySelector('.buri-party-banner')!.animate(
+      [
+        { transform: 'translate(-50%, 40vh) scale(5) rotate(-12deg)', opacity: 0 },
+        { transform: 'translate(-50%, 0) scale(0.9) rotate(3deg)', opacity: 1, offset: 0.7 },
+        { transform: 'translate(-50%, 0) scale(1) rotate(0deg)', opacity: 1 },
+      ],
+      { duration: 700, easing: 'cubic-bezier(.2,.8,.3,1)' },
+    );
+  };
+  const flag = (name: string) => () => (document.documentElement.dataset[name] = '');
+
+  // 軽量版のビート。ページ全体を動かすと縦に長い 1 枚の層になりメモリを食うので、
+  // 画面に見えているセクションだけを動かす。開始時刻をそろえて、どのセクションも同じタイミングで跳ねる
+  const BEAT: Keyframe[] = [
+    { scale: '1.012', translate: '0 6px' },
+    { scale: '1', translate: '0 0', offset: 0.4 },
+    { scale: '1', translate: '0 0' },
+  ];
+  const BEAT_STRONG: Keyframe[] = [
+    { scale: '1.03', translate: '0 14px' },
+    { scale: '1', translate: '0 0', offset: 0.4 },
+    { scale: '1', translate: '0 0' },
+  ];
+  let liteBeat: { observer: IntersectionObserver; anims: Map<HTMLElement, Animation> } | undefined;
+  const playBeat = (el: HTMLElement) => {
+    const strong = document.documentElement.dataset.hyperFever !== undefined;
+    el.style.transformOrigin = '50% 0';
+    const anim = el.animate(strong ? BEAT_STRONG : BEAT, { duration: 500, iterations: Infinity, easing: 'ease-out' });
+    anim.startTime = 0;
+    liteBeat?.anims.set(el, anim);
+  };
+  const stopBeat = (el: HTMLElement) => {
+    liteBeat?.anims.get(el)?.cancel();
+    liteBeat?.anims.delete(el);
+    el.style.transformOrigin = '';
+  };
+  const startLiteBeat = () => {
+    if (liteBeat) return;
+    const observer = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        const el = e.target as HTMLElement;
+        if (e.isIntersecting) playBeat(el);
+        else stopBeat(el);
+      }
+    });
+    liteBeat = { observer, anims: new Map() };
+    document
+      .querySelectorAll<HTMLElement>('.y2027 > header, .y2027 > main > *, .y2027 > .footer-wave, .y2027 > .site-footer')
+      .forEach((el) => observer.observe(el));
+  };
+  // FEVER で強いビートに切り替える
+  const restartLiteBeat = () => {
+    if (!liteBeat) return;
+    for (const el of [...liteBeat.anims.keys()]) {
+      stopBeat(el);
+      playBeat(el);
+    }
+  };
+  const stopLiteBeat = () => {
+    if (!liteBeat) return;
+    liteBeat.observer.disconnect();
+    for (const el of [...liteBeat.anims.keys()]) stopBeat(el);
+    liteBeat = undefined;
+  };
+
+  // コンボの進み方。最後の段階（at: 100 の FEVER）に必要なコンボ数を決め、そこから倍率を出す。
+  // 段階も徐々に強くなる要素も、combo / COMBO_SCALE を基準にする
+  const FEVER_COMBO = 333;
+  const COMBO_SCALE = FEVER_COMBO / 100;
+  // 段階 at を解禁するコンボ数（小数の割り算の誤差を避けるため整数にする）
+  const comboFor = (at: number) => Math.round(at * COMBO_SCALE);
+
+  // HYPER の段階。combo（自分でクリックした回数）が comboFor(at) に届くと、その演出を解禁する。
+  // 最初は鰤とロゴだけ。背景がきらびやかになるのは後半（60〜）
+  type Tier = { at: number; apply: (layer: HTMLElement) => void };
+  const TIERS: Tier[] = [
+    { at: 5, apply: addBanner },
+    { at: 10, apply: (l) => addMarquee(l, 'a') },
+    { at: 15, apply: (l) => addConfetti(l, BUDGET.confetti) },
+    {
+      at: 20,
+      apply: () => {
+        flag('hyperBeat')();
+        if (LITE) startLiteBeat();
+      },
+    },
+    { at: 25, apply: flag('hyperTitles') },
+    { at: 30, apply: addEqualizer },
+    {
+      at: 40,
+      apply: (l) => {
+        addBalls(l);
+        addMarquee(l, 'b');
+      },
+    },
+    {
+      at: 50,
+      apply: (l) => {
+        flag('hyperFloat')();
+        addConfetti(l, BUDGET.confetti);
+      },
+    },
+    {
+      at: 60,
+      apply: (l) => {
+        // 光（画面の 4 倍の面積の板を回す）とグリッド床（3D 変形）は重いので、軽量版では出さない
+        if (!LITE) addLights(l);
+        flag('hyperHue')();
+      },
+    },
+    {
+      at: 70,
+      apply: (l) => {
+        if (!LITE) addGrid(l);
+      },
+    },
+    {
+      at: 100,
+      apply: (l) => {
+        flag('hyperFever')();
+        if (LITE) restartLiteBeat();
+        const counter = l.querySelector('.buri-party-combo');
+        if (counter) {
+          counter.classList.add('fever');
+          counter.innerHTML = '<span>FEVER</span>';
+        }
+        const banner = l.querySelector('.buri-party-banner span');
+        if (banner) banner.textContent = 'ULTRA BURIKAIGI TIME';
+      },
+    },
+  ];
+
+  // 段階が上がったとき：画面中央から虹色の輪を衝撃波のように広げ、星をはじけさせる
+  const celebrate = (layer: HTMLElement) => {
+    for (let i = 0; i < BUDGET.rings; i++) {
+      const ring = document.createElement('i');
+      ring.className = 'buri-party-ring';
+      layer.append(ring);
+      ring.animate(
+        [
+          { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
+          { transform: 'translate(-50%, -50%) scale(1)', opacity: 0 },
+        ],
+        { duration: 900, delay: i * 120, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'backwards' },
+      ).onfinish = () => ring.remove();
+    }
+    sparkle(window.innerWidth / 2, window.innerHeight / 2, 28, Math.min(window.innerWidth, window.innerHeight) * 0.45);
+  };
+
+  // 解禁の瞬間に画面を揺らす。軽量版でページ全体（縦に長い 1 枚の層）を動かすと、その瞬間に大きなメモリを
+  // 確保して落ちることがあるので、画面サイズの HYPER 用レイヤーを揺らす
+  const shakePage = (power: number, layer: HTMLElement) =>
+    (LITE ? layer : document.querySelector('.y2027'))?.animate(
+      [
+        { translate: '0 0' },
+        { translate: `${-18 * power}px ${10 * power}px` },
+        { translate: `${16 * power}px ${-12 * power}px` },
+        { translate: `${-12 * power}px ${8 * power}px` },
+        { translate: `${8 * power}px ${-4 * power}px` },
+        { translate: '0 0' },
+      ],
+      { duration: 600, easing: 'ease-out' },
+    );
+
+
+  // HYPER 中に鰤がクリックされたときの処理（HYPER 中だけ入る）
+  let onHyperBuriClick: ((x: number, y: number) => void) | undefined;
+
+  // エフェクトの文字用フォント（Ranchers）。普段は読み込まず、鰤が増え始めたら先に読み込んでおく
+  const loadPartyFont = () => {
+    if (document.getElementById('buri-party-font')) return;
+    const link = document.createElement('link');
+    link.id = 'buri-party-font';
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Ranchers&display=swap';
+    // CSS を読んだだけではフォント本体は取得されない（使われたときに取りに行く）ので、明示的に読み込む
+    link.onload = () => void document.fonts.load('400 1em Ranchers');
+    document.head.append(link);
+  };
+
+  const startHyper = () => {
+    if (document.documentElement.dataset.hyper !== undefined) return;
+    document.documentElement.dataset.hyper = '';
+    if (LITE) document.documentElement.dataset.hyperLite = '';
+    loadPartyFont();
+
+    const layer = document.createElement('div');
+    layer.className = 'buri-party';
+    layer.setAttribute('aria-hidden', 'true');
+    // 軽量版の色相は、ページ全体のフィルターではなく画面サイズの板の backdrop-filter で回す
+    layer.innerHTML =
+      (LITE ? '<div class="buri-party-hue"></div>' : '') + '<p class="buri-party-combo">BURI COMBO ×<b>0</b></p>';
+    const stop = document.createElement('button');
+    stop.type = 'button';
+    stop.className = 'buri-party-stop';
+    stop.textContent = '日常に帰る（Esc）';
+    document.body.append(layer, stop);
+
+    const comboNum = layer.querySelector<HTMLElement>('.buri-party-combo b')!;
+    let combo = 0;
+    let nextTier = 0;
+    // combo を段階の単位（at と同じ尺度）に直したもの
+    const level = () => combo / COMBO_SCALE;
+    const fever = () => combo >= FEVER_COMBO;
+
+    // 入場：鰤が跳ね始めるだけ（ロゴのレインボーは CSS の html[data-hyper] で付く）
+    for (let i = 0; i < 12; i++) launchPartyBuri(layer);
+
+    // 自動で飛ぶ鰤。combo が増えるほど間隔が短く、同時に飛ぶ数も多くなる
+    let timer = 0;
+    const scheduleAuto = () => {
+      const interval = Math.max(60, 320 - level() * 3 - (level() >= 70 ? 80 : 0));
+      const limit = Math.min(BUDGET.autoMax, BUDGET.autoBase + level());
+      timer = window.setTimeout(() => {
+        if (layer.querySelectorAll('.buri-party-fish').length < limit) {
+          launchPartyBuri(layer, undefined, fever() && Math.random() < 0.08 ? BUDGET.giantRate : 1);
+        }
+        scheduleAuto();
+      }, interval);
+    };
+    scheduleAuto();
+
+    // ヒーローの鰤をクリックした分だけコンボを増やし、節目で演出を解禁する
+    onHyperBuriClick = (x: number, y: number) => {
+      combo += 1;
+      // FEVER 後は数字ではなく「FEVER」を出したままにする
+      if (!fever()) {
+        comboNum.textContent = String(combo);
+        comboNum.animate([{ scale: 1.8 }, { scale: 1 }], { duration: 220, easing: 'ease-out' });
+      }
+      // 画面上の鰤は BUDGET.maxFish まで（重くならないように）
+      const room = BUDGET.maxFish - layer.querySelectorAll('.buri-party-fish').length;
+      const perClick = Math.min(BUDGET.perClickMax, 3 + Math.floor(level() / 15), Math.max(0, room));
+      sparkle(x, y, Math.min(40, 16 + level() / 3), Math.min(260, 120 + level()));
+      // クリックした位置から出る鰤は、クリックした場所が隠れないよう小さめにする
+      for (let i = 0; i < perClick; i++) launchPartyBuri(layer, { x, y }, BUDGET.clickFishRate);
+      while (nextTier < TIERS.length && combo >= comboFor(TIERS[nextTier].at)) {
+        const tier = TIERS[nextTier];
+        tier.apply(layer);
+        celebrate(layer);
+        shakePage(1 + nextTier * 0.15, layer);
+        nextTier += 1;
+      }
+    };
+
+    // カーソルの軌跡に星（クリック以外ではコンボは増えない）
+    let lastTrail = 0;
+    const onMove = (e: PointerEvent) => {
+      if (e.timeStamp - lastTrail < 40) return;
+      lastTrail = e.timeStamp;
+      sparkle(e.clientX, e.clientY, 3, 40);
+    };
+    const end = () => {
+      window.clearTimeout(timer);
+      onHyperBuriClick = undefined;
+      stopLiteBeat();
+      layer.remove();
+      stop.remove();
+      for (const key of ['hyper', 'hyperLite', 'hyperBeat', 'hyperTitles', 'hyperFloat', 'hyperHue', 'hyperFever']) {
+        delete document.documentElement.dataset[key];
+      }
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('pointermove', onMove);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') end();
+    };
+    stop.addEventListener('click', end);
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('pointermove', onMove);
+  };
+
+  const init = () => {
+    // 動きを減らす設定の人には出さない
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const buri = document.getElementById('hero-buri');
+    const stage = buri?.closest<HTMLElement>('.stage');
+    if (!buri || !stage) return;
+
+    buri.classList.add('buri-clickable');
+    let clicks = 0;
+    let spawned = 0;
+    let hyperClicks = 0;
+
+    // クリックはヒーローの絵（.stage）でまとめて受け、鰤かどうかを見る。
+    // HYPER 前に反応するのは最初の鰤だけ。HYPER 中は増えた鰤（.buri-extra）も反応する
+    stage.addEventListener('click', (e) => {
+      const target = (e.target as Element).closest<HTMLElement>('.buri-clickable, .buri-extra');
+      if (!target) return;
+      shake(target);
+      if (onHyperBuriClick) {
+        // ダブルクリックなどで選択されてしまった文字があれば解除する
+        window.getSelection()?.removeAllRanges();
+        onHyperBuriClick(e.clientX, e.clientY);
+        // ヒーローの鰤も STAGE_MAX までは少しずつ増やす
+        hyperClicks += 1;
+        if (hyperClicks % HYPER_CLICKS_PER_STAGE_BURI === 0 && stage.querySelectorAll('.buri-extra').length < STAGE_MAX) {
+          spawnInStage(stage);
+        }
+        return;
+      }
+      if (target !== buri) return;
+      // 鰤がそろった後（HYPER を終了した後）は、増やさずに HYPER に戻る
+      if (spawned >= HYPER_AT) {
+        sparkle(e.clientX, e.clientY, 28, 200);
+        startHyper();
+        return;
+      }
+      clicks += 1;
+      const extra = clicks - SHAKE_ONLY;
+      if (extra <= 0 || extra % CLICKS_PER_BURI !== 0) {
+        sparkle(e.clientX, e.clientY, 8, 70);
+        return;
+      }
+      spawned += 1;
+      spawnInStage(stage);
+      // HYPER で使うフォントは、入る前から読み込んでおく（入った瞬間に字形が切り替わらないように）
+      if (spawned === FONT_PRELOAD_AT) loadPartyFont();
+      sparkle(e.clientX, e.clientY, spawned >= HYPER_AT ? 28 : 14, spawned >= HYPER_AT ? 200 : 120);
+      if (spawned === HYPER_AT) startHyper();
+    });
+  };
+
+  init();
+</script>
+
+<style is:global>
+  /* ---- クリックできる鰤（ヒーローの鰤を重ねている .art は通過させ、鰤だけ拾う） ---- */
+  .hero .art:has(.buri-clickable) {
+    pointer-events: none;
+  }
+  /* Hero.astro の .buri { pointer-events: none } より強いセレクタで上書きする */
+  .hero .buri.buri-clickable {
+    pointer-events: auto;
+    cursor: pointer;
+    /* 連打してもダブルタップでズームしないように */
+    touch-action: manipulation;
+  }
+  /* 日付・会場（Hero.astro の .hero-meta は z-index: 5）より上に出す。クリックは下に通す */
+  .buri-extra {
+    position: absolute;
+    z-index: 6;
+    height: auto;
+    max-width: none;
+    pointer-events: none;
+    transform-origin: 50% 50%;
+  }
+  /* 4 方向に尖った星 */
+  .buri-sparkle {
+    position: fixed;
+    z-index: 10001;
+    pointer-events: none;
+    clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  }
+
+  /* ---- HYPER BURIKAIGI TIME（html[data-hyper] のときだけ） ---- */
+  @keyframes buri-hue {
+    to {
+      filter: hue-rotate(360deg) saturate(1.6);
+    }
+  }
+  @keyframes buri-rainbow {
+    to {
+      background-position: 200% 0;
+    }
+  }
+  @keyframes buri-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes buri-pulse {
+    50% {
+      transform: translateX(-50%) scale(1.08);
+    }
+  }
+  @keyframes buri-wiggle {
+    25% {
+      translate: -1.5% 1%;
+      rotate: -4deg;
+    }
+    75% {
+      translate: 1.5% -1%;
+      rotate: 4deg;
+    }
+  }
+
+  @keyframes buri-beat {
+    0% {
+      scale: 1.012;
+      translate: 0 6px;
+    }
+    40%,
+    100% {
+      scale: 1;
+      translate: 0 0;
+    }
+  }
+  @keyframes buri-beat-strong {
+    0% {
+      scale: 1.03;
+      translate: 0 14px;
+    }
+    40%,
+    100% {
+      scale: 1;
+      translate: 0 0;
+    }
+  }
+  @keyframes buri-tilt {
+    50% {
+      rotate: -3deg;
+    }
+  }
+  @keyframes buri-float {
+    50% {
+      translate: 0 -10px;
+      rotate: 1deg;
+    }
+  }
+  @keyframes buri-fall {
+    from {
+      transform: translate(0, -5vh) rotate(0deg) rotateY(0deg);
+    }
+    50% {
+      transform: translate(4vw, 50vh) rotate(360deg) rotateY(540deg);
+    }
+    to {
+      transform: translate(-3vw, 110vh) rotate(720deg) rotateY(1080deg);
+    }
+  }
+  @keyframes buri-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes buri-grid {
+    to {
+      background-position: 0 60px;
+    }
+  }
+  @keyframes buri-eq {
+    from {
+      transform: scaleY(0.15);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+  @keyframes buri-swing {
+    50% {
+      rotate: 18deg;
+    }
+  }
+
+  /* HYPER 中はどこをタップしても鰤が出るので、ダブルタップでのズームを止める（ピンチやスクロールはできる） */
+  /* 連打で文字（コンボカウンター・帯など HYPER 用レイヤーの文字も含む）が選択されたり、長押しメニューが出たりしないように */
+  html[data-hyper] {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  /* HYPER 中は鰤を連打するので、ビートで画面が動いて連打がリンクやボタンに当たり、
+     ページ移動やページ内リンクでのスクロールが起きないよう、ページ本体は反応させない（鰤だけ反応する）。
+     終了ボタンはページ本体の外にあるので押せる */
+  html[data-hyper] .y2027 {
+    pointer-events: none;
+  }
+  /* HYPER 中は増えた鰤もクリックでき、コンボが増える（ページ本体の pointer-events: none より優先） */
+  html[data-hyper] .hero .buri-extra {
+    pointer-events: auto;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  html[data-hyper] {
+    /* エフェクトの文字だけ Ranchers（400 のみなので太字・斜体は付けない） */
+    --party-font: 'Ranchers', var(--display);
+    --rainbow: linear-gradient(90deg, #ff004c, #ff8a00, #ffe600, #00e676, #00b0ff, #7c4dff, #ff004c);
+  }
+  /* コンボ 67：ヘッダー・本文・フッターが 0.5 秒ごとにドンッと跳ねる */
+  html[data-hyper-beat]:not([data-hyper-lite]) .y2027 > * {
+    transform-origin: 50% 0;
+    animation: buri-beat 0.5s ease-out infinite;
+  }
+  /* コンボ 200：ページ全体の色相をゆっくり回す（点滅はさせない） */
+  html[data-hyper-hue]:not([data-hyper-lite]) .y2027 {
+    animation: buri-hue 3s linear infinite;
+  }
+  /* コンボ 333（KANBURI FEVER）：色相を速く（1 周 1.5 秒まで）、ビートを強く */
+  html[data-hyper-hue][data-hyper-fever]:not([data-hyper-lite]) .y2027 {
+    animation-duration: 1.5s;
+  }
+  html[data-hyper-beat][data-hyper-fever]:not([data-hyper-lite]) .y2027 > * {
+    animation-name: buri-beat-strong;
+  }
+  /* HYPER 中は、最初からいる鰤もクリックで増えた鰤もノリノリで揺れる */
+  html[data-hyper] :is(.buri-clickable, .buri-extra) {
+    animation: buri-wiggle 0.5s ease-in-out infinite;
+  }
+  /* コンボ 83：見出しが虹色に、カードが光る */
+  html[data-hyper-titles] .y2027 .section-title {
+    background: var(--rainbow) 0 0 / 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transform-origin: 0 50%;
+    animation: buri-rainbow 1.5s linear infinite;
+  }
+  html[data-hyper-titles] .y2027 :is(.speaker, .tile, .recruitment, .placeholder, .news-list) {
+    box-shadow:
+      0 0 12px #ff00e6,
+      0 0 28px #00e5ff;
+  }
+  /* コンボ 167：見出しが傾き、カードが浮く */
+  html[data-hyper-float]:not([data-hyper-lite]) .y2027 .section-title {
+    animation:
+      buri-rainbow 1.5s linear infinite,
+      buri-tilt 1s ease-in-out infinite;
+  }
+  html[data-hyper-float]:not([data-hyper-lite]) .y2027 :is(.speaker, .tile, .recruitment, .placeholder, .news-list) {
+    animation: buri-float 1.6s ease-in-out infinite;
+  }
+  html[data-hyper-float]:not([data-hyper-lite]) .y2027 :is(.speaker, .tile):nth-child(even) {
+    animation-delay: -0.8s;
+  }
+
+  /* ロゴの「BuriKaigi」をレインボーに：ロゴ SVG の形で切り抜いた虹色を上に重ねる */
+  html[data-hyper] .site-header .logo {
+    position: relative;
+  }
+  /* 帯の文字は登場アニメーションの最終状態（opacity: 1）を保持しているので visibility で隠す */
+  html[data-hyper] .site-header .logo img,
+  html[data-hyper] .hero-band .text {
+    visibility: hidden;
+  }
+  html[data-hyper] .site-header .logo::after,
+  html[data-hyper] .hero-band::after {
+    content: '';
+    position: absolute;
+    background: var(--rainbow) 0 0 / 200% 100%;
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+    filter: drop-shadow(0 0 6px #fff);
+    animation: buri-rainbow 1.2s linear infinite;
+  }
+  html[data-hyper] .site-header .logo::after {
+    --logo: url('/images/2027/logo-text.svg');
+    inset: 0;
+  }
+  /* 帯の中の文字と同じ位置（Hero.astro の .hero-band .text と同じ値。高さは 515.39 / 740.66） */
+  html[data-hyper] .hero-band::after {
+    --logo: url('/images/2027/logo-text-white.svg');
+    left: 6.844%;
+    top: 14.468%;
+    width: 66.882%;
+    height: 69.586%;
+  }
+
+  /* 全画面のレイヤー（ミラーボールの光・飛び交う鰤・帯） */
+  .buri-party {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .buri-party-lights {
+    position: absolute;
+    inset: -50%;
+    background: repeating-conic-gradient(
+      from 0deg,
+      rgba(255, 0, 200, 0.22) 0deg 10deg,
+      transparent 10deg 20deg,
+      rgba(0, 229, 255, 0.22) 20deg 30deg,
+      transparent 30deg 40deg
+    );
+    mix-blend-mode: screen;
+    animation: buri-spin 8s linear infinite;
+  }
+  .buri-party-fish {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 120px;
+    height: auto;
+    max-width: none;
+    filter: drop-shadow(0 0 8px #fff);
+  }
+  /* 黒い帯の中に虹色の文字 */
+  .buri-party-banner {
+    position: absolute;
+    left: 50%;
+    top: 16px;
+    margin: 0;
+    padding: 0.2em 0.8em;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: #000;
+    font-family: var(--party-font);
+    font-weight: 400;
+    font-size: clamp(18px, 4vw, 44px);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    animation: buri-pulse 0.5s ease-in-out infinite;
+  }
+  .buri-party-banner span {
+    background: var(--rainbow) 0 0 / 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: buri-rainbow 1.2s linear infinite;
+  }
+  .buri-party-stop {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    z-index: 10002;
+    transform: translateX(-50%);
+    padding: 0.7em 1.4em;
+    border: 2px solid #fff;
+    border-radius: 999px;
+    background: #000;
+    color: #fff;
+    font-family: var(--text);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* 画面下のネオンのグリッド床（手前へ流れる） */
+  .buri-party-grid {
+    position: absolute;
+    left: -50%;
+    right: -50%;
+    bottom: 0;
+    height: 55%;
+    transform: perspective(320px) rotateX(62deg);
+    transform-origin: 50% 100%;
+    background:
+      linear-gradient(transparent 95%, #ff00e6 95%) 0 0 / 100% 60px,
+      linear-gradient(90deg, transparent 95%, #00e5ff 95%) 0 0 / 60px 100%;
+    mask: linear-gradient(transparent, #000 60%);
+    opacity: 0.55;
+    animation: buri-grid 0.5s linear infinite;
+  }
+  /* 斜めに流れる文字帯 */
+  .buri-party-marquee {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    padding: 0.25em 0;
+    background: #000;
+    border-block: 3px solid #fff;
+    font-family: var(--party-font);
+    font-weight: 400;
+    font-size: clamp(16px, 2.4vw, 30px);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .buri-party-marquee span {
+    display: inline-block;
+    background: var(--rainbow) 0 0 / 50% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: buri-marquee 12s linear infinite;
+  }
+  /* 右下のコンボカウンターにかからないよう、文字帯は画面の上寄りに置く */
+  .buri-party-marquee.a {
+    top: 22%;
+    rotate: -6deg;
+  }
+  /* 2 本目はコンボカウンターの上に来るよう、下からの距離で置く。
+     距離 = カウンターの bottom（110px）+ カウンターの高さ（文字サイズの約 2.7 倍）
+     + 4° 傾けて右端が下がる分（画面幅の約 3.5%）+ 余白 */
+  .buri-party-marquee.b {
+    top: auto;
+    bottom: calc(110px + clamp(63px, 8vw, 110px) + 3.5vw + 24px);
+    rotate: 4deg;
+  }
+  .buri-party-marquee.b span {
+    animation-direction: reverse;
+  }
+  /* 紙吹雪 */
+  .buri-party-confetti {
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 16px;
+    border-radius: 2px;
+    animation: buri-fall 4s linear infinite;
+  }
+  /* 画面下のイコライザー */
+  .buri-party-eq {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 90px;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    padding: 0 8px;
+    opacity: 0.85;
+  }
+  .buri-party-eq i {
+    flex: 1;
+    height: 100%;
+    border-radius: 4px 4px 0 0;
+    transform-origin: 50% 100%;
+    animation: buri-eq 0.5s ease-in-out infinite alternate;
+  }
+  /* 左右のミラーボール（天井から吊るして揺らす） */
+  .buri-party-ball {
+    position: absolute;
+    top: 0;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1;
+    padding-top: 60px;
+    transform-origin: 50% 0;
+    background: linear-gradient(#fff, #fff) 50% 0 / 2px 60px no-repeat;
+    animation: buri-swing 2s ease-in-out infinite;
+  }
+  .buri-party-ball.left {
+    left: 6%;
+    rotate: -18deg;
+  }
+  .buri-party-ball.right {
+    right: 6%;
+    animation-delay: -1s;
+    rotate: -18deg;
+  }
+  /* コンボカウンター */
+  .buri-party-combo {
+    position: absolute;
+    right: 20px;
+    bottom: 110px;
+    margin: 0;
+    padding: 0.2em 0.6em;
+    background: #000;
+    border: 4px solid #ffe600;
+    border-radius: 14px;
+    color: #ffe600;
+    font-family: var(--party-font);
+    font-weight: 400;
+    font-size: clamp(22px, 3vw, 40px);
+  }
+  .buri-party-combo b {
+    display: inline-block;
+    min-width: 2.5em;
+    color: #fff;
+    font-size: 1.4em;
+    text-align: right;
+  }
+  /* 衝撃波の輪（画面の短い辺の 1.4 倍まで広がる） */
+  .buri-party-ring {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 140vmin;
+    height: 140vmin;
+    border-radius: 50%;
+    /* 虹色の円から内側をくり抜き、外周 14px だけ残す */
+    background: conic-gradient(#ff004c, #ff8a00, #ffe600, #00e676, #00b0ff, #7c4dff, #ff004c);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 14px), #000 calc(100% - 13px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 14px), #000 calc(100% - 13px));
+  }
+
+  /* ---- 軽量版（スマホなど）：ビートはページ全体ではなく、画面に固定したコンボカウンターだけで跳ねる ---- */
+  html[data-hyper-lite][data-hyper-beat] .buri-party-combo {
+    animation: buri-beat 0.5s ease-out infinite;
+  }
+  html[data-hyper-lite] .buri-party-fish {
+    filter: none;
+  }
+  html[data-hyper-lite] .buri-party-lights {
+    mix-blend-mode: normal;
+    opacity: 0.5;
+  }
+  html[data-hyper-lite] .buri-party-confetti {
+    animation-name: buri-fall-lite;
+  }
+  @keyframes buri-fall-lite {
+    from {
+      transform: translate(0, -5vh) rotate(0deg);
+    }
+    to {
+      transform: translate(-3vw, 110vh) rotate(540deg);
+    }
+  }
+  /* 軽量版の色相：画面サイズの板の後ろに見えているものだけを回す（ページ全体を描き直さない） */
+  .buri-party-hue {
+    position: absolute;
+    inset: 0;
+    display: none;
+  }
+  html[data-hyper-lite][data-hyper-hue] .buri-party-hue {
+    display: block;
+    animation: buri-backdrop-hue 3s linear infinite;
+  }
+  html[data-hyper-lite][data-hyper-hue][data-hyper-fever] .buri-party-hue {
+    animation-duration: 1.5s;
+  }
+  @keyframes buri-backdrop-hue {
+    from {
+      -webkit-backdrop-filter: hue-rotate(0deg) saturate(1.6);
+      backdrop-filter: hue-rotate(0deg) saturate(1.6);
+    }
+    to {
+      -webkit-backdrop-filter: hue-rotate(360deg) saturate(1.6);
+      backdrop-filter: hue-rotate(360deg) saturate(1.6);
+    }
+  }
+  /* FEVER 後のカウンター：「FEVER」だけを虹色にし、リズムに合わせてズンズン拡大する（枠からはみ出してよい） */
+  .buri-party-combo.fever {
+    overflow: visible;
+  }
+  .buri-party-combo.fever span {
+    display: inline-block;
+    font-size: 1.6em;
+    line-height: 1;
+    padding: 0 0.1em;
+    background: var(--rainbow) 0 0 / 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+    transform-origin: 50% 60%;
+    animation:
+      buri-rainbow 0.8s linear infinite,
+      buri-zun 0.5s cubic-bezier(.2,.8,.3,1) infinite;
+  }
+  @keyframes buri-zun {
+    0% {
+      scale: 1.9;
+      rotate: -6deg;
+    }
+    35% {
+      scale: 1.05;
+      rotate: 0deg;
+    }
+    100% {
+      scale: 1;
+      rotate: 0deg;
+    }
+  }
+  /* 軽量版の衝撃波の輪は小さめ（画面の短い辺と同じ） */
+  html[data-hyper-lite] .buri-party-ring {
+    width: 100vmin;
+    height: 100vmin;
+  }
+</style>

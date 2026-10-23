@@ -7,6 +7,8 @@ interface Props {
   ogType?: 'website' | 'article';
   ogDescription?: string;
   publishedTime?: string;
+  /** OG 画像のサイト内パス（/ 始まり） */
+  ogImage?: string;
 }
 
 const {
@@ -16,12 +18,13 @@ const {
   ogType = 'website',
   ogDescription,
   publishedTime,
+  ogImage = '/images/ogp.png',
 } = Astro.props;
 const myTitle = ['BuriKaigi', title, name].filter(Boolean).join(' | ');
 const ogTitleResolved = ogTitle ?? 'BuriKaigi';
 const siteDescription = '寒ブリとIT技術者のマリアージュ';
 const description = ogDescription ?? siteDescription;
-const ogImageUrl = 'https://burikaigi.dev/images/ogp.png';
+const ogImageUrl = new URL(ogImage, 'https://burikaigi.dev').toString();
 const ogExtended = ogTitle !== undefined && ogTitle !== '';
 const pathWithSlash = Astro.url.pathname.endsWith('/')
   ? Astro.url.pathname
@@ -70,6 +73,7 @@ const ogUrl = Astro.site
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+    <slot name="head" />
   </head>
   <body>
     <slot />

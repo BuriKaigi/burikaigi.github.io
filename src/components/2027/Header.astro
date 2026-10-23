@@ -1,0 +1,87 @@
+---
+type Props = {
+  nav: { href: string; label: string }[];
+  registrationUrl?: string;
+};
+
+const { nav, registrationUrl } = Astro.props;
+---
+
+<header class="site-header">
+  <a class="logo" href="/">
+    <img src="/images/2027/logo-text.svg" alt="BuriKaigi 2027" width="1228" height="515" />
+  </a>
+  <nav class="nav" aria-label="ページ内">
+    {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    {registrationUrl && (
+      <a class="btn primary entry" href={registrationUrl} target="_blank" rel="noopener noreferrer">
+        参加申し込み
+      </a>
+    )}
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: absolute;
+    inset: 0 0 auto 0;
+    max-width: var(--frame-max);
+    margin-inline: auto;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px clamp(16px, 4vw, 48px);
+  }
+  /* ロゴ：文字画像（burikaigi2027_text_black.svg）をそのまま使う */
+  .logo img {
+    display: block;
+    height: 44px;
+    width: auto;
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(14px, 2.4vw, 32px);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .nav a:not(.btn) {
+    text-decoration: none;
+    color: var(--ai);
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav a:not(.btn)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--kin);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .nav a:not(.btn):hover::after {
+    transform: scaleX(1);
+  }
+  .entry {
+    padding: 0.5em 1.2em;
+  }
+  @media (max-width: 760px) {
+    .site-header {
+      padding: 16px;
+    }
+    .logo img {
+      height: 36px;
+    }
+  }
+  /* 狭い画面ではページ内リンクを隠し、申し込みボタンだけ残す */
+  @media (max-width: 720px) {
+    .nav a:not(.btn) {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,213 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { conference } from '~/data/2027/conference';
+import { groupByPlan } from '~/data/2027/content';
+
+type Props = {
+  sponsors: CollectionEntry<'sponsors2027'>[];
+};
+
+const groups = groupByPlan(Astro.props.sponsors);
+const recruitment = conference.sponsorRecruitment;
+---
+
+<section class="paper" id="sponsors">
+  <div class="wrap">
+    <h2 class="section-title">スポンサー</h2>
+
+    {
+      recruitment && (
+        <div class="recruitment">
+          <div class="text">
+            <p class="title">スポンサー募集中</p>
+            <p class="deadline">募集締切 {recruitment.deadline}</p>
+            {recruitment.newsUrl && (
+              <a class="news" href={recruitment.newsUrl}>
+                募集のお知らせを見る →
+              </a>
+            )}
+          </div>
+          <div class="actions">
+            <a class="btn primary" href={recruitment.formUrl} target="_blank" rel="noopener noreferrer">
+              申し込みフォーム
+            </a>
+            {recruitment.documentUrl && (
+              <a class="btn ghost" href={recruitment.documentUrl} target="_blank" rel="noopener noreferrer">
+                スポンサー概要資料
+              </a>
+            )}
+          </div>
+        </div>
+      )
+    }
+
+    {
+      groups.map(({ plan, sponsors }) => (
+        <section class="plan">
+          <h3>{plan.label}</h3>
+          <ul class:list={['logos', plan.size]}>
+            {sponsors.map(({ data }) => {
+              // ロゴがなければ、鰤を透かした枠に名前を文字で出す。URL がなければリンクにしない
+              const content = data.logo ? (
+                <img src={data.logo} alt={data.name} loading="lazy" />
+              ) : (
+                <span class="name">{data.name}</span>
+              );
+              const tileClass = ['tile', { 'no-logo': !data.logo }];
+              return (
+                <li>
+                  {data.url ? (
+                    <a class:list={tileClass} href={data.url} target="_blank" rel="noopener noreferrer" title={data.name}>
+                      {content}
+                    </a>
+                  ) : (
+                    <div class:list={tileClass}>{content}</div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .paper {
+    padding-top: clamp(56px, 8vw, 104px);
+  }
+  .section-title {
+    color: var(--ai);
+  }
+
+  /* スポンサー募集中の告知（イベントの金色カードと同じ配色） */
+  .recruitment {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px 32px;
+    margin-top: 28px;
+    padding: clamp(24px, 3vw, 36px);
+    border: 2px solid var(--kin-deep);
+    border-radius: 20px;
+    background: #fffaf0;
+  }
+  .recruitment p {
+    margin: 0;
+  }
+  .recruitment .title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(22px, 2.4vw, 28px);
+    color: var(--ai);
+  }
+  .recruitment .deadline {
+    font-weight: 700;
+  }
+  .recruitment .news {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ai);
+    text-decoration: none;
+  }
+  .recruitment .news:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--kin);
+    text-underline-offset: 0.3em;
+  }
+  .recruitment .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .plan {
+    margin-top: 32px;
+  }
+  .plan h3 {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 0 16px;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: var(--ai);
+  }
+  /* 見出しの右に罫線を引く */
+  .plan h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .logos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .logos.lg {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .logos.md {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .logos.sm {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 2 / 1;
+    padding: 12% 10%;
+    background: var(--shiro);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    text-align: center;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+  a.tile:hover {
+    border-color: var(--ai);
+  }
+  .tile img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  /* ロゴ未掲載のダミー表示（招待講演の写真なしと同じく鰤を透かす） */
+  .tile.no-logo {
+    position: relative;
+  }
+  .tile.no-logo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/images/2027/buri.svg') center / auto 80% no-repeat;
+    opacity: 0.15;
+  }
+  .tile .name {
+    position: relative;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ai);
+  }
+  @media (max-width: 760px) {
+    .logos.lg {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .logos.md {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .logos.sm {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,232 @@
+---
+import { conference, toDayParts } from '~/data/2027/conference';
+
+type Props = {
+  /** アニメーションせず最終状態で表示し、ヘッダー分の余白も取らない（OG 画像の撮影用） */
+  still?: boolean;
+};
+
+const { still = false } = Astro.props;
+const [first, last] = conference.days.map(toDayParts);
+---
+
+<section class:list={['hero', { still }]}>
+  <div class="stage" aria-label="日本海の荒波から寒ぶりが跳ねるイラスト">
+    <!-- 重なり順：荒波 → 帯ロゴ → 鰤（鰤が帯にかぶる）。波と鰤は同じ .art の拡大で位置を揃える -->
+    <div class="art">
+      <img class="wave" src="/images/2027/wave-hero.svg" alt="" />
+    </div>
+    <h1 class="hero-band">
+      <span class="band" id="hero-band"></span>
+      <img class="text" id="hero-band-text" src="/images/2027/logo-text-white.svg" alt="BuriKaigi 2027" />
+    </h1>
+    <div class="art">
+      <img class="buri" id="hero-buri" src="/images/2027/buri.svg" alt="" />
+    </div>
+  </div>
+
+  <div class="hero-meta" id="hero-meta">
+    <p class="date">
+      {first.year}.{first.month}.{first.day}<small>{first.weekdayEn}</small>— {last.month}.{last.day}<small
+        >{last.weekdayEn}</small
+      ><span class="venue"
+        >{conference.venue.name}<a
+          class="tag"
+          href={`https://x.com/hashtag/${conference.hashtag}`}
+          target="_blank"
+          rel="noopener noreferrer">#{conference.hashtag}</a
+        ></span
+      >
+    </p>
+  </div>
+</section>
+
+<!-- 初回描画の前に動かし始めるため、モジュール化せず要素の直後で実行する -->
+{still ? null : (
+<script is:inline>
+  (() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.getElementById('hero-buri').style.transform = 'none';
+      return;
+    }
+
+    const SHUPA = 'cubic-bezier(.16, 1, .3, 1)'; // 速く出て、すっと止まる
+
+    // 帯 → 文字の順に画面左からシュパッと入る
+    document.getElementById('hero-band').animate(
+      [{ transform: 'translateX(-101%)' }, { transform: 'translateX(0)' }],
+      { duration: 420, delay: 150, easing: SHUPA, fill: 'both' },
+    );
+    document.getElementById('hero-band-text').animate(
+      [
+        { transform: 'translateX(-60vw) skewX(-18deg)', opacity: 0 },
+        { transform: 'none', opacity: 1 },
+      ],
+      { duration: 520, delay: 330, easing: SHUPA, fill: 'both' },
+    );
+    // 画面下から一度だけ跳ね、原画の構図 = translate(0,0) rotate(0) で空中に止まる
+    document.getElementById('hero-buri').animate(
+      [{ transform: 'translate(18%, 125%) rotate(38deg)' }, { transform: 'translate(0%, 0%) rotate(0deg)' }],
+      { duration: 750, delay: 450, easing: 'cubic-bezier(.2,.8,.25,1)', fill: 'both' },
+    );
+    // 日付・会場は最後に
+    document.getElementById('hero-meta').animate(
+      [
+        { opacity: 0, translate: '0 10px' },
+        { opacity: 1, translate: '0 0' },
+      ],
+      { duration: 500, delay: 900, easing: 'ease-out', fill: 'both' },
+    );
+  })();
+</script>
+)}
+
+<style>
+  .hero {
+    position: relative;
+    max-width: var(--frame-max);
+    margin-inline: auto;
+    /* 上のヘッダーの高さ。日付・会場の位置もこれを基準にする */
+    --hero-head: 72px;
+    padding-top: var(--hero-head);
+    container-type: inline-size;
+  }
+
+  /* 2000x1000 の原画座標系をそのまま使うステージ */
+  .stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    overflow: hidden;
+    /* 原画の藍帯は y=975 で終わるので、下端を藍で埋めて「BuriKaigiとは？」の海へつなぐ */
+    background: linear-gradient(to top, var(--ai) 3%, transparent 3%);
+  }
+  /* 波の SVG は原画の端の白フチを切り落とした範囲（x=26〜1973, y=0〜972）。
+     原画の座標に置いてから、波と鰤をまとめて拡大し、左右端まで届かせる（2000 / 1947 = 1.0272） */
+  .art {
+    position: absolute;
+    inset: 0;
+    transform-origin: 0 0;
+    transform: scale(1.0272) translateX(-1.3%);
+  }
+  .art img {
+    display: block;
+    max-width: none;
+  }
+  .wave {
+    position: absolute;
+    left: 1.3%;
+    top: 0;
+    width: 97.35%;
+    height: 97.2%;
+    pointer-events: none;
+    user-select: none;
+  }
+  /* 鰤：原画の位置を画素差分で実測して配置。初期状態は画面下（跳ぶ前） */
+  .buri {
+    position: absolute;
+    left: 62.75%;
+    top: 9.3%;
+    width: 34.4%;
+    height: auto;
+    transform-origin: 55% 55%;
+    pointer-events: none;
+    will-change: transform;
+    transform: translate(18%, 125%) rotate(38deg);
+  }
+
+  /* 帯ロゴ：帯と文字を別々に出す。画面の左端から始め、帯の右側は跳んできた鰤がかぶるくらいまで伸ばす */
+  .hero-band {
+    position: absolute;
+    left: 0;
+    top: 5cqw;
+    width: 80cqw;
+    margin: 0;
+    aspect-ratio: 1836 / 740.66;
+    pointer-events: none;
+  }
+  /* 帯：元 SVG（burikaigi2027_band.svg）の path#band と同じ平行四辺形 */
+  .hero-band .band {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    clip-path: polygon(0 45.86%, 100% 0, 100% 54.14%, 0 100%);
+  }
+  /* 文字：白文字 SVG を帯の座標に重ねる */
+  .hero-band .text {
+    position: absolute;
+    left: 6.844%;
+    top: 14.468%;
+    width: 66.882%;
+    height: auto;
+  }
+
+  /* 日付・会場：傾けずに右詰め。右端を帯の右端の少し内側（x≈78.5cqw）に揃え、鰤の腹ビレの横に置く */
+  .hero-meta {
+    position: absolute;
+    right: 21.5cqw;
+    top: calc(var(--hero-head) + 29.5cqw);
+    z-index: 5;
+    text-align: right;
+    color: var(--ai);
+  }
+  .hero-meta .date {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 2.8cqw;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+  }
+  .hero-meta .date small {
+    font-size: 0.55em;
+    margin: 0 0.3em;
+    letter-spacing: 0.06em;
+  }
+  /* ハッシュタグ：会場名と同じ大きさで、PC では会場名の下の行に置く */
+  .hero-meta .tag {
+    display: block;
+    margin-top: 0.3em;
+    font-weight: 800;
+    color: var(--ai);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .hero-meta .tag:hover {
+    color: var(--kin-deep);
+  }
+  .hero-meta .venue {
+    display: block;
+    font-size: 0.5em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-top: 0.25em;
+  }
+
+  /* 狭い画面でも PC と同じ配置をそのまま縮小する（帯・鰤・日付はすべて cqw 指定）。
+     日付・会場・ハッシュタグだけは読める大きさを下限にし、大きくなった分だけ帯の下へずらす */
+  @media (max-width: 760px) {
+    .hero-meta {
+      top: calc(var(--hero-head) + 30.5cqw);
+    }
+    .hero-meta .date {
+      font-size: max(2.8cqw, 14px);
+    }
+    .hero-meta .venue {
+      font-size: max(0.5em, 10px);
+    }
+    /* スマホは日付のすぐ下まで波が来るので、会場名と同じ行に並べる */
+    .hero-meta .tag {
+      display: inline;
+      margin: 0 0 0 0.8em;
+    }
+  }
+
+  /* 静止表示：ヘッダー分の余白なし、鰤は跳んだ後の位置 */
+  .hero.still {
+    --hero-head: 0px;
+  }
+  .hero.still .buri {
+    transform: none;
+  }
+</style>

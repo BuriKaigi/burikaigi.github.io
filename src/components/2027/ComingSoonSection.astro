@@ -1,0 +1,50 @@
+---
+// 内容がまだ決まっていない欄の仮表示（ワークショップなど）
+type Props = {
+  id: string;
+  title: string;
+};
+
+const { id, title } = Astro.props;
+---
+
+<section class="paper" id={id}>
+  <div class="wrap">
+    <h2 class="section-title">{title}</h2>
+    <div class="placeholder">
+      <p class="label">Coming Soon</p>
+      <p class="note">詳細は決まり次第お知らせします</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .paper {
+    padding-top: clamp(56px, 8vw, 104px);
+  }
+  .section-title {
+    color: var(--ai);
+  }
+  .placeholder {
+    margin-top: 28px;
+    padding: clamp(40px, 6vw, 72px) 24px;
+    border: 2px dashed var(--line);
+    border-radius: 20px;
+    text-align: center;
+  }
+  .placeholder p {
+    margin: 0;
+  }
+  .label {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(28px, 4vw, 44px);
+    letter-spacing: 0.08em;
+    color: var(--ai);
+  }
+  .placeholder .note {
+    margin-top: 8px;
+    font-size: 14px;
+    opacity: 0.8;
+  }
+</style>
