@@ -34,7 +34,7 @@ export const conference = {
     {
       label: 'プロポーザル募集中',
       href: 'https://fortee.jp/burikaigi-2027/speaker/proposal/cfp',
-      note: '締切 2026.10.25（日）23:59 JST',
+      note: '締切 2026.11.8（日）23:59 JST',
     },
     {
       label: 'スポンサー募集中',
