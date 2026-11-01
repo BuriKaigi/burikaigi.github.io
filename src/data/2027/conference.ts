@@ -19,7 +19,7 @@ export const conference = {
    * 募集が終わったら undefined にする
    */
   sponsorRecruitment: {
-    deadline: '2026 年 10 月末',
+    deadline: '2026.11.8（日）23:59 JST',
     formUrl: 'https://fortee.jp/burikaigi-2027/sponsor/form',
     documentUrl: 'https://drive.google.com/file/d/1PJenSFoLIWL4EzyfvIBebok39mOqKdoF/view?usp=sharing',
     newsUrl: '/news/2026-09-10/',
@@ -39,7 +39,7 @@ export const conference = {
     {
       label: 'スポンサー募集中',
       href: '#sponsors',
-      note: '締切 2026 年 10 月末',
+      note: '締切 2026.11.8（日）23:59 JST',
     },
   ] as { label: string; href: string; note?: string }[],
 } as const;
