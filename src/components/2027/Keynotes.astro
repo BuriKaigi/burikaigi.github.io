@@ -37,10 +37,25 @@ const { keynotes } = Astro.props;
               )}
               <p class="name">{data.name}</p>
               {data.affiliation && <p class="affiliation">{data.affiliation}</p>}
-              {data.x && (
-                <a class="x" href={`https://x.com/${data.x}`} target="_blank" rel="noopener noreferrer">
-                  @{data.x}
-                </a>
+              {(data.x || data.facebook) && (
+                <div class="links">
+                  {data.x && (
+                    <a class="x" href={`https://x.com/${data.x}`} target="_blank" rel="noopener noreferrer">
+                      @{data.x}
+                    </a>
+                  )}
+                  {data.facebook && (
+                    <a
+                      class="facebook"
+                      href={`https://www.facebook.com/${data.facebook}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${data.name} の Facebook`}
+                    >
+                      <img src="/images/facebook.svg" alt="" width="16" height="16" aria-hidden="true" />
+                    </a>
+                  )}
+                </div>
               )}
             </div>
           </li>
@@ -186,12 +201,35 @@ const { keynotes } = Astro.props;
     font-weight: 700;
     line-height: 1.7;
   }
-  .x {
-    display: inline-block;
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     margin-top: 6px;
+  }
+  .x {
     font-size: 13px;
     font-weight: 700;
     color: var(--kin-deep);
     text-decoration: none;
+  }
+  /* メンバー紹介カード（MemberCard.astro）の SNS ボタンと同じ見た目にそろえる */
+  .facebook {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .facebook:hover {
+    background: var(--washi);
+    border-color: var(--ai);
+  }
+  .facebook img {
+    width: 16px;
+    height: 16px;
   }
 </style>

@@ -6,5 +6,6 @@ image: /images/2027/keynotes/sample.png # 任意。public 配下のパスか htt
 title: 講演タイトル # 任意。未定なら省略
 day: 1 # 任意。1 = DAY 1, 2 = DAY 2
 x: example # 任意。@ は不要
+facebook: example # 任意。facebook.com/ 以降のユーザー名
 url: https://fortee.jp/burikaigi-2027/proposal/xxxx # 任意
 order: 0 # 任意。並び順（昇順）
