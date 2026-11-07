@@ -38,6 +38,8 @@ const keynotes2027 = defineCollection({
     /** 1 = DAY 1, 2 = DAY 2 */
     day: z.union([z.literal(1), z.literal(2)]).optional(),
     x: z.string().optional(),
+    /** Facebook のユーザー名（facebook.com/ 以降） */
+    facebook: z.string().optional(),
     /** セッション詳細（fortee など） */
     url: z.url().optional(),
     order: z.number().default(0),
