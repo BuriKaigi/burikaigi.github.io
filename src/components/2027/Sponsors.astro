@@ -45,7 +45,7 @@ const recruitment = conference.sponsorRecruitment;
       groups.map(({ plan, sponsors }) => (
         <section class="plan">
           <h3>{plan.label}</h3>
-          <ul class:list={['logos', plan.size]}>
+          <ul class:list={['logos', plan.size, `plan-${plan.id}`]}>
             {sponsors.map(({ data }) => {
               // ロゴがなければ、鰤を透かした枠に名前を文字で出す。URL がなければリンクにしない
               const content = data.logo ? (
@@ -175,6 +175,10 @@ const recruitment = conference.sponsorRecruitment;
   }
   a.tile:hover {
     border-color: var(--ai);
+  }
+  /* 後援は縦長ロゴもあるため、上下の余白を詰めてロゴを大きく見せる */
+  .logos.plan-supporter .tile {
+    padding: 5% 8%;
   }
   .tile img {
     max-width: 100%;

@@ -7,7 +7,7 @@ export const sponsorPlans = [
   { id: 'gando', label: 'ガンドスポンサー', size: 'md' },
   { id: 'fukuragi', label: 'フクラギスポンサー', size: 'md' },
   { id: 'kozukura', label: 'コヅクラスポンサー', size: 'sm' },
-  { id: 'supporter', label: '後援', size: 'sm' },
+  { id: 'supporter', label: '後援', size: 'lg' },
 ] as const;
 
 export type SponsorPlanId = (typeof sponsorPlans)[number]['id'];
