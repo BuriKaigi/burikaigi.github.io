@@ -37,7 +37,7 @@ const { keynotes } = Astro.props;
               )}
               <p class="name">{data.name}</p>
               {data.affiliation && <p class="affiliation">{data.affiliation}</p>}
-              {(data.x || data.facebook) && (
+              {(data.x || data.facebook || data.github) && (
                 <div class="links">
                   {data.x && (
                     <a class="x" href={`https://x.com/${data.x}`} target="_blank" rel="noopener noreferrer">
@@ -46,13 +46,24 @@ const { keynotes } = Astro.props;
                   )}
                   {data.facebook && (
                     <a
-                      class="facebook"
+                      class="social"
                       href={`https://www.facebook.com/${data.facebook}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${data.name} の Facebook`}
                     >
                       <img src="/images/facebook.svg" alt="" width="16" height="16" aria-hidden="true" />
+                    </a>
+                  )}
+                  {data.github && (
+                    <a
+                      class="social"
+                      href={`https://github.com/${data.github}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${data.name} の GitHub`}
+                    >
+                      <img src="/images/github.svg" alt="" width="16" height="16" aria-hidden="true" />
                     </a>
                   )}
                 </div>
@@ -214,7 +225,7 @@ const { keynotes } = Astro.props;
     text-decoration: none;
   }
   /* メンバー紹介カード（MemberCard.astro）の SNS ボタンと同じ見た目にそろえる */
-  .facebook {
+  .social {
     width: 32px;
     height: 32px;
     display: flex;
@@ -224,11 +235,11 @@ const { keynotes } = Astro.props;
     border-radius: 8px;
     transition: background 0.2s, border-color 0.2s;
   }
-  .facebook:hover {
+  .social:hover {
     background: var(--washi);
     border-color: var(--ai);
   }
-  .facebook img {
+  .social img {
     width: 16px;
     height: 16px;
   }
