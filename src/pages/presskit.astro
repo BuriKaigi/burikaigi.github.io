@@ -1,0 +1,78 @@
+---
+import Layout from '~/layouts/2027Sub.astro';
+import Prose from '~/components/2027/Prose.astro';
+---
+
+<Layout title="Press Kit" ogTitle="Press Kit | BuriKaigi 2027">
+  <article>
+    <h1>Press Kit</h1>
+
+    <Prose>
+      <p>BuriKaigi 2027 のロゴ、アイコン、タイトル、ブリ、波を PNG・SVG 形式で収録しています。</p>
+
+      <h2>利用について</h2>
+      <p>BuriKaigi 2027 を盛り上げるための宣伝や告知などに、ご自由にご利用ください。</p>
+      <p>グッズやプレスリリースにもご利用いただけます。その際は、BuriKaigi 2027 の公式グッズや公式プレスリリースと誤認されないよう、ご配慮をお願いいたします。</p>
+      <p>不適切な利用であると運営が判断した場合は、利用・掲載の取り下げをお願いすることがあります。</p>
+    </Prose>
+
+    <p class="download">
+      <a class="btn primary" href="/images/2027/BuriKaigi2027-presskit-rev1.zip" download>Press Kit をダウンロード（ZIP）</a>
+    </p>
+    <figure class="catalog">
+      <a href="/images/2027/presskit-catalog.png" target="_blank" rel="noopener noreferrer">
+        <img
+          src="/images/2027/presskit-catalog.png"
+          alt="Press Kit に収録されているロゴ、アイコン、タイトル、ブリ、波の素材一覧"
+          width="1854"
+          height="2074"
+          loading="lazy"
+        />
+      </a>
+      <figcaption>素材一覧（画像を選択すると別タブで拡大できます）</figcaption>
+    </figure>
+    <p class="back"><a class="btn ghost" href="/">← トップに戻る</a></p>
+  </article>
+</Layout>
+
+<style>
+  article {
+    max-width: 840px;
+    margin: 0 auto;
+  }
+  h1 {
+    margin: 0;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--ai);
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(24px, 3.4vw, 36px);
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: var(--ai);
+  }
+  .download {
+    margin: 40px 0 0;
+  }
+  .catalog {
+    margin: 40px 0 0;
+  }
+  .catalog a {
+    display: block;
+  }
+  .catalog img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .catalog figcaption {
+    margin-top: 8px;
+    font-size: 14px;
+  }
+  .back {
+    margin: 56px 0 0;
+    text-align: center;
+  }
+</style>

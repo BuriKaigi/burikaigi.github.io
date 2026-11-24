@@ -11,8 +11,9 @@ const { nav, registrationUrl } = Astro.props;
   <a class="logo" href="/">
     <img src="/images/2027/logo-text.svg" alt="BuriKaigi 2027" width="1228" height="515" />
   </a>
-  <nav class="nav" aria-label="ページ内">
+  <nav class="nav" aria-label="ナビゲーション">
     {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    <a class="presskit" href="/presskit/">Press Kit</a>
     {registrationUrl && (
       <a class="btn primary entry" href={registrationUrl} target="_blank" rel="noopener noreferrer">
         参加申し込み
@@ -78,9 +79,20 @@ const { nav, registrationUrl } = Astro.props;
       height: 36px;
     }
   }
-  /* 狭い画面ではページ内リンクを隠し、申し込みボタンだけ残す */
+  @media (max-width: 960px) {
+    .nav:has(.entry) {
+      gap: 8px;
+    }
+    .nav:has(.entry) a:not(.btn):not(.presskit) {
+      display: none;
+    }
+  }
+  /* 狭い画面ではページ内リンクを隠し、Press Kit と申し込みボタンを残す */
   @media (max-width: 720px) {
-    .nav a:not(.btn) {
+    .nav {
+      gap: 8px;
+    }
+    .nav a:not(.btn):not(.presskit) {
       display: none;
     }
   }
