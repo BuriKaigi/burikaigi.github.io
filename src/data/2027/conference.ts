@@ -10,7 +10,7 @@ export const conference = {
   },
   lead: '年に一度、寒ブリの季節に、ソフトウェア開発・IT の最前線に立つエキスパートを全国から北陸へお招きし、技術の旬を持ち寄るカンファレンスです。',
   /** 参加申し込み（connpass など）。設定するとヘッダーと「BuriKaigiとは？」に申し込みボタンを出す */
-  registrationUrl: undefined as string | undefined,
+  registrationUrl: 'https://toyama-eng.connpass.com/event/411004/' as string | undefined,
   /** タイムテーブル（fortee など）。設定すると「BuriKaigiとは？」にリンクを出す */
   timetableUrl: undefined as string | undefined,
   x: 'burikaigi',
@@ -27,7 +27,12 @@ export const conference = {
    * 「BuriKaigiとは？」の上に大きく出す告知リンク（CFP 募集中など）。この順に並べる。
    * 終わったものは配列から消す
    */
-  highlights: [] as { label: string; href: string; note?: string }[],
+  highlights: [
+    {
+      label: '参加申し込み受付中',
+      href: 'https://toyama-eng.connpass.com/event/411004/',
+    },
+  ] as { label: string; href: string; note?: string }[],
 } as const;
 
 // 'YYYY-MM-DD' を日付表示用に分解する。タイムゾーンの影響を受けないよう UTC で曜日を求める。
