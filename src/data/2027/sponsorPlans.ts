@@ -1,8 +1,8 @@
 // スポンサープラン。この配列の順でトップページに並べる。
-// size はロゴ枠の大きさ（lg: 1 行 3 枠 / md: 4 枠 / sm: 6 枠）。
+// size はロゴ枠の大きさ（xl: 1 行 2 枠 / lg: 3 枠 / md: 4 枠 / sm: 5 枠）。
 // プラン名・順序はスポンサー概要資料に合わせて調整すること。
 export const sponsorPlans = [
-  { id: 'himi-buri', label: '氷見ブリスポンサー', size: 'lg' },
+  { id: 'himi-buri', label: '氷見ブリスポンサー', size: 'xl' },
   { id: 'buri', label: 'ブリスポンサー', size: 'lg' },
   { id: 'gando', label: 'ガンドスポンサー', size: 'md' },
   { id: 'fukuragi', label: 'フクラギスポンサー', size: 'md' },

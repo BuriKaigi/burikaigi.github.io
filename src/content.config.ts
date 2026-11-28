@@ -11,18 +11,28 @@ import { sponsorPlanIds } from '~/data/2027/sponsorPlans';
 const imagePath = z.string().regex(/^(\/|https:\/\/)/, '/ で始まる public 配下のパスか https:// の URL を指定してください');
 
 // src/content/2027/sponsors/*.md
-// 本文（Markdown）は今後スポンサー詳細ページを作るときの紹介文として使う
+// 本文（Markdown）はスポンサー詳細ページ（src/pages/sponsors/[slug].astro）に紹介文として出す
 const sponsors2027 = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/2027/sponsors' }),
   schema: z.object({
     name: z.string(),
+    /**
+     * 詳細ページの URL（/sponsors/<pageSlug>/）。Webサイトのドメインから決め、一度決めたら変えない。
+     * URL が変わっても自動では追従させない（リンク切れを防ぐため）。
+     * 項目名を slug にしないこと: glob ローダーが slug をエントリ ID に使い、同じ値のエントリが黙って上書きされる
+     */
+    pageSlug: z.string().regex(/^[a-z0-9-]+$/, '英小文字・数字・ハイフンのみ使えます'),
+    /** 申込日時。同じ order の中ではこの昇順で並べる */
+    appliedAt: z.coerce.date().optional(),
     plan: z.enum(sponsorPlanIds),
     /** 未指定なら名前を文字で表示する */
     logo: imagePath.optional(),
-    /** 未指定ならリンクにしない */
+    /** Webサイト。詳細ページに出す */
     url: z.url().optional(),
     x: z.string().optional(),
     order: z.number().default(0),
+    /** true ならサイトに出さない（ロゴ未着などでデータだけ用意しておく場合） */
+    hidden: z.boolean().default(false),
   }),
 });
 
