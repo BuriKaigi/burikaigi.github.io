@@ -2,12 +2,17 @@
 import type { CollectionEntry } from 'astro:content';
 import { conference } from '~/data/2027/conference';
 import { groupByPlan } from '~/data/2027/content';
+import { logoAspect, logoWidthPercent } from '~/data/2027/logo';
+import { sponsorPath } from '~/data/2027/paths';
 
 type Props = {
   sponsors: CollectionEntry<'sponsors2027'>[];
 };
 
 const groups = groupByPlan(Astro.props.sponsors);
+
+// 正方形のロゴの幅（枠の内側の幅に対する %）。後援は枠が 2:1 で低いので小さめにする
+const logoBase = (planId: string) => (planId === 'supporter' ? 42 : 50);
 const recruitment = conference.sponsorRecruitment;
 ---
 
@@ -47,22 +52,25 @@ const recruitment = conference.sponsorRecruitment;
           <h3>{plan.label}</h3>
           <ul class:list={['logos', plan.size, `plan-${plan.id}`]}>
             {sponsors.map(({ data }) => {
-              // ロゴがなければ、鰤を透かした枠に名前を文字で出す。URL がなければリンクにしない
+              // ロゴがなければ、鰤を透かした枠に名前を文字で出す。リンク先は詳細ページ
+              // 縦横比から幅を決め、横長・縦長のロゴでも見た目の面積がそろうようにする
+              const aspect = data.logo ? logoAspect(data.logo) : null;
               const content = data.logo ? (
-                <img src={data.logo} alt={data.name} loading="lazy" />
+                <img
+                  src={data.logo}
+                  alt={data.name}
+                  loading="lazy"
+                  style={aspect ? `width: ${logoWidthPercent(aspect, logoBase(plan.id))}%` : undefined}
+                />
               ) : (
                 <span class="name">{data.name}</span>
               );
               const tileClass = ['tile', { 'no-logo': !data.logo }];
               return (
                 <li>
-                  {data.url ? (
-                    <a class:list={tileClass} href={data.url} target="_blank" rel="noopener noreferrer" title={data.name}>
-                      {content}
-                    </a>
-                  ) : (
-                    <div class:list={tileClass}>{content}</div>
-                  )}
+                  <a class:list={tileClass} href={sponsorPath(data.pageSlug)} title={data.name}>
+                    {content}
+                  </a>
                 </li>
               );
             })}
@@ -151,6 +159,9 @@ const recruitment = conference.sponsorRecruitment;
     display: grid;
     gap: 16px;
   }
+  .logos.xl {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .logos.lg {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -158,14 +169,14 @@ const recruitment = conference.sponsorRecruitment;
     grid-template-columns: repeat(4, 1fr);
   }
   .logos.sm {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
   .tile {
     display: flex;
     align-items: center;
     justify-content: center;
-    aspect-ratio: 2 / 1;
-    padding: 12% 10%;
+    aspect-ratio: 16 / 9;
+    padding: 6% 8%;
     background: var(--shiro);
     border: 1px solid var(--line);
     border-radius: 12px;
@@ -176,11 +187,14 @@ const recruitment = conference.sponsorRecruitment;
   a.tile:hover {
     border-color: var(--ai);
   }
-  /* 後援は縦長ロゴもあるため、上下の余白を詰めてロゴを大きく見せる */
+  /* 後援は 2:1 のまま（スポンサーより控えめに見せる） */
   .logos.plan-supporter .tile {
-    padding: 5% 8%;
+    aspect-ratio: 2 / 1;
   }
+  /* 幅は縦横比から計算してインラインで指定する。枠に収まらない分はここで抑える */
   .tile img {
+    width: 42%;
+    height: auto;
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
@@ -204,14 +218,15 @@ const recruitment = conference.sponsorRecruitment;
     color: var(--ai);
   }
   @media (max-width: 760px) {
-    .logos.lg {
-      grid-template-columns: repeat(2, 1fr);
+    .logos.xl {
+      grid-template-columns: 1fr;
     }
+    .logos.lg,
     .logos.md {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
     .logos.sm {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>

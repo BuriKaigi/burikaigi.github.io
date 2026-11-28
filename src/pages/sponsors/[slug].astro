@@ -1,0 +1,169 @@
+---
+// スポンサー詳細ページ。URL は各スポンサーの pageSlug（src/data/2027/paths.ts）。
+// 2027 年版を /2027/ 配下に移すときは、このディレクトリごと src/pages/2027/sponsors/ へ移し、paths.ts の basePath を変える。
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Layout from '~/layouts/2027Sub.astro';
+import Prose from '~/components/2027/Prose.astro';
+import { getSponsors } from '~/data/2027/content';
+import { logoAspect, logoWidthPercent } from '~/data/2027/logo';
+import { findDuplicateSlugs, sponsorsSectionPath } from '~/data/2027/paths';
+import { sponsorPlans } from '~/data/2027/sponsorPlans';
+
+export const getStaticPaths = (async () => {
+  // 非表示（hidden）のスポンサーも含めて重複を確認する。表示に切り替えたときに初めて衝突するのを防ぐ
+  const all = await getCollection('sponsors2027');
+  const duplicates = findDuplicateSlugs(all.map((s) => s.data.pageSlug));
+  if (duplicates.length > 0) {
+    throw new Error(`スポンサーの slug が重複しています: ${duplicates.join(', ')}`);
+  }
+  const sponsors = await getSponsors();
+  return sponsors.map((sponsor) => ({ params: { slug: sponsor.data.pageSlug }, props: { sponsor } }));
+}) satisfies GetStaticPaths;
+
+type Props = { sponsor: CollectionEntry<'sponsors2027'> };
+
+const { sponsor } = Astro.props;
+const { data } = sponsor;
+const { Content } = await render(sponsor);
+const hasBody = (sponsor.body ?? '').trim().length > 0;
+const plan = sponsorPlans.find((p) => p.id === data.plan);
+const aspect = data.logo ? logoAspect(data.logo) : null;
+---
+
+<Layout title={data.name} ogTitle={`${data.name} | BuriKaigi 2027`}>
+  <article>
+    <div class="logo">
+      {
+        data.logo ? (
+          <img
+            src={data.logo}
+            alt={data.name}
+            style={aspect ? `width: ${logoWidthPercent(aspect)}%` : undefined}
+          />
+        ) : (
+          <span class="name">{data.name}</span>
+        )
+      }
+    </div>
+
+    <header class="head">
+      {plan && <p class="plan">{plan.label}</p>}
+      <h1>{data.name}</h1>
+      {
+        (data.url || data.x) && (
+          <ul class="links">
+            {data.url && (
+              <li>
+                <a class="btn primary" href={data.url} target="_blank" rel="noopener noreferrer">
+                  Webサイト
+                </a>
+              </li>
+            )}
+            {data.x && (
+              <li>
+                <a
+                  class="btn ghost x"
+                  href={`https://x.com/${data.x}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`X @${data.x}`}
+                >
+                  {/* public/images/x.svg と同じ X ロゴ。ボタンの文字色に合わせるためインラインで置く */}
+                  <svg viewBox="0 0 448 512" width="16" height="18" aria-hidden="true">
+                    <path fill="currentColor" d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm297.1 84L257.3 234.6 379.4 396H283.8L209 298.1 123.3 396H75.8l111-126.9L69.7 116h98l67.7 89.5L313.6 116h47.5zM323.3 367.6L153.4 142.9H125.1L296.9 367.6h26.3z" />
+                  </svg>
+                  @{data.x}
+                </a>
+              </li>
+            )}
+          </ul>
+        )
+      }
+    </header>
+
+    {
+      hasBody && (
+        <Prose>
+          <Content />
+        </Prose>
+      )
+    }
+
+    <p class="back"><a class="btn ghost" href={sponsorsSectionPath}>← スポンサー一覧に戻る</a></p>
+  </article>
+</Layout>
+
+<style>
+  article {
+    max-width: 840px;
+    margin: 0 auto;
+  }
+  /* トップのロゴ枠と同じ 2:1 の枠に大きく出す */
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 2 / 1;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 6% 8%;
+    background: var(--shiro);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+  }
+  .logo img {
+    width: 42%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .logo .name {
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--ai);
+  }
+  .head {
+    margin-top: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--ai);
+  }
+  .plan {
+    margin: 0 0 8px;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--kin-deep);
+  }
+  h1 {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(24px, 3.4vw, 36px);
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: var(--ai);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .x {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .head + :global(.prose) {
+    margin-top: 32px;
+  }
+  .back {
+    margin: 56px 0 0;
+    text-align: center;
+  }
+</style>
