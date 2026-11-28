@@ -4,7 +4,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { extname, join } from 'node:path';
 
-// fortee のプラン名 → src/data/2027/sponsorPlans.ts の id
+// fortee のプラン名 → src/data/<年>/sponsorPlans.ts の id。
+// BuriKaigi 2027 時点の対応表。年が変わったら sponsorPlans.ts と突き合わせて更新する
 const PLAN_IDS = {
   氷見ブリ: 'himi-buri',
   売切氷見ブリ: 'himi-buri',

@@ -29,8 +29,11 @@ async page => {
       const name = text(card?.querySelector('.service-name .fs-4'));
       const kana = text(card?.querySelector('.service-name .text-muted'));
       const urlA = card?.querySelector('.basic-info .url a');
-      // SNS: .basic-info 内の .url 以外の行（現状 fortee の入力欄は Twitter のみ）
-      const sns = [...(card?.querySelectorAll('.basic-info > div:not(.url)') ?? [])]
+      // SNS: .basic-info 内の Twitter / X の行だけを拾う（現状 fortee の入力欄は Twitter のみ）。
+      // 種類で絞るのは、fortee がこのカードに連絡先などの行を足しても取り込まないため
+      const SNS_TYPES = ['twitter', 'x'];
+      const sns = [...(card?.querySelectorAll('.basic-info > div') ?? [])]
+        .filter(row => SNS_TYPES.includes(row.classList[0]))
         .map(row => {
           const a = row.querySelector('a');
           return a ? { type: row.className.split(' ')[0], handle: a.textContent.trim(), url: a.href } : null;
@@ -42,9 +45,9 @@ async page => {
       const plans = [...(planKey?.parentElement.querySelectorAll('.value [data-plan-uuid]') ?? [])].map(b =>
         b.textContent.trim(),
       );
-      // 申込日時「2026/09/28 13:43」（JST）を ISO 8601 にする
+      // 申込日時「2026/01/23 13:45」（JST）を ISO 8601 にする
       const appliedKey = [...document.querySelectorAll('.key')].find(k => k.textContent.trim() === '申込日時');
-      // 時は 1 桁のこともある（例: 2026/09/25 8:30）
+      // 時は 1 桁のこともある（例: 2026/01/23 8:05）
       const am = appliedKey?.nextElementSibling?.textContent
         .trim()
         .match(/^(\d{4})\/(\d{1,2})\/(\d{1,2}) (\d{1,2}):(\d{2})$/);
